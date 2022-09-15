@@ -1,4 +1,4 @@
-import { Configuration, DocumentsApi, UploadApi, UploadApiFactory, UploadApiFp } from "signer-node-client"
+import { Configuration, DocumentsApi, FileModel, FileUploadModel, UploadApi, UploadApiFactory, UploadApiFp } from "signer-node-client"
 import * as fs from 'fs'
 
 var config: Configuration = { // set your configs here!
@@ -6,26 +6,29 @@ var config: Configuration = { // set your configs here!
     basePath: "https://signer-lac.azurewebsites.net"
 }
 var uploadApi = new UploadApi(config)
+var documentApi = new DocumentsApi(config)
 
 var filepath = "..\\samples\\sample.pdf"
 var base64File = getBase64(filepath)
 
-var file: any = new FormData(null);
-file.append("name","sample.pdf")
-file.append("file", base64File)
-file.append("contentType","application/pdf")
-
-uploadApi.apiUploadsPostForm(file).then((res) => {
-    console.log(res.data);
-})
-
-
 // Do upload via POST
-// uploadApi.apiUploadsBytesPost({
-//     bytes:base64File
-// }).then((response) => {
-//     console.log(response.data); 
-// })
+uploadApi.apiUploadsBytesPost({
+    bytes:base64File
+}).then((response) => {
+    console.log(response.data); 
+    var uploadModel: FileUploadModel = {
+        name: "sample.pdf",
+        displayName: "Add New Document Version Sample",
+        contentType: "application/pdf",
+        id: response.data.id
+    }
+    documentApi.apiDocumentsIdVersionsPost(response.data.id, {
+        file: uploadModel
+    }).then((res) =>{
+        console.log(res.data);
+    })
+
+})
 
 function getBase64(file) {
     var result = fs.readFileSync(file, {encoding: 'base64'});

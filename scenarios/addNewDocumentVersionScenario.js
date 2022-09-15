@@ -7,21 +7,26 @@ var config = {
     basePath: "https://signer-lac.azurewebsites.net"
 };
 var uploadApi = new signer_node_client_1.UploadApi(config);
+var documentApi = new signer_node_client_1.DocumentsApi(config);
 var filepath = "..\\samples\\sample.pdf";
 var base64File = getBase64(filepath);
-var file = new FormData(null);
-file.append("name", "sample.pdf");
-file.append("file", base64File);
-file.append("contentType", "application/pdf");
-uploadApi.apiUploadsPostForm(file).then((res) => {
-    console.log(res.data);
-});
 // Do upload via POST
-// uploadApi.apiUploadsBytesPost({
-//     bytes:base64File
-// }).then((response) => {
-//     console.log(response.data); 
-// })
+uploadApi.apiUploadsBytesPost({
+    bytes: base64File
+}).then((response) => {
+    console.log(response.data);
+    var uploadModel = {
+        name: "sample.pdf",
+        displayName: "Add New Document Version Sample",
+        contentType: "application/pdf",
+        id: response.data.id
+    };
+    documentApi.apiDocumentsIdVersionsPost(response.data.id, {
+        file: uploadModel
+    }).then((res) => {
+        console.log(res.data);
+    });
+});
 function getBase64(file) {
     var result = fs.readFileSync(file, { encoding: 'base64' });
     return result;
