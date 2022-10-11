@@ -9,9 +9,9 @@ import { config, CreateDocument, getBase64 } from "./scenario";
 const uploadApi = new UploadApi(config);
 const documentsApi = new DocumentsApi(config);
 
-let document = CreateDocument().then((res) => {
+CreateDocument().then((res) => {
   // 1. Retrieve document id
-  let docId = res.documentId;
+  const docId = res.documentId;
 
   // 2. The file's bytes must be read by the application and uploaded
   const filepath = "..\\samples\\sample.pdf";
@@ -24,14 +24,14 @@ let document = CreateDocument().then((res) => {
     })
     .then((response) => {
       // 3. Define the name of the document which will be visible in the application
-      var fileUploadModel: FileUploadModel = {
+      const fileUploadModel: FileUploadModel = {
         name: "sample.pdf",
         displayName: "Add New Document Version Sample",
         contentType: "application/pdf",
         id: response.data.id,
       };
       // 4. Create object and send the new version request
-      let documentAddVersionRequest: DocumentsDocumentAddVersionRequest = {
+      const documentAddVersionRequest: DocumentsDocumentAddVersionRequest = {
         file: fileUploadModel,
       };
       documentsApi

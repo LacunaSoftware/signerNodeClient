@@ -14,41 +14,35 @@ const fileName = "sample.pdf"
 const base64File = getBase64(filepath)
 
 export async function CreateDocument(): Promise<DocumentsCreateDocumentResult> {
-    let response = await uploadApi.apiUploadsBytesPost({
+    const response = await uploadApi.apiUploadsBytesPost({
         bytes: base64File
     });
-    let fileUploadModel: FileUploadModel = {
+    const fileUploadModel: FileUploadModel = {
         displayName: "Check Status Sample",
         id: response.data.id,
         contentType: "application/pdf",
         name:fileName
     }
-    let participant: UsersParticipantUserModel = {
+    const participant: UsersParticipantUserModel = {
         name: "Jack Bauer",
         email: "jack.bauer@mailnator.com",
         identifier: "75502846369"
     }
-    let flowAction: FlowActionsFlowActionCreateModel = {
+    const flowAction: FlowActionsFlowActionCreateModel = {
         type: FlowActionType.Signer,
         user: participant
     }
-    let files = new Array(fileUploadModel);
-    let flowActions = new Array(flowAction);
-    let documentRequest: DocumentsCreateDocumentRequest = {
+    const files = new Array(fileUploadModel);
+    const flowActions = new Array(flowAction);
+    const documentRequest: DocumentsCreateDocumentRequest = {
         files: files,
         flowActions: flowActions
     }
-    let result = await documentApi.apiDocumentsPost(documentRequest);
+    const result = await documentApi.apiDocumentsPost(documentRequest);
     return result.data[0]
 }
 
 export function getBase64(file) {
-    let result = fs.readFileSync(file, {encoding: 'base64'});
+    const result = fs.readFileSync(file, {encoding: 'base64'});
     return result;
-}
-
-module.exports= {
-    config,
-    CreateDocument,
-    getBase64
 }

@@ -23,42 +23,37 @@ const fileName = "sample.pdf";
 const base64File = getBase64(filepath);
 function CreateDocument() {
     return __awaiter(this, void 0, void 0, function* () {
-        let response = yield uploadApi.apiUploadsBytesPost({
+        const response = yield uploadApi.apiUploadsBytesPost({
             bytes: base64File
         });
-        let fileUploadModel = {
+        const fileUploadModel = {
             displayName: "Check Status Sample",
             id: response.data.id,
             contentType: "application/pdf",
             name: fileName
         };
-        let participant = {
+        const participant = {
             name: "Jack Bauer",
             email: "jack.bauer@mailnator.com",
             identifier: "75502846369"
         };
-        let flowAction = {
+        const flowAction = {
             type: signer_node_client_1.FlowActionType.Signer,
             user: participant
         };
-        let files = new Array(fileUploadModel);
-        let flowActions = new Array(flowAction);
-        let documentRequest = {
+        const files = new Array(fileUploadModel);
+        const flowActions = new Array(flowAction);
+        const documentRequest = {
             files: files,
             flowActions: flowActions
         };
-        let result = yield documentApi.apiDocumentsPost(documentRequest);
+        const result = yield documentApi.apiDocumentsPost(documentRequest);
         return result.data[0];
     });
 }
 exports.CreateDocument = CreateDocument;
 function getBase64(file) {
-    let result = fs.readFileSync(file, { encoding: 'base64' });
+    const result = fs.readFileSync(file, { encoding: 'base64' });
     return result;
 }
 exports.getBase64 = getBase64;
-module.exports = {
-    config: exports.config,
-    CreateDocument,
-    getBase64
-};
