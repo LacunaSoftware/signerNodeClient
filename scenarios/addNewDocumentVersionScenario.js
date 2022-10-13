@@ -18,7 +18,7 @@ const documentsApi = new signer_node_client_1.DocumentsApi(scenario_1.config);
         .then((response) => {
         // 3. Define the name of the document which will be visible in the application
         const fileUploadModel = {
-            name: "sample.pdf",
+            name: fileName,
             displayName: "Add New Document Version Sample",
             contentType: "application/pdf",
             id: response.data.id,

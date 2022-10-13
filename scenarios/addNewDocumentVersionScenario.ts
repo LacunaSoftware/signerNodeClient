@@ -25,7 +25,7 @@ CreateDocument().then((res) => {
     .then((response) => {
       // 3. Define the name of the document which will be visible in the application
       const fileUploadModel: FileUploadModel = {
-        name: "sample.pdf",
+        name: fileName,
         displayName: "Add New Document Version Sample",
         contentType: "application/pdf",
         id: response.data.id,
