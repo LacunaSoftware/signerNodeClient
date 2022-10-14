@@ -6,13 +6,16 @@ import {
   FlowActionsFlowActionCreateModel,
   FlowActionType,
   DocumentsCreateDocumentRequest,
+  FlowActionsXadesOptionsModel,
+  XadesSignatureTypes,
+  XadesElementIdentifierTypes,
 } from "signer-node-client";
 import { config, getBase64 } from "./scenario";
 
 const uploadApi = new UploadApi(config);
 const documentsApi = new DocumentsApi(config);
-const filepath = "../samples/sample.pdf";
-const filename = "sample.pdf";
+const filepath = "../samples/sample.xml";
+const filename = "sample.xml";
 
 // 1. The file's bytes must be read by the application and uploaded
 uploadApi.apiUploadsBytesPost({ bytes: getBase64(filepath) }).then((res) => {
@@ -20,8 +23,8 @@ uploadApi.apiUploadsBytesPost({ bytes: getBase64(filepath) }).then((res) => {
   const uploadModel: FileUploadModel = {
     id: res.data.id,
     name: filename,
-    contentType: "application/pdf",
-    displayName: "One Signer Sample",
+    contentType: "application/xml",
+    displayName: "XML Element Sign Sample",
   };
   // 3. For each participant on the flow, create one instance of ParticipantUserModel
   const participant: UsersParticipantUserModel = {
@@ -29,20 +32,29 @@ uploadApi.apiUploadsBytesPost({ bytes: getBase64(filepath) }).then((res) => {
     email: "jack.bauer@mailinator.com",
     identifier: "75502846369",
   };
-  // 4. Create a FlowActionCreateModel instance for each action (signature or approval) in the flow.
+
+  // 4. Specify the type of the element (Id is used below) and the value of the identifier
+  const xadesOptionsModel: FlowActionsXadesOptionsModel = {
+    signatureType: XadesSignatureTypes.XmlElement,
+    elementToSignIdentifierType: XadesElementIdentifierTypes.Id,
+    elementToSignIdentifier: "NFe35141214314050000662550010001084271182362300",
+  };
+
+  // 5. Create a FlowActionCreateModel instance for each action (signature or approval) in the flow.
   //    This object is responsible for defining the personal data of the participant and the type of
-  //    action that he will perform on the flow
+  //    action that he will perform on the flow.
   const flowAction: FlowActionsFlowActionCreateModel = {
     type: FlowActionType.Signer,
     user: participant,
+    xadesOptions: xadesOptionsModel,
   };
 
-  // 5. Send the document create request
+  // 6. Create and send the document request
   const documentRequest: DocumentsCreateDocumentRequest = {
     files: [uploadModel],
     flowActions: [flowAction],
   };
   documentsApi.apiDocumentsPost(documentRequest).then((res) => {
-    console.log("Document ", res.data[0].documentId, " Created");
+    console.log("Document ", res.data[0].documentId, "created");
   });
 });

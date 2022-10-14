@@ -21,7 +21,7 @@ uploadApi.apiUploadsBytesPost({ bytes: getBase64(filepath) }).then((res) => {
     id: res.data.id,
     name: filename,
     contentType: "application/pdf",
-    displayName: "One Signer Sample",
+    displayName: "Cades Signature Sample",
   };
   // 3. For each participant on the flow, create one instance of ParticipantUserModel
   const participant: UsersParticipantUserModel = {
@@ -41,6 +41,8 @@ uploadApi.apiUploadsBytesPost({ bytes: getBase64(filepath) }).then((res) => {
   const documentRequest: DocumentsCreateDocumentRequest = {
     files: [uploadModel],
     flowActions: [flowAction],
+    // 6. This time we'll add the forceCadesSignature parameter
+    forceCadesSignature: true,
   };
   documentsApi.apiDocumentsPost(documentRequest).then((res) => {
     console.log("Document ", res.data[0].documentId, " Created");

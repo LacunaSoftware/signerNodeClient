@@ -13,20 +13,28 @@ uploadApi.apiUploadsBytesPost({ bytes: (0, scenario_1.getBase64)(filepath) }).th
         id: res.data.id,
         name: filename,
         contentType: "application/pdf",
-        displayName: "One Signer Sample",
+        displayName: "Signing Rule Sample",
     };
     // 3. For each participant on the flow, create one instance of ParticipantUserModel
-    const participant = {
+    const participantUserOne = {
         name: "Jack Bauer",
         email: "jack.bauer@mailinator.com",
         identifier: "75502846369",
     };
-    // 4. Create a FlowActionCreateModel instance for each action (signature or approval) in the flow.
-    //    This object is responsible for defining the personal data of the participant and the type of
-    //    action that he will perform on the flow
+    const participantUserTwo = {
+        name: "James Bond",
+        email: "james.bond@mailinator.com",
+        identifier: "95588148061",
+    };
+    // 4. Each signing rule requires just one FlowActionCreateModel no matter
+    //    the number of participants assigned to it. The participants are assigned to
+    //    it via a list of ParticipantUserModel assigned to the `SignRuleUsers` property.
+    //    The number of required signatures from this list of participants is represented by
+    //    the property `NumberRequiredSignatures`.
     const flowAction = {
-        type: signer_node_client_1.FlowActionType.Signer,
-        user: participant,
+        type: signer_node_client_1.FlowActionType.SignRule,
+        numberRequiredSignatures: 1,
+        signRuleUsers: [participantUserOne, participantUserTwo],
     };
     // 5. Send the document create request
     const documentRequest = {
