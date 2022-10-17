@@ -2,7 +2,6 @@ import {
   DocumentDownloadTypes,
   DocumentsApi,
   DocumentTicketType,
-  TicketModel,
 } from "signer-node-client";
 import { config, CreateDocument } from "./scenario";
 import * as fs from "fs";

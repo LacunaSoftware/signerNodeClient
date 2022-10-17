@@ -1,1 +1,7 @@
-import { PaginationOrders } from "signer-node-client";
+import { FlowsApi, PaginationOrders } from "signer-node-client";
+import { config } from "./scenario";
+
+const flowsApi = new FlowsApi(config)
+flowsApi.apiDocumentFlowsGet("Doc1", 10, 0, PaginationOrders.Desc).then((res) => {
+    console.log("Listing query results: ", res.data);
+})

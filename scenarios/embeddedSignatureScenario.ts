@@ -7,7 +7,6 @@ import {
     FlowActionType,
     DocumentsCreateDocumentRequest,
     DocumentsActionUrlRequest,
-    DocumentsActionUrlResponse,
   } from "signer-node-client";
   import { config, getBase64 } from "./scenario";
 
