@@ -1,7 +1,6 @@
 import { Configuration, DocumentsCreateDocumentResult, UploadApi, FileUploadModel, UsersParticipantUserModel, FlowActionsFlowActionCreateModel, FlowActionType, DocumentsCreateDocumentRequest, DocumentsApi } from "signer-node-client";
 import * as fs from 'fs';
 
-
 export const config: Configuration = { // set your configs here!
     apiKey: "API Sample App|43fc0da834e48b4b840fd6e8c37196cf29f919e5daedba0f1a5ec17406c13a99",
     basePath: "https://signer-lac.azurewebsites.net"
@@ -42,7 +41,7 @@ export async function CreateDocument(): Promise<DocumentsCreateDocumentResult> {
     return result.data[0]
 }
 
-export function getBase64(file) {
+export function getBase64(file: fs.PathOrFileDescriptor) {
     const result = fs.readFileSync(file, {encoding: 'base64'});
     return result;
 }
