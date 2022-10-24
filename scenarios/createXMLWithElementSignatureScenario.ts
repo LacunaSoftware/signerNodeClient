@@ -9,8 +9,9 @@ import {
   FlowActionsXadesOptionsModel,
   XadesSignatureTypes,
   XadesElementIdentifierTypes,
+  getBase64,
 } from "signer-node-client";
-import { config, getBase64 } from "./scenario";
+import { config } from "./scenario";
 
 const uploadApi = new UploadApi(config);
 const documentsApi = new DocumentsApi(config);

@@ -4,7 +4,8 @@ import {
   UploadApi,
   DocumentsDocumentAddVersionRequest,
 } from "signer-node-client";
-import { config, CreateDocument, getBase64 } from "./scenario";
+import { config, CreateDocument } from "./scenario";
+import { getBase64 } from "signer-node-client";
 
 const uploadApi = new UploadApi(config);
 const documentsApi = new DocumentsApi(config);

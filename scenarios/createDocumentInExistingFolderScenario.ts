@@ -3,8 +3,9 @@ import {
   FlowActionType,
   FoldersApi,
   DocumentsApi,
+  getBase64
 } from "signer-node-client";
-import { config, getBase64 } from "./scenario";
+import { config } from "./scenario";
 
 /**
  * This scenario demonstrates the creation of a document into an existing folder.

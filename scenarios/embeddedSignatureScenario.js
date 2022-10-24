@@ -7,7 +7,7 @@ const documentsApi = new signer_node_client_1.DocumentsApi(scenario_1.config);
 const filepath = "../samples/sample.pdf";
 const filename = "sample.pdf";
 // 1. The file's bytes must be read by the application and uploaded
-uploadApi.apiUploadsBytesPost({ bytes: (0, scenario_1.getBase64)(filepath) }).then((res) => {
+uploadApi.apiUploadsBytesPost({ bytes: (0, signer_node_client_1.getBase64)(filepath) }).then((res) => {
     // 2. Define the name of the document which will be visible in the application
     const uploadModel = {
         id: res.data.id,

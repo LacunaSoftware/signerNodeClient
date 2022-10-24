@@ -5,8 +5,9 @@ import {
   UsersParticipantUserModel,
   FlowActionsFlowActionCreateModel,
   FlowActionType,
+  getBase64
 } from "signer-node-client";
-import { config, getBase64 } from "./scenario";
+import { config } from "./scenario";
 
 const filePath = "../samples/sample.pdf";
 const fileName = "sample.pdf";

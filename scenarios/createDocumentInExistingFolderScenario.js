@@ -13,7 +13,7 @@ const fileName = "sample.pdf";
 // 1. The file's bytes must be read by the application and uploaded
 uploadApi
     .apiUploadsBytesPost({
-    bytes: (0, scenario_1.getBase64)(filePath),
+    bytes: (0, signer_node_client_1.getBase64)(filePath),
 })
     .then((res) => {
     // 2. Define the name of the document which will be visible in the application

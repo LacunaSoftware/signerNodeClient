@@ -11,8 +11,10 @@ import {
   FlowActionType,
   DocumentsCreateDocumentRequest,
   DocumentsApi,
+  getBase64,
 } from "signer-node-client";
-import { config, getBase64 } from "./scenario";
+import { config } from "./scenario";
+
 
 const filePath = "../samples/sample-degree.xml";
 const filename = "sample-degree.xml";

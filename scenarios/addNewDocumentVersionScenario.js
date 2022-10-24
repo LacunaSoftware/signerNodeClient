@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const signer_node_client_1 = require("signer-node-client");
 const scenario_1 = require("./scenario");
+const signer_node_client_2 = require("signer-node-client");
 const uploadApi = new signer_node_client_1.UploadApi(scenario_1.config);
 const documentsApi = new signer_node_client_1.DocumentsApi(scenario_1.config);
 (0, scenario_1.CreateDocument)().then((res) => {
@@ -10,7 +11,7 @@ const documentsApi = new signer_node_client_1.DocumentsApi(scenario_1.config);
     // 2. The file's bytes must be read by the application and uploaded
     const filepath = "..\\samples\\sample.pdf";
     const fileName = "sample.pdf";
-    const base64File = (0, scenario_1.getBase64)(filepath);
+    const base64File = (0, signer_node_client_2.getBase64)(filepath);
     uploadApi
         .apiUploadsBytesPost({
         bytes: base64File,

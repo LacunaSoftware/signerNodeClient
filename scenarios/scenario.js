@@ -8,13 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createMultipartFormData = exports.getBase64 = exports.CreateDocument = exports.config = void 0;
+exports.CreateDocument = exports.config = void 0;
 const signer_node_client_1 = require("signer-node-client");
-const fs_1 = __importDefault(require("fs"));
 exports.config = {
     apiKey: "API Sample App|43fc0da834e48b4b840fd6e8c37196cf29f919e5daedba0f1a5ec17406c13a99",
     basePath: "https://signer-lac.azurewebsites.net"
@@ -23,12 +19,9 @@ const uploadApi = new signer_node_client_1.UploadApi(exports.config);
 const documentApi = new signer_node_client_1.DocumentsApi(exports.config);
 const filepath = "..\\samples\\sample.pdf";
 const fileName = "sample.pdf";
-const base64File = (filepath);
-// CreateDocument();
 function CreateDocument() {
     return __awaiter(this, void 0, void 0, function* () {
-        const file = fs_1.default.readFileSync(filepath);
-        const response = yield uploadApi.apiUploadsBytesPost({ bytes: getBase64(filepath) });
+        const response = yield uploadApi.apiUploadsBytesPost({ bytes: (0, signer_node_client_1.getBase64)(filepath) });
         console.log(response.data);
         const fileUploadModel = {
             displayName: "Check Status Sample",
@@ -56,17 +49,3 @@ function CreateDocument() {
     });
 }
 exports.CreateDocument = CreateDocument;
-function getBase64(file) {
-    const result = fs_1.default.readFileSync(file, { encoding: 'base64' });
-    return result;
-}
-exports.getBase64 = getBase64;
-function createMultipartFormData(name, content, mimeType) {
-    const form = new FormData();
-    form.append('name', name);
-    const file = fs_1.default.createReadStream(content);
-    form.append('content', file.toString());
-    form.append('contentType', mimeType);
-    return form;
-}
-exports.createMultipartFormData = createMultipartFormData;
