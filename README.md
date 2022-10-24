@@ -1,12 +1,10 @@
-# test-signer-node-client
-This repository will be used to test functionalities of the recently published Signer library for Node.js
+# signer-node-client-lib
+This repository stores the client library in Node.js for the [Lacuna Signer API](https://signer-lac.azurewebsites.net/swagger/index.html) and was made using the [swagger codegen library](https://swagger.io/tools/swagger-codegen/) along with other minor manual changes. This library was made using Node v.19.0.0.
 
-# How to test a sample
-First, select a sample, in order to run it, you need to execute
+## Building
+In order to publish this library, you must first run `npm install` and `npm run build`, which will install dependencies and trigger the internal build. If it does not show any errors, you may proceed running the following command:
 ```
-node [sample-name].js
+npm publish
 ```
-Additionally, if you want to compile all samples to JavaScript before running, run
-```
-tsc
-```
+## Publishing
+Make sure you have the correct credentials to publish this library. You might also fork this repository if you want to publish another version with modifications of this library.
