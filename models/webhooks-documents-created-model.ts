@@ -11,18 +11,17 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { WebhooksDocumentInformationModel } from './webhooks-document-information-model';
 /**
  * 
  * @export
- * @enum {string}
+ * @interface WebhooksDocumentsCreatedModel
  */
-export enum DocumentFilterStatus {
-    PendingOrRefused = 'PendingOrRefused',
-    Concluded = 'Concluded',
-    CanceledOrExpired = 'CanceledOrExpired',
-    Pending = 'Pending',
-    Refused = 'Refused',
-    Canceled = 'Canceled',
-    Expired = 'Expired'
+export interface WebhooksDocumentsCreatedModel {
+    /**
+     * 
+     * @type {Array<WebhooksDocumentInformationModel>}
+     * @memberof WebhooksDocumentsCreatedModel
+     */
+    documents?: Array<WebhooksDocumentInformationModel> | null;
 }
-

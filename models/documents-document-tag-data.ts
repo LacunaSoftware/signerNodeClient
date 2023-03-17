@@ -14,15 +14,19 @@
 /**
  * 
  * @export
- * @enum {string}
+ * @interface DocumentsDocumentTagData
  */
-export enum DocumentFilterStatus {
-    PendingOrRefused = 'PendingOrRefused',
-    Concluded = 'Concluded',
-    CanceledOrExpired = 'CanceledOrExpired',
-    Pending = 'Pending',
-    Refused = 'Refused',
-    Canceled = 'Canceled',
-    Expired = 'Expired'
+export interface DocumentsDocumentTagData {
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentsDocumentTagData
+     */
+    label?: string | null;
+    /**
+     * 
+     * @type {string}
+     * @memberof DocumentsDocumentTagData
+     */
+    value: string;
 }
-

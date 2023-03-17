@@ -11,18 +11,55 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { DocumentsCreatorModel } from './documents-creator-model';
+import { FoldersFolderInfoModel } from './folders-folder-info-model';
+import { OrganizationsOrganizationInfoModel } from './organizations-organization-info-model';
 /**
  * 
  * @export
- * @enum {string}
+ * @interface WebhooksDocumentInformationModel
  */
-export enum DocumentFilterStatus {
-    PendingOrRefused = 'PendingOrRefused',
-    Concluded = 'Concluded',
-    CanceledOrExpired = 'CanceledOrExpired',
-    Pending = 'Pending',
-    Refused = 'Refused',
-    Canceled = 'Canceled',
-    Expired = 'Expired'
+export interface WebhooksDocumentInformationModel {
+    /**
+     * The document's id
+     * @type {string}
+     * @memberof WebhooksDocumentInformationModel
+     */
+    id?: string;
+    /**
+     * The document's name
+     * @type {string}
+     * @memberof WebhooksDocumentInformationModel
+     */
+    name?: string | null;
+    /**
+     * The date the document was created.
+     * @type {Date}
+     * @memberof WebhooksDocumentInformationModel
+     */
+    creationDate?: Date;
+    /**
+     * The date of the last update to the document.
+     * @type {Date}
+     * @memberof WebhooksDocumentInformationModel
+     */
+    updateDate?: Date;
+    /**
+     * 
+     * @type {FoldersFolderInfoModel}
+     * @memberof WebhooksDocumentInformationModel
+     */
+    folder?: FoldersFolderInfoModel;
+    /**
+     * 
+     * @type {OrganizationsOrganizationInfoModel}
+     * @memberof WebhooksDocumentInformationModel
+     */
+    organization?: OrganizationsOrganizationInfoModel;
+    /**
+     * 
+     * @type {DocumentsCreatorModel}
+     * @memberof WebhooksDocumentInformationModel
+     */
+    createdBy?: DocumentsCreatorModel;
 }
-

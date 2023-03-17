@@ -14,15 +14,25 @@
 /**
  * 
  * @export
- * @enum {string}
+ * @interface UploadModel
  */
-export enum DocumentFilterStatus {
-    PendingOrRefused = 'PendingOrRefused',
-    Concluded = 'Concluded',
-    CanceledOrExpired = 'CanceledOrExpired',
-    Pending = 'Pending',
-    Refused = 'Refused',
-    Canceled = 'Canceled',
-    Expired = 'Expired'
+export interface UploadModel {
+    /**
+     * The upload Id as returned by the <a href=\"#operations-Upload-post_api_uploads\">Upload API</a>
+     * @type {string}
+     * @memberof UploadModel
+     */
+    id: string;
+    /**
+     * The file's original name.
+     * @type {string}
+     * @memberof UploadModel
+     */
+    name: string;
+    /**
+     * The file's mime type. Unless overridden, PDF mime types will be signed as PAdES and all other types as CAdES.
+     * @type {string}
+     * @memberof UploadModel
+     */
+    contentType: string;
 }
-
