@@ -1,4 +1,4 @@
-# signer-node-client-lib
+# signerNodeClient
 This repository stores the client library in Node.js for the [Lacuna Signer API](https://signer-lac.azurewebsites.net/swagger/index.html) and was made using the [swagger codegen library](https://swagger.io/tools/swagger-codegen/) along with other minor manual changes. This library was made using Node v.19.0.0.
 
 ## Building
