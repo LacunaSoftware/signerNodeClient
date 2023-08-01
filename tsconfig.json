@@ -5,6 +5,7 @@
     "module": "commonjs",
     "noImplicitAny": true,
     "allowSyntheticDefaultImports": true,
+    "emitDeclarationOnly": false,
     "outDir": "dist",
     "rootDir": ".",
     "typeRoots": [
