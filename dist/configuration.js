@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Configuration = void 0;
-class Configuration {
-    constructor(param = {}) {
+var Configuration = /** @class */ (function () {
+    function Configuration(param) {
+        if (param === void 0) { param = {}; }
         this.apiKey = param.apiKey;
         this.username = param.username;
         this.password = param.password;
@@ -10,5 +11,6 @@ class Configuration {
         this.basePath = param.basePath;
         this.baseOptions = param.baseOptions;
     }
-}
+    return Configuration;
+}());
 exports.Configuration = Configuration;

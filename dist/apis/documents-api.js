@@ -1,4 +1,30 @@
 "use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
+    return function (d, b) {
+        if (typeof b !== "function" && b !== null)
+            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,30 +34,67 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DocumentsApi = exports.DocumentsApiFactory = exports.DocumentsApiFp = exports.DocumentsApiAxiosParamCreator = void 0;
 /* tslint:disable */
 /* eslint-disable */
 /**
  * Dropsigner
- * <!--------------------------------------------------------------------------------------------------------------------->    <h2>Authentication</h2>    <p>   In order to call this APIs, you will need an <strong>API key</strong>. Set the API key in the header <span class=\"code\">X-Api-Key</span>:  </p>    <pre>X-Api-Key: your-app|xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</pre>    <!--------------------------------------------------------------------------------------------------------------------->  <br />    <h2>HTTP Codes</h2>    <p>   The APIs will return the following HTTP codes:  </p>    <table>   <thead>    <tr>     <th>Code</th>     <th>Description</th>    </tr>   </thead>   <tbody>    <tr>     <td><strong class=\"model-title\">200 (OK)</strong></td>     <td>Request processed successfully. The response is different for each API, please refer to the operation's documentation</td>    </tr>    <tr>     <td><strong class=\"model-title\">400 (Bad Request)</strong></td>     <td>Syntax error. For instance, when a required field was not provided</td>    </tr>    <tr>     <td><strong class=\"model-title\">401 (Unauthorized)</strong></td>     <td>API key not provided or invalid</td>    </tr>    <tr>     <td><strong class=\"model-title\">403 (Forbidden)</strong></td>     <td>API key is valid, but the application has insufficient permissions to complete the requested operation</td>    </tr>    <tr>     <td><strong class=\"model-title\">422 (Unprocessable Entity)</strong></td>     <td>API error. The response is as defined in <a href=\"#model-ErrorModel\">ErrorModel</a></td>    </tr>   </tbody>  </table>    <br />    <h3>Error Codes</h3>    <p>Some of the error codes returned in a 422 response are provided bellow*:</p>    <ul>   <li>CertificateNotFound</li>   <li>DocumentNotFound</li>   <li>FolderNotFound</li>   <li>CpfMismatch</li>   <li>CpfNotExpected</li>   <li>InvalidFlowAction</li>   <li>DocumentInvalidKey</li>  </ul>    <p style=\"font-size: 0.9em\">   *The codes shown above are the main error codes. Nonetheless, this list is not comprehensive. New codes may be added anytime without previous warning.  </p>    <!--------------------------------------------------------------------------------------------------------------------->    <br />    <h2>Webhooks</h2>    <p>   It is recomended to subscribe to Webhook events <strong>instead</strong> of polling APIs. To do so, enable webhooks and register an URL that will receive a POST request   whenever one of the events bellow occur.  </p>  <p>   All requests have the format described in <a href=\"#model-Webhooks.WebhookModel\">Webhooks.WebhookModel</a>.   The data field varies according to the webhook event type:  </p>      <table>   <thead>    <tr>     <th>Event type</th>     <th>Description</th>     <th>Payload</th>    </tr>   </thead>   <tbody>    <tr>     <td><strong class=\"model-title\">DocumentSigned</strong></td>     <td>Triggered when a document is signed.</td>     <td><a href=\"#model-Webhooks.DocumentSignedModel\">Webhooks.DocumentSignedModel</a></td>    </tr>    <tr>     <td><strong class=\"model-title\">DocumentApproved</strong></td>     <td>Triggered when a document is approved.</td>     <td><a href=\"#model-Webhooks.DocumentApprovedModel\">Webhooks.DocumentApprovedModel</a></td>    </tr>    <tr>     <td><strong class=\"model-title\">DocumentRefused</strong></td>     <td>Triggered when a document is refused.</td>     <td><a href=\"#model-Webhooks.DocumentRefusedModel\">Webhooks.DocumentRefusedModel</a></td>    </tr>    <tr>     <td><strong class=\"model-title\">DocumentConcluded</strong></td>     <td>Triggered when the flow of a document is concluded.</td>     <td><a href=\"#model-Webhooks.DocumentConcludedModel\">Webhooks.DocumentConcludedModel</a></td>    </tr>    <tr>     <td><strong class=\"model-title\">DocumentCanceled</strong></td>     <td>Triggered when the document is canceled.</td>     <td><a href=\"#model-Webhooks.DocumentCanceledModel\">Webhooks.DocumentCanceledModel</a></td>    </tr>    <tr>     <td><strong class=\"model-title\">DocumentsCreated (v1.50.0)</strong></td>     <td>Triggered when one or more documents are created.</td>     <td><a href=\"#model-Webhooks.DocumentsCreatedModel\">Webhooks.DocumentsCreatedModel</a></td>    </tr>   </tbody>  </table>    <p>   To register your application URL and enable Webhooks, access the integrations section in your <a href=\"/private/organizations\" target=\"_blank\">organization's details page</a>.  </p>
+ * <!--------------------------------------------------------------------------------------------------------------------->  <h2>Authentication</h2>  <p>  In order to call this APIs, you will need an <strong>API key</strong>. Set the API key in the header <span class=\"code\">X-Api-Key</span>: </p>  <pre>X-Api-Key: your-app|xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</pre>  <!---------------------------------------------------------------------------------------------------------------------> <br />  <h2>HTTP Codes</h2>  <p>  The APIs will return the following HTTP codes: </p>  <table>  <thead>   <tr>    <th>Code</th>    <th>Description</th>   </tr>  </thead>  <tbody>   <tr>    <td><strong class=\"model-title\">200 (OK)</strong></td>    <td>Request processed successfully. The response is different for each API, please refer to the operation's documentation</td>   </tr>   <tr>    <td><strong class=\"model-title\">400 (Bad Request)</strong></td>    <td>Syntax error. For instance, when a required field was not provided</td>   </tr>   <tr>    <td><strong class=\"model-title\">401 (Unauthorized)</strong></td>    <td>API key not provided or invalid</td>   </tr>   <tr>    <td><strong class=\"model-title\">403 (Forbidden)</strong></td>    <td>API key is valid, but the application has insufficient permissions to complete the requested operation</td>   </tr>   <tr>    <td><strong class=\"model-title\">422 (Unprocessable Entity)</strong></td>    <td>API error. The response is as defined in <a href=\"#model-ErrorModel\">ErrorModel</a></td>   </tr>  </tbody> </table>  <br />  <h3>Error Codes</h3>  <p>Some of the error codes returned in a 422 response are provided bellow*:</p>  <ul>  <li>CertificateNotFound</li>  <li>DocumentNotFound</li>  <li>FolderNotFound</li>  <li>CpfMismatch</li>  <li>CpfNotExpected</li>  <li>InvalidFlowAction</li>  <li>DocumentInvalidKey</li> </ul>  <p style=\"font-size: 0.9em\">  *The codes shown above are the main error codes. Nonetheless, this list is not comprehensive. New codes may be added anytime without previous warning. </p>  <!--------------------------------------------------------------------------------------------------------------------->  <br />  <h2>Webhooks</h2>  <p>  It is recomended to subscribe to Webhook events <strong>instead</strong> of polling APIs. To do so, enable webhooks and register an URL that will receive a POST request  whenever one of the events bellow occur. </p> <p>  All requests have the format described in <a href=\"#model-Webhooks.WebhookModel\">Webhooks.WebhookModel</a>.  The data field varies according to the webhook event type: </p>   <table>  <thead>   <tr>    <th>Event type</th>    <th>Description</th>    <th>Payload</th>   </tr>  </thead>  <tbody>   <tr>    <td><strong class=\"model-title\">DocumentSigned</strong></td>    <td>Triggered when a document is signed.</td>    <td><a href=\"#model-Webhooks.DocumentSignedModel\">Webhooks.DocumentSignedModel</a></td>   </tr>   <tr>    <td><strong class=\"model-title\">DocumentApproved</strong></td>    <td>Triggered when a document is approved.</td>    <td><a href=\"#model-Webhooks.DocumentApprovedModel\">Webhooks.DocumentApprovedModel</a></td>   </tr>   <tr>    <td><strong class=\"model-title\">DocumentRefused</strong></td>    <td>Triggered when a document is refused.</td>    <td><a href=\"#model-Webhooks.DocumentRefusedModel\">Webhooks.DocumentRefusedModel</a></td>   </tr>   <tr>    <td><strong class=\"model-title\">DocumentConcluded</strong></td>    <td>Triggered when the flow of a document is concluded.</td>    <td><a href=\"#model-Webhooks.DocumentConcludedModel\">Webhooks.DocumentConcludedModel</a></td>   </tr>   <tr>    <td><strong class=\"model-title\">DocumentCanceled</strong></td>    <td>Triggered when the document is canceled.</td>    <td><a href=\"#model-Webhooks.DocumentCanceledModel\">Webhooks.DocumentCanceledModel</a></td>   </tr>   <tr>    <td><strong class=\"model-title\">DocumentExpired (v1.33.0)</strong></td>    <td>Triggered when the document is expired.</td>    <td><a href=\"#model-Webhooks.DocumentExpiredModel\">Webhooks.DocumentExpiredModel</a></td>   </tr>   <tr>    <td><strong class=\"model-title\">DocumentsCreated (v1.50.0)</strong></td>    <td>Triggered when one or more documents are created.</td>    <td><a href=\"#model-Webhooks.DocumentsCreatedModel\">Webhooks.DocumentsCreatedModel</a></td>   </tr>   <tr>    <td><strong class=\"model-title\">DocumentsDeleted (v1.78.0)</strong></td>    <td>Triggered when one or more documents are deleted.</td>    <td><a href=\"#model-Webhooks.DocumentsDeletedModel\">Webhooks.DocumentsDeletedModel</a></td>   </tr>  </tbody> </table>  <p>  To register your application URL and enable Webhooks, access the integrations section in your <a href=\"/private/organizations\" target=\"_blank\">organization's details page</a>. </p>
  *
- * OpenAPI spec version: 1.55.1
+ * OpenAPI spec version: 2.6.0
  *
  *
  * NOTE: This class is auto generated by the swagger code generator program.
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-const axios_1 = require("axios");
+var axios_1 = require("axios");
 // Some imports not used depending on template conditions
 // @ts-ignore
-const base_1 = require("../base");
+var base_1 = require("../base");
 /**
  * DocumentsApi - axios parameter creator
  * @export
  */
-const DocumentsApiAxiosParamCreator = function (configuration) {
+var DocumentsApiAxiosParamCreator = function (configuration) {
+    var _this = this;
     return {
         /**
          *
@@ -40,42 +103,61 @@ const DocumentsApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsBatchFolderPost: (body, options = {}) => __awaiter(this, void 0, void 0, function* () {
-            const localVarPath = `/api/documents/batch/folder`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
+        apiDocumentsBatchFolderPost: function (body_1) {
+            var args_1 = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                args_1[_i - 1] = arguments[_i];
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
-            const localVarHeaderParameter = {};
-            const localVarQueryParameter = {};
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? yield configuration.apiKey("X-Api-Key")
-                    : yield configuration.apiKey;
-                localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
-            }
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.params) {
-                query.set(key, options.params[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        }),
+            return __awaiter(_this, __spreadArray([body_1], args_1, true), void 0, function (body, options) {
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, localVarApiKeyValue, _a, query, key, key, headersFromBaseOptions, needsSerialization;
+                if (options === void 0) { options = {}; }
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            localVarPath = "/api/documents/batch/folder";
+                            localVarUrlObj = new URL(localVarPath, 'https://example.com');
+                            if (configuration) {
+                                baseOptions = configuration.baseOptions;
+                            }
+                            localVarRequestOptions = __assign(__assign({ method: 'POST' }, baseOptions), options);
+                            localVarHeaderParameter = {};
+                            localVarQueryParameter = {};
+                            if (!(configuration && configuration.apiKey)) return [3 /*break*/, 5];
+                            if (!(typeof configuration.apiKey === 'function')) return [3 /*break*/, 2];
+                            return [4 /*yield*/, configuration.apiKey("X-Api-Key")];
+                        case 1:
+                            _a = _b.sent();
+                            return [3 /*break*/, 4];
+                        case 2: return [4 /*yield*/, configuration.apiKey];
+                        case 3:
+                            _a = _b.sent();
+                            _b.label = 4;
+                        case 4:
+                            localVarApiKeyValue = _a;
+                            localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
+                            _b.label = 5;
+                        case 5:
+                            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+                            query = new URLSearchParams(localVarUrlObj.search);
+                            for (key in localVarQueryParameter) {
+                                query.set(key, localVarQueryParameter[key]);
+                            }
+                            for (key in options.params) {
+                                query.set(key, options.params[key]);
+                            }
+                            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                            headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                            localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+                            needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+                            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+                            return [2 /*return*/, {
+                                    url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                                    options: localVarRequestOptions,
+                                }];
+                    }
+                });
+            });
+        },
         /**
          * You may filter the documents by folder and document type.
          * @summary Retrieves the documents of the organization paginating the response.
@@ -89,7 +171,8 @@ const DocumentsApiAxiosParamCreator = function (configuration) {
          * @param {DocumentQueryTypes} [queryType]
          * @param {string} [participantQ] Query to filter by participant
          * @param {ParticipantQueryTypes} [participantQueryType]
-         * @param {string} [tags] Label/value pairs are separated by \&quot;|\&quot; (optional) and Tags separated by \&quot;,\&quot;. Only the first 10 pairs will be considered.&lt;br /&gt;To search by tag value only, do not use the \&quot;|\&quot;.
+         * @param {string} [tags] Label/value pairs are separated by \&quot;|\&quot; (optional) and Tags separated by \&quot;,\&quot;. Only the first 10 pairs will be considered.  To search by tag value only, do not use the \&quot;|\&quot;.
+         * @param {boolean} [isDeleted] Returns deleted documents that had the specified document status when deleted.
          * @param {string} [Q] Query to filter items.
          * @param {number} [limit] Number of items to return.
          * @param {number} [offset] The offset of the searched page (starting with 0).
@@ -97,133 +180,174 @@ const DocumentsApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsGet: (isConcluded, status, folderId, folderType, documentType, filterByDocumentType, filterByPendingSignature, queryType, participantQ, participantQueryType, tags, Q, limit, offset, order, options = {}) => __awaiter(this, void 0, void 0, function* () {
-            const localVarPath = `/api/documents`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
+        apiDocumentsGet: function (isConcluded_1, status_1, folderId_1, folderType_1, documentType_1, filterByDocumentType_1, filterByPendingSignature_1, queryType_1, participantQ_1, participantQueryType_1, tags_1, isDeleted_1, Q_1, limit_1, offset_1, order_1) {
+            var args_1 = [];
+            for (var _i = 16; _i < arguments.length; _i++) {
+                args_1[_i - 16] = arguments[_i];
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
-            const localVarHeaderParameter = {};
-            const localVarQueryParameter = {};
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? yield configuration.apiKey("X-Api-Key")
-                    : yield configuration.apiKey;
-                localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
-            }
-            if (isConcluded !== undefined) {
-                localVarQueryParameter['IsConcluded'] = isConcluded;
-            }
-            if (status !== undefined) {
-                localVarQueryParameter['Status'] = status;
-            }
-            if (folderId !== undefined) {
-                localVarQueryParameter['FolderId'] = folderId;
-            }
-            if (folderType !== undefined) {
-                localVarQueryParameter['FolderType'] = folderType;
-            }
-            if (documentType !== undefined) {
-                localVarQueryParameter['DocumentType'] = documentType;
-            }
-            if (filterByDocumentType !== undefined) {
-                localVarQueryParameter['FilterByDocumentType'] = filterByDocumentType;
-            }
-            if (filterByPendingSignature !== undefined) {
-                localVarQueryParameter['FilterByPendingSignature'] = filterByPendingSignature;
-            }
-            if (queryType !== undefined) {
-                localVarQueryParameter['QueryType'] = queryType;
-            }
-            if (participantQ !== undefined) {
-                localVarQueryParameter['ParticipantQ'] = participantQ;
-            }
-            if (participantQueryType !== undefined) {
-                localVarQueryParameter['ParticipantQueryType'] = participantQueryType;
-            }
-            if (tags !== undefined) {
-                localVarQueryParameter['Tags'] = tags;
-            }
-            if (Q !== undefined) {
-                localVarQueryParameter['Q'] = Q;
-            }
-            if (limit !== undefined) {
-                localVarQueryParameter['Limit'] = limit;
-            }
-            if (offset !== undefined) {
-                localVarQueryParameter['Offset'] = offset;
-            }
-            if (order !== undefined) {
-                localVarQueryParameter['Order'] = order;
-            }
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.params) {
-                query.set(key, options.params[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        }),
+            return __awaiter(_this, __spreadArray([isConcluded_1, status_1, folderId_1, folderType_1, documentType_1, filterByDocumentType_1, filterByPendingSignature_1, queryType_1, participantQ_1, participantQueryType_1, tags_1, isDeleted_1, Q_1, limit_1, offset_1, order_1], args_1, true), void 0, function (isConcluded, status, folderId, folderType, documentType, filterByDocumentType, filterByPendingSignature, queryType, participantQ, participantQueryType, tags, isDeleted, Q, limit, offset, order, options) {
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, localVarApiKeyValue, _a, query, key, key, headersFromBaseOptions;
+                if (options === void 0) { options = {}; }
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            localVarPath = "/api/documents";
+                            localVarUrlObj = new URL(localVarPath, 'https://example.com');
+                            if (configuration) {
+                                baseOptions = configuration.baseOptions;
+                            }
+                            localVarRequestOptions = __assign(__assign({ method: 'GET' }, baseOptions), options);
+                            localVarHeaderParameter = {};
+                            localVarQueryParameter = {};
+                            if (!(configuration && configuration.apiKey)) return [3 /*break*/, 5];
+                            if (!(typeof configuration.apiKey === 'function')) return [3 /*break*/, 2];
+                            return [4 /*yield*/, configuration.apiKey("X-Api-Key")];
+                        case 1:
+                            _a = _b.sent();
+                            return [3 /*break*/, 4];
+                        case 2: return [4 /*yield*/, configuration.apiKey];
+                        case 3:
+                            _a = _b.sent();
+                            _b.label = 4;
+                        case 4:
+                            localVarApiKeyValue = _a;
+                            localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
+                            _b.label = 5;
+                        case 5:
+                            if (isConcluded !== undefined) {
+                                localVarQueryParameter['IsConcluded'] = isConcluded;
+                            }
+                            if (status !== undefined) {
+                                localVarQueryParameter['Status'] = status;
+                            }
+                            if (folderId !== undefined) {
+                                localVarQueryParameter['FolderId'] = folderId;
+                            }
+                            if (folderType !== undefined) {
+                                localVarQueryParameter['FolderType'] = folderType;
+                            }
+                            if (documentType !== undefined) {
+                                localVarQueryParameter['DocumentType'] = documentType;
+                            }
+                            if (filterByDocumentType !== undefined) {
+                                localVarQueryParameter['FilterByDocumentType'] = filterByDocumentType;
+                            }
+                            if (filterByPendingSignature !== undefined) {
+                                localVarQueryParameter['FilterByPendingSignature'] = filterByPendingSignature;
+                            }
+                            if (queryType !== undefined) {
+                                localVarQueryParameter['QueryType'] = queryType;
+                            }
+                            if (participantQ !== undefined) {
+                                localVarQueryParameter['ParticipantQ'] = participantQ;
+                            }
+                            if (participantQueryType !== undefined) {
+                                localVarQueryParameter['ParticipantQueryType'] = participantQueryType;
+                            }
+                            if (tags !== undefined) {
+                                localVarQueryParameter['Tags'] = tags;
+                            }
+                            if (isDeleted !== undefined) {
+                                localVarQueryParameter['IsDeleted'] = isDeleted;
+                            }
+                            if (Q !== undefined) {
+                                localVarQueryParameter['Q'] = Q;
+                            }
+                            if (limit !== undefined) {
+                                localVarQueryParameter['Limit'] = limit;
+                            }
+                            if (offset !== undefined) {
+                                localVarQueryParameter['Offset'] = offset;
+                            }
+                            if (order !== undefined) {
+                                localVarQueryParameter['Order'] = order;
+                            }
+                            query = new URLSearchParams(localVarUrlObj.search);
+                            for (key in localVarQueryParameter) {
+                                query.set(key, localVarQueryParameter[key]);
+                            }
+                            for (key in options.params) {
+                                query.set(key, options.params[key]);
+                            }
+                            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                            headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                            localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+                            return [2 /*return*/, {
+                                    url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                                    options: localVarRequestOptions,
+                                }];
+                    }
+                });
+            });
+        },
         /**
-         * This API will return an URL that allows an user to sign or approve the document without having to wait to receive an email notification.<br /><br />  If the document has multiple pending actions, this API will return the URL of the first pending action for the matched user.<br /><br />  After the action has been completed, you may call this API again to retrieve the URL for the next action (if any).<br /><br />  Please note that using the URL returned will be recorded in the evidences of the action as an Application Authentication.<br />
+         * This API will return an URL that allows an user to sign or approve the document without having to wait to receive an email notification.      If the document has multiple pending actions, this API will return the URL of the first pending action for the matched user.      After the action has been completed, you may call this API again to retrieve the URL for the next action (if any).      Please note that using the URL returned will be recorded in the evidences of the action as an Application Authentication.
          * @summary Retrieves an URL to redirect the user to the first pending action of the document.
          * @param {string} id Document Id
          * @param {DocumentsActionUrlRequest} [body]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdActionUrlPost: (id, body, options = {}) => __awaiter(this, void 0, void 0, function* () {
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdActionUrlPost.');
+        apiDocumentsIdActionUrlPost: function (id_1, body_1) {
+            var args_1 = [];
+            for (var _i = 2; _i < arguments.length; _i++) {
+                args_1[_i - 2] = arguments[_i];
             }
-            const localVarPath = `/api/documents/{id}/action-url`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
-            const localVarHeaderParameter = {};
-            const localVarQueryParameter = {};
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? yield configuration.apiKey("X-Api-Key")
-                    : yield configuration.apiKey;
-                localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
-            }
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.params) {
-                query.set(key, options.params[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        }),
+            return __awaiter(_this, __spreadArray([id_1, body_1], args_1, true), void 0, function (id, body, options) {
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, localVarApiKeyValue, _a, query, key, key, headersFromBaseOptions, needsSerialization;
+                if (options === void 0) { options = {}; }
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            // verify required parameter 'id' is not null or undefined
+                            if (id === null || id === undefined) {
+                                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdActionUrlPost.');
+                            }
+                            localVarPath = "/api/documents/{id}/action-url"
+                                .replace("{".concat("id", "}"), encodeURIComponent(String(id)));
+                            localVarUrlObj = new URL(localVarPath, 'https://example.com');
+                            if (configuration) {
+                                baseOptions = configuration.baseOptions;
+                            }
+                            localVarRequestOptions = __assign(__assign({ method: 'POST' }, baseOptions), options);
+                            localVarHeaderParameter = {};
+                            localVarQueryParameter = {};
+                            if (!(configuration && configuration.apiKey)) return [3 /*break*/, 5];
+                            if (!(typeof configuration.apiKey === 'function')) return [3 /*break*/, 2];
+                            return [4 /*yield*/, configuration.apiKey("X-Api-Key")];
+                        case 1:
+                            _a = _b.sent();
+                            return [3 /*break*/, 4];
+                        case 2: return [4 /*yield*/, configuration.apiKey];
+                        case 3:
+                            _a = _b.sent();
+                            _b.label = 4;
+                        case 4:
+                            localVarApiKeyValue = _a;
+                            localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
+                            _b.label = 5;
+                        case 5:
+                            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+                            query = new URLSearchParams(localVarUrlObj.search);
+                            for (key in localVarQueryParameter) {
+                                query.set(key, localVarQueryParameter[key]);
+                            }
+                            for (key in options.params) {
+                                query.set(key, options.params[key]);
+                            }
+                            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                            headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                            localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+                            needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+                            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+                            return [2 /*return*/, {
+                                    url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                                    options: localVarRequestOptions,
+                                }];
+                    }
+                });
+            });
+        },
         /**
          * <b>CAUTION: This action cannot be reverted.</b>
          * @summary Cancels the document by providing a reason for the cancellation.
@@ -232,47 +356,66 @@ const DocumentsApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdCancellationPost: (id, body, options = {}) => __awaiter(this, void 0, void 0, function* () {
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdCancellationPost.');
+        apiDocumentsIdCancellationPost: function (id_1, body_1) {
+            var args_1 = [];
+            for (var _i = 2; _i < arguments.length; _i++) {
+                args_1[_i - 2] = arguments[_i];
             }
-            const localVarPath = `/api/documents/{id}/cancellation`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
-            const localVarHeaderParameter = {};
-            const localVarQueryParameter = {};
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? yield configuration.apiKey("X-Api-Key")
-                    : yield configuration.apiKey;
-                localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
-            }
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.params) {
-                query.set(key, options.params[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        }),
+            return __awaiter(_this, __spreadArray([id_1, body_1], args_1, true), void 0, function (id, body, options) {
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, localVarApiKeyValue, _a, query, key, key, headersFromBaseOptions, needsSerialization;
+                if (options === void 0) { options = {}; }
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            // verify required parameter 'id' is not null or undefined
+                            if (id === null || id === undefined) {
+                                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdCancellationPost.');
+                            }
+                            localVarPath = "/api/documents/{id}/cancellation"
+                                .replace("{".concat("id", "}"), encodeURIComponent(String(id)));
+                            localVarUrlObj = new URL(localVarPath, 'https://example.com');
+                            if (configuration) {
+                                baseOptions = configuration.baseOptions;
+                            }
+                            localVarRequestOptions = __assign(__assign({ method: 'POST' }, baseOptions), options);
+                            localVarHeaderParameter = {};
+                            localVarQueryParameter = {};
+                            if (!(configuration && configuration.apiKey)) return [3 /*break*/, 5];
+                            if (!(typeof configuration.apiKey === 'function')) return [3 /*break*/, 2];
+                            return [4 /*yield*/, configuration.apiKey("X-Api-Key")];
+                        case 1:
+                            _a = _b.sent();
+                            return [3 /*break*/, 4];
+                        case 2: return [4 /*yield*/, configuration.apiKey];
+                        case 3:
+                            _a = _b.sent();
+                            _b.label = 4;
+                        case 4:
+                            localVarApiKeyValue = _a;
+                            localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
+                            _b.label = 5;
+                        case 5:
+                            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+                            query = new URLSearchParams(localVarUrlObj.search);
+                            for (key in localVarQueryParameter) {
+                                query.set(key, localVarQueryParameter[key]);
+                            }
+                            for (key in options.params) {
+                                query.set(key, options.params[key]);
+                            }
+                            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                            headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                            localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+                            needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+                            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+                            return [2 /*return*/, {
+                                    url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                                    options: localVarRequestOptions,
+                                }];
+                    }
+                });
+            });
+        },
         /**
          *
          * @summary Downloads a specific version type of the document encoding the bytes in Base 64 format.
@@ -281,47 +424,66 @@ const DocumentsApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdContentB64Get: (id, type, options = {}) => __awaiter(this, void 0, void 0, function* () {
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdContentB64Get.');
+        apiDocumentsIdContentB64Get: function (id_1, type_1) {
+            var args_1 = [];
+            for (var _i = 2; _i < arguments.length; _i++) {
+                args_1[_i - 2] = arguments[_i];
             }
-            const localVarPath = `/api/documents/{id}/content-b64`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
-            const localVarHeaderParameter = {};
-            const localVarQueryParameter = {};
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? yield configuration.apiKey("X-Api-Key")
-                    : yield configuration.apiKey;
-                localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
-            }
-            if (type !== undefined) {
-                localVarQueryParameter['type'] = type;
-            }
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.params) {
-                query.set(key, options.params[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        }),
+            return __awaiter(_this, __spreadArray([id_1, type_1], args_1, true), void 0, function (id, type, options) {
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, localVarApiKeyValue, _a, query, key, key, headersFromBaseOptions;
+                if (options === void 0) { options = {}; }
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            // verify required parameter 'id' is not null or undefined
+                            if (id === null || id === undefined) {
+                                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdContentB64Get.');
+                            }
+                            localVarPath = "/api/documents/{id}/content-b64"
+                                .replace("{".concat("id", "}"), encodeURIComponent(String(id)));
+                            localVarUrlObj = new URL(localVarPath, 'https://example.com');
+                            if (configuration) {
+                                baseOptions = configuration.baseOptions;
+                            }
+                            localVarRequestOptions = __assign(__assign({ method: 'GET' }, baseOptions), options);
+                            localVarHeaderParameter = {};
+                            localVarQueryParameter = {};
+                            if (!(configuration && configuration.apiKey)) return [3 /*break*/, 5];
+                            if (!(typeof configuration.apiKey === 'function')) return [3 /*break*/, 2];
+                            return [4 /*yield*/, configuration.apiKey("X-Api-Key")];
+                        case 1:
+                            _a = _b.sent();
+                            return [3 /*break*/, 4];
+                        case 2: return [4 /*yield*/, configuration.apiKey];
+                        case 3:
+                            _a = _b.sent();
+                            _b.label = 4;
+                        case 4:
+                            localVarApiKeyValue = _a;
+                            localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
+                            _b.label = 5;
+                        case 5:
+                            if (type !== undefined) {
+                                localVarQueryParameter['type'] = type;
+                            }
+                            query = new URLSearchParams(localVarUrlObj.search);
+                            for (key in localVarQueryParameter) {
+                                query.set(key, localVarQueryParameter[key]);
+                            }
+                            for (key in options.params) {
+                                query.set(key, options.params[key]);
+                            }
+                            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                            headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                            localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+                            return [2 /*return*/, {
+                                    url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                                    options: localVarRequestOptions,
+                                }];
+                    }
+                });
+            });
+        },
         /**
          *
          * @summary Downloads a specific version type of the document.
@@ -330,47 +492,66 @@ const DocumentsApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdContentGet: (id, type, options = {}) => __awaiter(this, void 0, void 0, function* () {
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdContentGet.');
+        apiDocumentsIdContentGet: function (id_1, type_1) {
+            var args_1 = [];
+            for (var _i = 2; _i < arguments.length; _i++) {
+                args_1[_i - 2] = arguments[_i];
             }
-            const localVarPath = `/api/documents/{id}/content`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
-            const localVarHeaderParameter = {};
-            const localVarQueryParameter = {};
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? yield configuration.apiKey("X-Api-Key")
-                    : yield configuration.apiKey;
-                localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
-            }
-            if (type !== undefined) {
-                localVarQueryParameter['type'] = type;
-            }
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.params) {
-                query.set(key, options.params[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        }),
+            return __awaiter(_this, __spreadArray([id_1, type_1], args_1, true), void 0, function (id, type, options) {
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, localVarApiKeyValue, _a, query, key, key, headersFromBaseOptions;
+                if (options === void 0) { options = {}; }
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            // verify required parameter 'id' is not null or undefined
+                            if (id === null || id === undefined) {
+                                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdContentGet.');
+                            }
+                            localVarPath = "/api/documents/{id}/content"
+                                .replace("{".concat("id", "}"), encodeURIComponent(String(id)));
+                            localVarUrlObj = new URL(localVarPath, 'https://example.com');
+                            if (configuration) {
+                                baseOptions = configuration.baseOptions;
+                            }
+                            localVarRequestOptions = __assign(__assign({ method: 'GET' }, baseOptions), options);
+                            localVarHeaderParameter = {};
+                            localVarQueryParameter = {};
+                            if (!(configuration && configuration.apiKey)) return [3 /*break*/, 5];
+                            if (!(typeof configuration.apiKey === 'function')) return [3 /*break*/, 2];
+                            return [4 /*yield*/, configuration.apiKey("X-Api-Key")];
+                        case 1:
+                            _a = _b.sent();
+                            return [3 /*break*/, 4];
+                        case 2: return [4 /*yield*/, configuration.apiKey];
+                        case 3:
+                            _a = _b.sent();
+                            _b.label = 4;
+                        case 4:
+                            localVarApiKeyValue = _a;
+                            localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
+                            _b.label = 5;
+                        case 5:
+                            if (type !== undefined) {
+                                localVarQueryParameter['type'] = type;
+                            }
+                            query = new URLSearchParams(localVarUrlObj.search);
+                            for (key in localVarQueryParameter) {
+                                query.set(key, localVarQueryParameter[key]);
+                            }
+                            for (key in options.params) {
+                                query.set(key, options.params[key]);
+                            }
+                            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                            headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                            localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+                            return [2 /*return*/, {
+                                    url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                                    options: localVarRequestOptions,
+                                }];
+                    }
+                });
+            });
+        },
         /**
          *
          * @summary Deletes a specific document using it's id.
@@ -378,44 +559,63 @@ const DocumentsApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdDelete: (id, options = {}) => __awaiter(this, void 0, void 0, function* () {
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdDelete.');
+        apiDocumentsIdDelete: function (id_1) {
+            var args_1 = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                args_1[_i - 1] = arguments[_i];
             }
-            const localVarPath = `/api/documents/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'DELETE' }, baseOptions), options);
-            const localVarHeaderParameter = {};
-            const localVarQueryParameter = {};
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? yield configuration.apiKey("X-Api-Key")
-                    : yield configuration.apiKey;
-                localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
-            }
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.params) {
-                query.set(key, options.params[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        }),
+            return __awaiter(_this, __spreadArray([id_1], args_1, true), void 0, function (id, options) {
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, localVarApiKeyValue, _a, query, key, key, headersFromBaseOptions;
+                if (options === void 0) { options = {}; }
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            // verify required parameter 'id' is not null or undefined
+                            if (id === null || id === undefined) {
+                                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdDelete.');
+                            }
+                            localVarPath = "/api/documents/{id}"
+                                .replace("{".concat("id", "}"), encodeURIComponent(String(id)));
+                            localVarUrlObj = new URL(localVarPath, 'https://example.com');
+                            if (configuration) {
+                                baseOptions = configuration.baseOptions;
+                            }
+                            localVarRequestOptions = __assign(__assign({ method: 'DELETE' }, baseOptions), options);
+                            localVarHeaderParameter = {};
+                            localVarQueryParameter = {};
+                            if (!(configuration && configuration.apiKey)) return [3 /*break*/, 5];
+                            if (!(typeof configuration.apiKey === 'function')) return [3 /*break*/, 2];
+                            return [4 /*yield*/, configuration.apiKey("X-Api-Key")];
+                        case 1:
+                            _a = _b.sent();
+                            return [3 /*break*/, 4];
+                        case 2: return [4 /*yield*/, configuration.apiKey];
+                        case 3:
+                            _a = _b.sent();
+                            _b.label = 4;
+                        case 4:
+                            localVarApiKeyValue = _a;
+                            localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
+                            _b.label = 5;
+                        case 5:
+                            query = new URLSearchParams(localVarUrlObj.search);
+                            for (key in localVarQueryParameter) {
+                                query.set(key, localVarQueryParameter[key]);
+                            }
+                            for (key in options.params) {
+                                query.set(key, options.params[key]);
+                            }
+                            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                            headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                            localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+                            return [2 /*return*/, {
+                                    url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                                    options: localVarRequestOptions,
+                                }];
+                    }
+                });
+            });
+        },
         /**
          * The flow of the document will be restarted.
          * @summary Adds a new version for an envelope.
@@ -424,47 +624,66 @@ const DocumentsApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdEnvelopeVersionsPost: (id, body, options = {}) => __awaiter(this, void 0, void 0, function* () {
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdEnvelopeVersionsPost.');
+        apiDocumentsIdEnvelopeVersionsPost: function (id_1, body_1) {
+            var args_1 = [];
+            for (var _i = 2; _i < arguments.length; _i++) {
+                args_1[_i - 2] = arguments[_i];
             }
-            const localVarPath = `/api/documents/{id}/envelope/versions`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
-            const localVarHeaderParameter = {};
-            const localVarQueryParameter = {};
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? yield configuration.apiKey("X-Api-Key")
-                    : yield configuration.apiKey;
-                localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
-            }
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.params) {
-                query.set(key, options.params[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        }),
+            return __awaiter(_this, __spreadArray([id_1, body_1], args_1, true), void 0, function (id, body, options) {
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, localVarApiKeyValue, _a, query, key, key, headersFromBaseOptions, needsSerialization;
+                if (options === void 0) { options = {}; }
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            // verify required parameter 'id' is not null or undefined
+                            if (id === null || id === undefined) {
+                                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdEnvelopeVersionsPost.');
+                            }
+                            localVarPath = "/api/documents/{id}/envelope/versions"
+                                .replace("{".concat("id", "}"), encodeURIComponent(String(id)));
+                            localVarUrlObj = new URL(localVarPath, 'https://example.com');
+                            if (configuration) {
+                                baseOptions = configuration.baseOptions;
+                            }
+                            localVarRequestOptions = __assign(__assign({ method: 'POST' }, baseOptions), options);
+                            localVarHeaderParameter = {};
+                            localVarQueryParameter = {};
+                            if (!(configuration && configuration.apiKey)) return [3 /*break*/, 5];
+                            if (!(typeof configuration.apiKey === 'function')) return [3 /*break*/, 2];
+                            return [4 /*yield*/, configuration.apiKey("X-Api-Key")];
+                        case 1:
+                            _a = _b.sent();
+                            return [3 /*break*/, 4];
+                        case 2: return [4 /*yield*/, configuration.apiKey];
+                        case 3:
+                            _a = _b.sent();
+                            _b.label = 4;
+                        case 4:
+                            localVarApiKeyValue = _a;
+                            localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
+                            _b.label = 5;
+                        case 5:
+                            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+                            query = new URLSearchParams(localVarUrlObj.search);
+                            for (key in localVarQueryParameter) {
+                                query.set(key, localVarQueryParameter[key]);
+                            }
+                            for (key in options.params) {
+                                query.set(key, options.params[key]);
+                            }
+                            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                            headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                            localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+                            needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+                            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+                            return [2 /*return*/, {
+                                    url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                                    options: localVarRequestOptions,
+                                }];
+                    }
+                });
+            });
+        },
         /**
          *
          * @summary Updates the document's flow.
@@ -473,47 +692,66 @@ const DocumentsApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdFlowPost: (id, body, options = {}) => __awaiter(this, void 0, void 0, function* () {
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdFlowPost.');
+        apiDocumentsIdFlowPost: function (id_1, body_1) {
+            var args_1 = [];
+            for (var _i = 2; _i < arguments.length; _i++) {
+                args_1[_i - 2] = arguments[_i];
             }
-            const localVarPath = `/api/documents/{id}/flow`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
-            const localVarHeaderParameter = {};
-            const localVarQueryParameter = {};
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? yield configuration.apiKey("X-Api-Key")
-                    : yield configuration.apiKey;
-                localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
-            }
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.params) {
-                query.set(key, options.params[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        }),
+            return __awaiter(_this, __spreadArray([id_1, body_1], args_1, true), void 0, function (id, body, options) {
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, localVarApiKeyValue, _a, query, key, key, headersFromBaseOptions, needsSerialization;
+                if (options === void 0) { options = {}; }
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            // verify required parameter 'id' is not null or undefined
+                            if (id === null || id === undefined) {
+                                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdFlowPost.');
+                            }
+                            localVarPath = "/api/documents/{id}/flow"
+                                .replace("{".concat("id", "}"), encodeURIComponent(String(id)));
+                            localVarUrlObj = new URL(localVarPath, 'https://example.com');
+                            if (configuration) {
+                                baseOptions = configuration.baseOptions;
+                            }
+                            localVarRequestOptions = __assign(__assign({ method: 'POST' }, baseOptions), options);
+                            localVarHeaderParameter = {};
+                            localVarQueryParameter = {};
+                            if (!(configuration && configuration.apiKey)) return [3 /*break*/, 5];
+                            if (!(typeof configuration.apiKey === 'function')) return [3 /*break*/, 2];
+                            return [4 /*yield*/, configuration.apiKey("X-Api-Key")];
+                        case 1:
+                            _a = _b.sent();
+                            return [3 /*break*/, 4];
+                        case 2: return [4 /*yield*/, configuration.apiKey];
+                        case 3:
+                            _a = _b.sent();
+                            _b.label = 4;
+                        case 4:
+                            localVarApiKeyValue = _a;
+                            localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
+                            _b.label = 5;
+                        case 5:
+                            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+                            query = new URLSearchParams(localVarUrlObj.search);
+                            for (key in localVarQueryParameter) {
+                                query.set(key, localVarQueryParameter[key]);
+                            }
+                            for (key in options.params) {
+                                query.set(key, options.params[key]);
+                            }
+                            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                            headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                            localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+                            needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+                            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+                            return [2 /*return*/, {
+                                    url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                                    options: localVarRequestOptions,
+                                }];
+                    }
+                });
+            });
+        },
         /**
          *
          * @summary Moves a document to a folder.
@@ -522,47 +760,66 @@ const DocumentsApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdFolderPost: (id, body, options = {}) => __awaiter(this, void 0, void 0, function* () {
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdFolderPost.');
+        apiDocumentsIdFolderPost: function (id_1, body_1) {
+            var args_1 = [];
+            for (var _i = 2; _i < arguments.length; _i++) {
+                args_1[_i - 2] = arguments[_i];
             }
-            const localVarPath = `/api/documents/{id}/folder`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
-            const localVarHeaderParameter = {};
-            const localVarQueryParameter = {};
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? yield configuration.apiKey("X-Api-Key")
-                    : yield configuration.apiKey;
-                localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
-            }
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.params) {
-                query.set(key, options.params[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        }),
+            return __awaiter(_this, __spreadArray([id_1, body_1], args_1, true), void 0, function (id, body, options) {
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, localVarApiKeyValue, _a, query, key, key, headersFromBaseOptions, needsSerialization;
+                if (options === void 0) { options = {}; }
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            // verify required parameter 'id' is not null or undefined
+                            if (id === null || id === undefined) {
+                                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdFolderPost.');
+                            }
+                            localVarPath = "/api/documents/{id}/folder"
+                                .replace("{".concat("id", "}"), encodeURIComponent(String(id)));
+                            localVarUrlObj = new URL(localVarPath, 'https://example.com');
+                            if (configuration) {
+                                baseOptions = configuration.baseOptions;
+                            }
+                            localVarRequestOptions = __assign(__assign({ method: 'POST' }, baseOptions), options);
+                            localVarHeaderParameter = {};
+                            localVarQueryParameter = {};
+                            if (!(configuration && configuration.apiKey)) return [3 /*break*/, 5];
+                            if (!(typeof configuration.apiKey === 'function')) return [3 /*break*/, 2];
+                            return [4 /*yield*/, configuration.apiKey("X-Api-Key")];
+                        case 1:
+                            _a = _b.sent();
+                            return [3 /*break*/, 4];
+                        case 2: return [4 /*yield*/, configuration.apiKey];
+                        case 3:
+                            _a = _b.sent();
+                            _b.label = 4;
+                        case 4:
+                            localVarApiKeyValue = _a;
+                            localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
+                            _b.label = 5;
+                        case 5:
+                            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+                            query = new URLSearchParams(localVarUrlObj.search);
+                            for (key in localVarQueryParameter) {
+                                query.set(key, localVarQueryParameter[key]);
+                            }
+                            for (key in options.params) {
+                                query.set(key, options.params[key]);
+                            }
+                            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                            headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                            localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+                            needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+                            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+                            return [2 /*return*/, {
+                                    url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                                    options: localVarRequestOptions,
+                                }];
+                    }
+                });
+            });
+        },
         /**
          *
          * @summary Retrieves the document's details.
@@ -570,44 +827,63 @@ const DocumentsApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdGet: (id, options = {}) => __awaiter(this, void 0, void 0, function* () {
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdGet.');
+        apiDocumentsIdGet: function (id_1) {
+            var args_1 = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                args_1[_i - 1] = arguments[_i];
             }
-            const localVarPath = `/api/documents/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
-            const localVarHeaderParameter = {};
-            const localVarQueryParameter = {};
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? yield configuration.apiKey("X-Api-Key")
-                    : yield configuration.apiKey;
-                localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
-            }
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.params) {
-                query.set(key, options.params[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        }),
+            return __awaiter(_this, __spreadArray([id_1], args_1, true), void 0, function (id, options) {
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, localVarApiKeyValue, _a, query, key, key, headersFromBaseOptions;
+                if (options === void 0) { options = {}; }
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            // verify required parameter 'id' is not null or undefined
+                            if (id === null || id === undefined) {
+                                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdGet.');
+                            }
+                            localVarPath = "/api/documents/{id}"
+                                .replace("{".concat("id", "}"), encodeURIComponent(String(id)));
+                            localVarUrlObj = new URL(localVarPath, 'https://example.com');
+                            if (configuration) {
+                                baseOptions = configuration.baseOptions;
+                            }
+                            localVarRequestOptions = __assign(__assign({ method: 'GET' }, baseOptions), options);
+                            localVarHeaderParameter = {};
+                            localVarQueryParameter = {};
+                            if (!(configuration && configuration.apiKey)) return [3 /*break*/, 5];
+                            if (!(typeof configuration.apiKey === 'function')) return [3 /*break*/, 2];
+                            return [4 /*yield*/, configuration.apiKey("X-Api-Key")];
+                        case 1:
+                            _a = _b.sent();
+                            return [3 /*break*/, 4];
+                        case 2: return [4 /*yield*/, configuration.apiKey];
+                        case 3:
+                            _a = _b.sent();
+                            _b.label = 4;
+                        case 4:
+                            localVarApiKeyValue = _a;
+                            localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
+                            _b.label = 5;
+                        case 5:
+                            query = new URLSearchParams(localVarUrlObj.search);
+                            for (key in localVarQueryParameter) {
+                                query.set(key, localVarQueryParameter[key]);
+                            }
+                            for (key in options.params) {
+                                query.set(key, options.params[key]);
+                            }
+                            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                            headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                            localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+                            return [2 /*return*/, {
+                                    url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                                    options: localVarRequestOptions,
+                                }];
+                    }
+                });
+            });
+        },
         /**
          * The notified emails are the ones that will be notified after the document is concluded.
          * @summary Updates the document's notified emails
@@ -616,47 +892,66 @@ const DocumentsApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdNotifiedEmailsPut: (id, body, options = {}) => __awaiter(this, void 0, void 0, function* () {
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdNotifiedEmailsPut.');
+        apiDocumentsIdNotifiedEmailsPut: function (id_1, body_1) {
+            var args_1 = [];
+            for (var _i = 2; _i < arguments.length; _i++) {
+                args_1[_i - 2] = arguments[_i];
             }
-            const localVarPath = `/api/documents/{id}/notified-emails`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'PUT' }, baseOptions), options);
-            const localVarHeaderParameter = {};
-            const localVarQueryParameter = {};
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? yield configuration.apiKey("X-Api-Key")
-                    : yield configuration.apiKey;
-                localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
-            }
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.params) {
-                query.set(key, options.params[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        }),
+            return __awaiter(_this, __spreadArray([id_1, body_1], args_1, true), void 0, function (id, body, options) {
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, localVarApiKeyValue, _a, query, key, key, headersFromBaseOptions, needsSerialization;
+                if (options === void 0) { options = {}; }
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            // verify required parameter 'id' is not null or undefined
+                            if (id === null || id === undefined) {
+                                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdNotifiedEmailsPut.');
+                            }
+                            localVarPath = "/api/documents/{id}/notified-emails"
+                                .replace("{".concat("id", "}"), encodeURIComponent(String(id)));
+                            localVarUrlObj = new URL(localVarPath, 'https://example.com');
+                            if (configuration) {
+                                baseOptions = configuration.baseOptions;
+                            }
+                            localVarRequestOptions = __assign(__assign({ method: 'PUT' }, baseOptions), options);
+                            localVarHeaderParameter = {};
+                            localVarQueryParameter = {};
+                            if (!(configuration && configuration.apiKey)) return [3 /*break*/, 5];
+                            if (!(typeof configuration.apiKey === 'function')) return [3 /*break*/, 2];
+                            return [4 /*yield*/, configuration.apiKey("X-Api-Key")];
+                        case 1:
+                            _a = _b.sent();
+                            return [3 /*break*/, 4];
+                        case 2: return [4 /*yield*/, configuration.apiKey];
+                        case 3:
+                            _a = _b.sent();
+                            _b.label = 4;
+                        case 4:
+                            localVarApiKeyValue = _a;
+                            localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
+                            _b.label = 5;
+                        case 5:
+                            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+                            query = new URLSearchParams(localVarUrlObj.search);
+                            for (key in localVarQueryParameter) {
+                                query.set(key, localVarQueryParameter[key]);
+                            }
+                            for (key in options.params) {
+                                query.set(key, options.params[key]);
+                            }
+                            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                            headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                            localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+                            needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+                            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+                            return [2 /*return*/, {
+                                    url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                                    options: localVarRequestOptions,
+                                }];
+                    }
+                });
+            });
+        },
         /**
          * The document's flow will pause and can only be resumed by adding a new version of the document (see <a href=\"#operations-Documents-post_api_documents__id__versions\">Add Version API</a>).
          * @summary Refuses a document by providing a reason for the refusal.
@@ -665,47 +960,66 @@ const DocumentsApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdRefusalPost: (id, body, options = {}) => __awaiter(this, void 0, void 0, function* () {
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdRefusalPost.');
+        apiDocumentsIdRefusalPost: function (id_1, body_1) {
+            var args_1 = [];
+            for (var _i = 2; _i < arguments.length; _i++) {
+                args_1[_i - 2] = arguments[_i];
             }
-            const localVarPath = `/api/documents/{id}/refusal`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
-            const localVarHeaderParameter = {};
-            const localVarQueryParameter = {};
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? yield configuration.apiKey("X-Api-Key")
-                    : yield configuration.apiKey;
-                localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
-            }
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.params) {
-                query.set(key, options.params[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        }),
+            return __awaiter(_this, __spreadArray([id_1, body_1], args_1, true), void 0, function (id, body, options) {
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, localVarApiKeyValue, _a, query, key, key, headersFromBaseOptions, needsSerialization;
+                if (options === void 0) { options = {}; }
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            // verify required parameter 'id' is not null or undefined
+                            if (id === null || id === undefined) {
+                                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdRefusalPost.');
+                            }
+                            localVarPath = "/api/documents/{id}/refusal"
+                                .replace("{".concat("id", "}"), encodeURIComponent(String(id)));
+                            localVarUrlObj = new URL(localVarPath, 'https://example.com');
+                            if (configuration) {
+                                baseOptions = configuration.baseOptions;
+                            }
+                            localVarRequestOptions = __assign(__assign({ method: 'POST' }, baseOptions), options);
+                            localVarHeaderParameter = {};
+                            localVarQueryParameter = {};
+                            if (!(configuration && configuration.apiKey)) return [3 /*break*/, 5];
+                            if (!(typeof configuration.apiKey === 'function')) return [3 /*break*/, 2];
+                            return [4 /*yield*/, configuration.apiKey("X-Api-Key")];
+                        case 1:
+                            _a = _b.sent();
+                            return [3 /*break*/, 4];
+                        case 2: return [4 /*yield*/, configuration.apiKey];
+                        case 3:
+                            _a = _b.sent();
+                            _b.label = 4;
+                        case 4:
+                            localVarApiKeyValue = _a;
+                            localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
+                            _b.label = 5;
+                        case 5:
+                            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+                            query = new URLSearchParams(localVarUrlObj.search);
+                            for (key in localVarQueryParameter) {
+                                query.set(key, localVarQueryParameter[key]);
+                            }
+                            for (key in options.params) {
+                                query.set(key, options.params[key]);
+                            }
+                            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                            headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                            localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+                            needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+                            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+                            return [2 /*return*/, {
+                                    url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                                    options: localVarRequestOptions,
+                                }];
+                    }
+                });
+            });
+        },
         /**
          * This will perform the same validations as verifying the document signatures using the verification code.
          * @summary Retrieves the details of the document's signatures.
@@ -713,46 +1027,65 @@ const DocumentsApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdSignaturesDetailsGet: (id, options = {}) => __awaiter(this, void 0, void 0, function* () {
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdSignaturesDetailsGet.');
+        apiDocumentsIdSignaturesDetailsGet: function (id_1) {
+            var args_1 = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                args_1[_i - 1] = arguments[_i];
             }
-            const localVarPath = `/api/documents/{id}/signatures-details`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
-            const localVarHeaderParameter = {};
-            const localVarQueryParameter = {};
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? yield configuration.apiKey("X-Api-Key")
-                    : yield configuration.apiKey;
-                localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
-            }
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.params) {
-                query.set(key, options.params[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        }),
+            return __awaiter(_this, __spreadArray([id_1], args_1, true), void 0, function (id, options) {
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, localVarApiKeyValue, _a, query, key, key, headersFromBaseOptions;
+                if (options === void 0) { options = {}; }
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            // verify required parameter 'id' is not null or undefined
+                            if (id === null || id === undefined) {
+                                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdSignaturesDetailsGet.');
+                            }
+                            localVarPath = "/api/documents/{id}/signatures-details"
+                                .replace("{".concat("id", "}"), encodeURIComponent(String(id)));
+                            localVarUrlObj = new URL(localVarPath, 'https://example.com');
+                            if (configuration) {
+                                baseOptions = configuration.baseOptions;
+                            }
+                            localVarRequestOptions = __assign(__assign({ method: 'GET' }, baseOptions), options);
+                            localVarHeaderParameter = {};
+                            localVarQueryParameter = {};
+                            if (!(configuration && configuration.apiKey)) return [3 /*break*/, 5];
+                            if (!(typeof configuration.apiKey === 'function')) return [3 /*break*/, 2];
+                            return [4 /*yield*/, configuration.apiKey("X-Api-Key")];
+                        case 1:
+                            _a = _b.sent();
+                            return [3 /*break*/, 4];
+                        case 2: return [4 /*yield*/, configuration.apiKey];
+                        case 3:
+                            _a = _b.sent();
+                            _b.label = 4;
+                        case 4:
+                            localVarApiKeyValue = _a;
+                            localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
+                            _b.label = 5;
+                        case 5:
+                            query = new URLSearchParams(localVarUrlObj.search);
+                            for (key in localVarQueryParameter) {
+                                query.set(key, localVarQueryParameter[key]);
+                            }
+                            for (key in options.params) {
+                                query.set(key, options.params[key]);
+                            }
+                            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                            headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                            localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+                            return [2 /*return*/, {
+                                    url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                                    options: localVarRequestOptions,
+                                }];
+                    }
+                });
+            });
+        },
         /**
-         * The URL does not require authentication and will be available for 1 hour.  <br /><ul><li><b>Original</b>: the original file provided when the document was created.</li><li><b>OriginalWithMarks</b>: the original file with all marks added (for example when an user approves the document and includes its signature image).</li><li><b>PrinterFriendlyVersion</b>: if the original document is PDF, the version with marks and a appended signature manifest, otherwise a PDF file with the signature manifest.</li><li><b>Signatures</b>: if the original document is PDF, the signed PDF file, otherwise the .p7s file.</li></ul>
+         * The URL does not require authentication and will be available for 1 hour.    <ul><li><b>Original</b>: the original file provided when the document was created.</li><li><b>OriginalWithMarks</b>: the original file with all marks added (for example when an user approves the document and includes its signature image).</li><li><b>PrinterFriendlyVersion</b>: if the original document is PDF, the version with marks and a appended signature manifest, otherwise a PDF file with the signature manifest.</li><li><b>Signatures</b>: if the original document is PDF, the signed PDF file, otherwise the .p7s file.</li></ul>
          * @summary Generates a URL (ticket) to download a specific version type of the document.
          * @param {string} id Document id
          * @param {DocumentTicketType} [type] The version type to download
@@ -760,99 +1093,137 @@ const DocumentsApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdTicketGet: (id, type, preview, options = {}) => __awaiter(this, void 0, void 0, function* () {
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdTicketGet.');
+        apiDocumentsIdTicketGet: function (id_1, type_1, preview_1) {
+            var args_1 = [];
+            for (var _i = 3; _i < arguments.length; _i++) {
+                args_1[_i - 3] = arguments[_i];
             }
-            const localVarPath = `/api/documents/{id}/ticket`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
-            const localVarHeaderParameter = {};
-            const localVarQueryParameter = {};
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? yield configuration.apiKey("X-Api-Key")
-                    : yield configuration.apiKey;
-                localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
-            }
-            if (type !== undefined) {
-                localVarQueryParameter['type'] = type;
-            }
-            if (preview !== undefined) {
-                localVarQueryParameter['preview'] = preview;
-            }
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.params) {
-                query.set(key, options.params[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        }),
+            return __awaiter(_this, __spreadArray([id_1, type_1, preview_1], args_1, true), void 0, function (id, type, preview, options) {
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, localVarApiKeyValue, _a, query, key, key, headersFromBaseOptions;
+                if (options === void 0) { options = {}; }
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            // verify required parameter 'id' is not null or undefined
+                            if (id === null || id === undefined) {
+                                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdTicketGet.');
+                            }
+                            localVarPath = "/api/documents/{id}/ticket"
+                                .replace("{".concat("id", "}"), encodeURIComponent(String(id)));
+                            localVarUrlObj = new URL(localVarPath, 'https://example.com');
+                            if (configuration) {
+                                baseOptions = configuration.baseOptions;
+                            }
+                            localVarRequestOptions = __assign(__assign({ method: 'GET' }, baseOptions), options);
+                            localVarHeaderParameter = {};
+                            localVarQueryParameter = {};
+                            if (!(configuration && configuration.apiKey)) return [3 /*break*/, 5];
+                            if (!(typeof configuration.apiKey === 'function')) return [3 /*break*/, 2];
+                            return [4 /*yield*/, configuration.apiKey("X-Api-Key")];
+                        case 1:
+                            _a = _b.sent();
+                            return [3 /*break*/, 4];
+                        case 2: return [4 /*yield*/, configuration.apiKey];
+                        case 3:
+                            _a = _b.sent();
+                            _b.label = 4;
+                        case 4:
+                            localVarApiKeyValue = _a;
+                            localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
+                            _b.label = 5;
+                        case 5:
+                            if (type !== undefined) {
+                                localVarQueryParameter['type'] = type;
+                            }
+                            if (preview !== undefined) {
+                                localVarQueryParameter['preview'] = preview;
+                            }
+                            query = new URLSearchParams(localVarUrlObj.search);
+                            for (key in localVarQueryParameter) {
+                                query.set(key, localVarQueryParameter[key]);
+                            }
+                            for (key in options.params) {
+                                query.set(key, options.params[key]);
+                            }
+                            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                            headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                            localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+                            return [2 /*return*/, {
+                                    url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                                    options: localVarRequestOptions,
+                                }];
+                    }
+                });
+            });
+        },
         /**
-         * The flow of the document will be restarted. <br /><br />  If the document was created as an envelope, please use the <a href=\"#operations-Documents-post_api_documents__id__envelope_versions\">Add Envelope Version API</a>
+         * The flow of the document will be restarted.       If the document was created as an envelope, please use the <a href=\"#operations-Documents-post_api_documents__id__envelope_versions\">Add Envelope Version API</a>
          * @summary Adds a new version for the document.
          * @param {string} id
          * @param {DocumentsDocumentAddVersionRequest} [body]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdVersionsPost: (id, body, options = {}) => __awaiter(this, void 0, void 0, function* () {
-            // verify required parameter 'id' is not null or undefined
-            if (id === null || id === undefined) {
-                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdVersionsPost.');
+        apiDocumentsIdVersionsPost: function (id_1, body_1) {
+            var args_1 = [];
+            for (var _i = 2; _i < arguments.length; _i++) {
+                args_1[_i - 2] = arguments[_i];
             }
-            const localVarPath = `/api/documents/{id}/versions`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
-            const localVarHeaderParameter = {};
-            const localVarQueryParameter = {};
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? yield configuration.apiKey("X-Api-Key")
-                    : yield configuration.apiKey;
-                localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
-            }
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.params) {
-                query.set(key, options.params[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        }),
+            return __awaiter(_this, __spreadArray([id_1, body_1], args_1, true), void 0, function (id, body, options) {
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, localVarApiKeyValue, _a, query, key, key, headersFromBaseOptions, needsSerialization;
+                if (options === void 0) { options = {}; }
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            // verify required parameter 'id' is not null or undefined
+                            if (id === null || id === undefined) {
+                                throw new base_1.RequiredError('id', 'Required parameter id was null or undefined when calling apiDocumentsIdVersionsPost.');
+                            }
+                            localVarPath = "/api/documents/{id}/versions"
+                                .replace("{".concat("id", "}"), encodeURIComponent(String(id)));
+                            localVarUrlObj = new URL(localVarPath, 'https://example.com');
+                            if (configuration) {
+                                baseOptions = configuration.baseOptions;
+                            }
+                            localVarRequestOptions = __assign(__assign({ method: 'POST' }, baseOptions), options);
+                            localVarHeaderParameter = {};
+                            localVarQueryParameter = {};
+                            if (!(configuration && configuration.apiKey)) return [3 /*break*/, 5];
+                            if (!(typeof configuration.apiKey === 'function')) return [3 /*break*/, 2];
+                            return [4 /*yield*/, configuration.apiKey("X-Api-Key")];
+                        case 1:
+                            _a = _b.sent();
+                            return [3 /*break*/, 4];
+                        case 2: return [4 /*yield*/, configuration.apiKey];
+                        case 3:
+                            _a = _b.sent();
+                            _b.label = 4;
+                        case 4:
+                            localVarApiKeyValue = _a;
+                            localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
+                            _b.label = 5;
+                        case 5:
+                            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+                            query = new URLSearchParams(localVarUrlObj.search);
+                            for (key in localVarQueryParameter) {
+                                query.set(key, localVarQueryParameter[key]);
+                            }
+                            for (key in options.params) {
+                                query.set(key, options.params[key]);
+                            }
+                            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                            headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                            localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+                            needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+                            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+                            return [2 /*return*/, {
+                                    url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                                    options: localVarRequestOptions,
+                                }];
+                    }
+                });
+            });
+        },
         /**
          *
          * @summary Validates each signature in a document using the verification code
@@ -860,87 +1231,125 @@ const DocumentsApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsKeysKeySignaturesGet: (key, options = {}) => __awaiter(this, void 0, void 0, function* () {
-            // verify required parameter 'key' is not null or undefined
-            if (key === null || key === undefined) {
-                throw new base_1.RequiredError('key', 'Required parameter key was null or undefined when calling apiDocumentsKeysKeySignaturesGet.');
+        apiDocumentsKeysKeySignaturesGet: function (key_1) {
+            var args_1 = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                args_1[_i - 1] = arguments[_i];
             }
-            const localVarPath = `/api/documents/keys/{key}/signatures`
-                .replace(`{${"key"}}`, encodeURIComponent(String(key)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
-            const localVarHeaderParameter = {};
-            const localVarQueryParameter = {};
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? yield configuration.apiKey("X-Api-Key")
-                    : yield configuration.apiKey;
-                localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
-            }
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.params) {
-                query.set(key, options.params[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        }),
+            return __awaiter(_this, __spreadArray([key_1], args_1, true), void 0, function (key, options) {
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, localVarApiKeyValue, _a, query, key_2, key_3, headersFromBaseOptions;
+                if (options === void 0) { options = {}; }
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            // verify required parameter 'key' is not null or undefined
+                            if (key === null || key === undefined) {
+                                throw new base_1.RequiredError('key', 'Required parameter key was null or undefined when calling apiDocumentsKeysKeySignaturesGet.');
+                            }
+                            localVarPath = "/api/documents/keys/{key}/signatures"
+                                .replace("{".concat("key", "}"), encodeURIComponent(String(key)));
+                            localVarUrlObj = new URL(localVarPath, 'https://example.com');
+                            if (configuration) {
+                                baseOptions = configuration.baseOptions;
+                            }
+                            localVarRequestOptions = __assign(__assign({ method: 'GET' }, baseOptions), options);
+                            localVarHeaderParameter = {};
+                            localVarQueryParameter = {};
+                            if (!(configuration && configuration.apiKey)) return [3 /*break*/, 5];
+                            if (!(typeof configuration.apiKey === 'function')) return [3 /*break*/, 2];
+                            return [4 /*yield*/, configuration.apiKey("X-Api-Key")];
+                        case 1:
+                            _a = _b.sent();
+                            return [3 /*break*/, 4];
+                        case 2: return [4 /*yield*/, configuration.apiKey];
+                        case 3:
+                            _a = _b.sent();
+                            _b.label = 4;
+                        case 4:
+                            localVarApiKeyValue = _a;
+                            localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
+                            _b.label = 5;
+                        case 5:
+                            query = new URLSearchParams(localVarUrlObj.search);
+                            for (key_2 in localVarQueryParameter) {
+                                query.set(key_2, localVarQueryParameter[key_2]);
+                            }
+                            for (key_3 in options.params) {
+                                query.set(key_3, options.params[key_3]);
+                            }
+                            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                            headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                            localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+                            return [2 /*return*/, {
+                                    url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                                    options: localVarRequestOptions,
+                                }];
+                    }
+                });
+            });
+        },
         /**
-         * Before calling this API you need to upload the file(s) using the <a href=\"#operations-Upload-post_api_uploads\">Upload API</a> or the <a href=\"#operations-Upload-post_api_uploads_bytes\">Upload Bytes API</a>. <br /><br />  When creating a big batch of documents, it is recommended to send multiple requests instead of one big request. For instance, if you want to create 100 documents,   send 10 requests of 10 documents. In this case it is recommended to use the disablePendingActionNotifications option and, when all requests are finished, use the   <a href=\"#operations-Notifications-post_api_users_notify_pending\">users/notify-pending API</a> to notify participants.<br /><br />  Returns a list of ids of each document created.
+         * Before calling this API you need to upload the file(s) using the <a href=\"#operations-Upload-post_api_uploads\">Upload API</a> or the <a href=\"#operations-Upload-post_api_uploads_bytes\">Upload Bytes API</a>.       When creating a big batch of documents, it is recommended to send multiple requests instead of one big request. For instance, if you want to create 100 documents,   send 10 requests of 10 documents. In this case it is recommended to use the disablePendingActionNotifications option and, when all requests are finished, use the   <a href=\"#operations-Notifications-post_api_users_notify_pending\">users/notify-pending API</a> to notify participants.      Returns a list of ids of each document created.
          * @summary Creates one or multiple documents.
          * @param {DocumentsCreateDocumentRequest} [body]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsPost: (body, options = {}) => __awaiter(this, void 0, void 0, function* () {
-            const localVarPath = `/api/documents`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
+        apiDocumentsPost: function (body_1) {
+            var args_1 = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                args_1[_i - 1] = arguments[_i];
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
-            const localVarHeaderParameter = {};
-            const localVarQueryParameter = {};
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? yield configuration.apiKey("X-Api-Key")
-                    : yield configuration.apiKey;
-                localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
-            }
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.params) {
-                query.set(key, options.params[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        }),
+            return __awaiter(_this, __spreadArray([body_1], args_1, true), void 0, function (body, options) {
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, localVarApiKeyValue, _a, query, key, key, headersFromBaseOptions, needsSerialization;
+                if (options === void 0) { options = {}; }
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            localVarPath = "/api/documents";
+                            localVarUrlObj = new URL(localVarPath, 'https://example.com');
+                            if (configuration) {
+                                baseOptions = configuration.baseOptions;
+                            }
+                            localVarRequestOptions = __assign(__assign({ method: 'POST' }, baseOptions), options);
+                            localVarHeaderParameter = {};
+                            localVarQueryParameter = {};
+                            if (!(configuration && configuration.apiKey)) return [3 /*break*/, 5];
+                            if (!(typeof configuration.apiKey === 'function')) return [3 /*break*/, 2];
+                            return [4 /*yield*/, configuration.apiKey("X-Api-Key")];
+                        case 1:
+                            _a = _b.sent();
+                            return [3 /*break*/, 4];
+                        case 2: return [4 /*yield*/, configuration.apiKey];
+                        case 3:
+                            _a = _b.sent();
+                            _b.label = 4;
+                        case 4:
+                            localVarApiKeyValue = _a;
+                            localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
+                            _b.label = 5;
+                        case 5:
+                            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+                            query = new URLSearchParams(localVarUrlObj.search);
+                            for (key in localVarQueryParameter) {
+                                query.set(key, localVarQueryParameter[key]);
+                            }
+                            for (key in options.params) {
+                                query.set(key, options.params[key]);
+                            }
+                            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                            headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                            localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+                            needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+                            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+                            return [2 /*return*/, {
+                                    url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                                    options: localVarRequestOptions,
+                                }];
+                    }
+                });
+            });
+        },
         /**
          * Before calling this API you need to upload the file using the <a href=\"#operations-Upload-post_api_uploads\">Upload API</a> or the <a href=\"#operations-Upload-post_api_uploads_bytes\">Upload Bytes API</a>.
          * @summary Validates each signature in the uploaded document
@@ -948,42 +1357,61 @@ const DocumentsApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsValidateSignaturesPost: (body, options = {}) => __awaiter(this, void 0, void 0, function* () {
-            const localVarPath = `/api/documents/validate-signatures`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, 'https://example.com');
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
+        apiDocumentsValidateSignaturesPost: function (body_1) {
+            var args_1 = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                args_1[_i - 1] = arguments[_i];
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'POST' }, baseOptions), options);
-            const localVarHeaderParameter = {};
-            const localVarQueryParameter = {};
-            // authentication ApiKey required
-            if (configuration && configuration.apiKey) {
-                const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                    ? yield configuration.apiKey("X-Api-Key")
-                    : yield configuration.apiKey;
-                localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
-            }
-            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
-            const query = new URLSearchParams(localVarUrlObj.search);
-            for (const key in localVarQueryParameter) {
-                query.set(key, localVarQueryParameter[key]);
-            }
-            for (const key in options.params) {
-                query.set(key, options.params[key]);
-            }
-            localVarUrlObj.search = (new URLSearchParams(query)).toString();
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
-            const needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
-            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
-            return {
-                url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
-                options: localVarRequestOptions,
-            };
-        }),
+            return __awaiter(_this, __spreadArray([body_1], args_1, true), void 0, function (body, options) {
+                var localVarPath, localVarUrlObj, baseOptions, localVarRequestOptions, localVarHeaderParameter, localVarQueryParameter, localVarApiKeyValue, _a, query, key, key, headersFromBaseOptions, needsSerialization;
+                if (options === void 0) { options = {}; }
+                return __generator(this, function (_b) {
+                    switch (_b.label) {
+                        case 0:
+                            localVarPath = "/api/documents/validate-signatures";
+                            localVarUrlObj = new URL(localVarPath, 'https://example.com');
+                            if (configuration) {
+                                baseOptions = configuration.baseOptions;
+                            }
+                            localVarRequestOptions = __assign(__assign({ method: 'POST' }, baseOptions), options);
+                            localVarHeaderParameter = {};
+                            localVarQueryParameter = {};
+                            if (!(configuration && configuration.apiKey)) return [3 /*break*/, 5];
+                            if (!(typeof configuration.apiKey === 'function')) return [3 /*break*/, 2];
+                            return [4 /*yield*/, configuration.apiKey("X-Api-Key")];
+                        case 1:
+                            _a = _b.sent();
+                            return [3 /*break*/, 4];
+                        case 2: return [4 /*yield*/, configuration.apiKey];
+                        case 3:
+                            _a = _b.sent();
+                            _b.label = 4;
+                        case 4:
+                            localVarApiKeyValue = _a;
+                            localVarHeaderParameter["X-Api-Key"] = localVarApiKeyValue;
+                            _b.label = 5;
+                        case 5:
+                            localVarHeaderParameter['Content-Type'] = 'application/json-patch+json';
+                            query = new URLSearchParams(localVarUrlObj.search);
+                            for (key in localVarQueryParameter) {
+                                query.set(key, localVarQueryParameter[key]);
+                            }
+                            for (key in options.params) {
+                                query.set(key, options.params[key]);
+                            }
+                            localVarUrlObj.search = (new URLSearchParams(query)).toString();
+                            headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+                            localVarRequestOptions.headers = __assign(__assign(__assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+                            needsSerialization = (typeof body !== "string") || localVarRequestOptions.headers['Content-Type'] === 'application/json';
+                            localVarRequestOptions.data = needsSerialization ? JSON.stringify(body !== undefined ? body : {}) : (body || "");
+                            return [2 /*return*/, {
+                                    url: localVarUrlObj.pathname + localVarUrlObj.search + localVarUrlObj.hash,
+                                    options: localVarRequestOptions,
+                                }];
+                    }
+                });
+            });
+        },
     };
 };
 exports.DocumentsApiAxiosParamCreator = DocumentsApiAxiosParamCreator;
@@ -991,7 +1419,7 @@ exports.DocumentsApiAxiosParamCreator = DocumentsApiAxiosParamCreator;
  * DocumentsApi - functional programming interface
  * @export
  */
-const DocumentsApiFp = function (configuration) {
+var DocumentsApiFp = function (configuration) {
     return {
         /**
          *
@@ -1000,13 +1428,22 @@ const DocumentsApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsBatchFolderPost(body, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsBatchFolderPost(body, options);
-                return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
-                    const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
-                    return axios.request(axiosRequestArgs);
-                };
+        apiDocumentsBatchFolderPost: function (body, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                var localVarAxiosArgs;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsBatchFolderPost(body, options)];
+                        case 1:
+                            localVarAxiosArgs = _a.sent();
+                            return [2 /*return*/, function (axios, basePath) {
+                                    if (axios === void 0) { axios = axios_1.default; }
+                                    if (basePath === void 0) { basePath = base_1.BASE_PATH; }
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    return axios.request(axiosRequestArgs);
+                                }];
+                    }
+                });
             });
         },
         /**
@@ -1022,7 +1459,8 @@ const DocumentsApiFp = function (configuration) {
          * @param {DocumentQueryTypes} [queryType]
          * @param {string} [participantQ] Query to filter by participant
          * @param {ParticipantQueryTypes} [participantQueryType]
-         * @param {string} [tags] Label/value pairs are separated by \&quot;|\&quot; (optional) and Tags separated by \&quot;,\&quot;. Only the first 10 pairs will be considered.&lt;br /&gt;To search by tag value only, do not use the \&quot;|\&quot;.
+         * @param {string} [tags] Label/value pairs are separated by \&quot;|\&quot; (optional) and Tags separated by \&quot;,\&quot;. Only the first 10 pairs will be considered.  To search by tag value only, do not use the \&quot;|\&quot;.
+         * @param {boolean} [isDeleted] Returns deleted documents that had the specified document status when deleted.
          * @param {string} [Q] Query to filter items.
          * @param {number} [limit] Number of items to return.
          * @param {number} [offset] The offset of the searched page (starting with 0).
@@ -1030,30 +1468,48 @@ const DocumentsApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsGet(isConcluded, status, folderId, folderType, documentType, filterByDocumentType, filterByPendingSignature, queryType, participantQ, participantQueryType, tags, Q, limit, offset, order, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsGet(isConcluded, status, folderId, folderType, documentType, filterByDocumentType, filterByPendingSignature, queryType, participantQ, participantQueryType, tags, Q, limit, offset, order, options);
-                return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
-                    const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
-                    return axios.request(axiosRequestArgs);
-                };
+        apiDocumentsGet: function (isConcluded, status, folderId, folderType, documentType, filterByDocumentType, filterByPendingSignature, queryType, participantQ, participantQueryType, tags, isDeleted, Q, limit, offset, order, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                var localVarAxiosArgs;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsGet(isConcluded, status, folderId, folderType, documentType, filterByDocumentType, filterByPendingSignature, queryType, participantQ, participantQueryType, tags, isDeleted, Q, limit, offset, order, options)];
+                        case 1:
+                            localVarAxiosArgs = _a.sent();
+                            return [2 /*return*/, function (axios, basePath) {
+                                    if (axios === void 0) { axios = axios_1.default; }
+                                    if (basePath === void 0) { basePath = base_1.BASE_PATH; }
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    return axios.request(axiosRequestArgs);
+                                }];
+                    }
+                });
             });
         },
         /**
-         * This API will return an URL that allows an user to sign or approve the document without having to wait to receive an email notification.<br /><br />  If the document has multiple pending actions, this API will return the URL of the first pending action for the matched user.<br /><br />  After the action has been completed, you may call this API again to retrieve the URL for the next action (if any).<br /><br />  Please note that using the URL returned will be recorded in the evidences of the action as an Application Authentication.<br />
+         * This API will return an URL that allows an user to sign or approve the document without having to wait to receive an email notification.      If the document has multiple pending actions, this API will return the URL of the first pending action for the matched user.      After the action has been completed, you may call this API again to retrieve the URL for the next action (if any).      Please note that using the URL returned will be recorded in the evidences of the action as an Application Authentication.
          * @summary Retrieves an URL to redirect the user to the first pending action of the document.
          * @param {string} id Document Id
          * @param {DocumentsActionUrlRequest} [body]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdActionUrlPost(id, body, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdActionUrlPost(id, body, options);
-                return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
-                    const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
-                    return axios.request(axiosRequestArgs);
-                };
+        apiDocumentsIdActionUrlPost: function (id, body, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                var localVarAxiosArgs;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdActionUrlPost(id, body, options)];
+                        case 1:
+                            localVarAxiosArgs = _a.sent();
+                            return [2 /*return*/, function (axios, basePath) {
+                                    if (axios === void 0) { axios = axios_1.default; }
+                                    if (basePath === void 0) { basePath = base_1.BASE_PATH; }
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    return axios.request(axiosRequestArgs);
+                                }];
+                    }
+                });
             });
         },
         /**
@@ -1064,13 +1520,22 @@ const DocumentsApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdCancellationPost(id, body, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdCancellationPost(id, body, options);
-                return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
-                    const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
-                    return axios.request(axiosRequestArgs);
-                };
+        apiDocumentsIdCancellationPost: function (id, body, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                var localVarAxiosArgs;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdCancellationPost(id, body, options)];
+                        case 1:
+                            localVarAxiosArgs = _a.sent();
+                            return [2 /*return*/, function (axios, basePath) {
+                                    if (axios === void 0) { axios = axios_1.default; }
+                                    if (basePath === void 0) { basePath = base_1.BASE_PATH; }
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    return axios.request(axiosRequestArgs);
+                                }];
+                    }
+                });
             });
         },
         /**
@@ -1081,13 +1546,22 @@ const DocumentsApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdContentB64Get(id, type, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdContentB64Get(id, type, options);
-                return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
-                    const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
-                    return axios.request(axiosRequestArgs);
-                };
+        apiDocumentsIdContentB64Get: function (id, type, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                var localVarAxiosArgs;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdContentB64Get(id, type, options)];
+                        case 1:
+                            localVarAxiosArgs = _a.sent();
+                            return [2 /*return*/, function (axios, basePath) {
+                                    if (axios === void 0) { axios = axios_1.default; }
+                                    if (basePath === void 0) { basePath = base_1.BASE_PATH; }
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    return axios.request(axiosRequestArgs);
+                                }];
+                    }
+                });
             });
         },
         /**
@@ -1098,13 +1572,22 @@ const DocumentsApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdContentGet(id, type, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdContentGet(id, type, options);
-                return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
-                    const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
-                    return axios.request(axiosRequestArgs);
-                };
+        apiDocumentsIdContentGet: function (id, type, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                var localVarAxiosArgs;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdContentGet(id, type, options)];
+                        case 1:
+                            localVarAxiosArgs = _a.sent();
+                            return [2 /*return*/, function (axios, basePath) {
+                                    if (axios === void 0) { axios = axios_1.default; }
+                                    if (basePath === void 0) { basePath = base_1.BASE_PATH; }
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    return axios.request(axiosRequestArgs);
+                                }];
+                    }
+                });
             });
         },
         /**
@@ -1114,13 +1597,22 @@ const DocumentsApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdDelete(id, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdDelete(id, options);
-                return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
-                    const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
-                    return axios.request(axiosRequestArgs);
-                };
+        apiDocumentsIdDelete: function (id, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                var localVarAxiosArgs;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdDelete(id, options)];
+                        case 1:
+                            localVarAxiosArgs = _a.sent();
+                            return [2 /*return*/, function (axios, basePath) {
+                                    if (axios === void 0) { axios = axios_1.default; }
+                                    if (basePath === void 0) { basePath = base_1.BASE_PATH; }
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    return axios.request(axiosRequestArgs);
+                                }];
+                    }
+                });
             });
         },
         /**
@@ -1131,13 +1623,22 @@ const DocumentsApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdEnvelopeVersionsPost(id, body, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdEnvelopeVersionsPost(id, body, options);
-                return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
-                    const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
-                    return axios.request(axiosRequestArgs);
-                };
+        apiDocumentsIdEnvelopeVersionsPost: function (id, body, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                var localVarAxiosArgs;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdEnvelopeVersionsPost(id, body, options)];
+                        case 1:
+                            localVarAxiosArgs = _a.sent();
+                            return [2 /*return*/, function (axios, basePath) {
+                                    if (axios === void 0) { axios = axios_1.default; }
+                                    if (basePath === void 0) { basePath = base_1.BASE_PATH; }
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    return axios.request(axiosRequestArgs);
+                                }];
+                    }
+                });
             });
         },
         /**
@@ -1148,13 +1649,22 @@ const DocumentsApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdFlowPost(id, body, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdFlowPost(id, body, options);
-                return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
-                    const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
-                    return axios.request(axiosRequestArgs);
-                };
+        apiDocumentsIdFlowPost: function (id, body, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                var localVarAxiosArgs;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdFlowPost(id, body, options)];
+                        case 1:
+                            localVarAxiosArgs = _a.sent();
+                            return [2 /*return*/, function (axios, basePath) {
+                                    if (axios === void 0) { axios = axios_1.default; }
+                                    if (basePath === void 0) { basePath = base_1.BASE_PATH; }
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    return axios.request(axiosRequestArgs);
+                                }];
+                    }
+                });
             });
         },
         /**
@@ -1165,13 +1675,22 @@ const DocumentsApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdFolderPost(id, body, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdFolderPost(id, body, options);
-                return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
-                    const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
-                    return axios.request(axiosRequestArgs);
-                };
+        apiDocumentsIdFolderPost: function (id, body, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                var localVarAxiosArgs;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdFolderPost(id, body, options)];
+                        case 1:
+                            localVarAxiosArgs = _a.sent();
+                            return [2 /*return*/, function (axios, basePath) {
+                                    if (axios === void 0) { axios = axios_1.default; }
+                                    if (basePath === void 0) { basePath = base_1.BASE_PATH; }
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    return axios.request(axiosRequestArgs);
+                                }];
+                    }
+                });
             });
         },
         /**
@@ -1181,13 +1700,22 @@ const DocumentsApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdGet(id, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdGet(id, options);
-                return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
-                    const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
-                    return axios.request(axiosRequestArgs);
-                };
+        apiDocumentsIdGet: function (id, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                var localVarAxiosArgs;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdGet(id, options)];
+                        case 1:
+                            localVarAxiosArgs = _a.sent();
+                            return [2 /*return*/, function (axios, basePath) {
+                                    if (axios === void 0) { axios = axios_1.default; }
+                                    if (basePath === void 0) { basePath = base_1.BASE_PATH; }
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    return axios.request(axiosRequestArgs);
+                                }];
+                    }
+                });
             });
         },
         /**
@@ -1198,13 +1726,22 @@ const DocumentsApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdNotifiedEmailsPut(id, body, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdNotifiedEmailsPut(id, body, options);
-                return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
-                    const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
-                    return axios.request(axiosRequestArgs);
-                };
+        apiDocumentsIdNotifiedEmailsPut: function (id, body, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                var localVarAxiosArgs;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdNotifiedEmailsPut(id, body, options)];
+                        case 1:
+                            localVarAxiosArgs = _a.sent();
+                            return [2 /*return*/, function (axios, basePath) {
+                                    if (axios === void 0) { axios = axios_1.default; }
+                                    if (basePath === void 0) { basePath = base_1.BASE_PATH; }
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    return axios.request(axiosRequestArgs);
+                                }];
+                    }
+                });
             });
         },
         /**
@@ -1215,13 +1752,22 @@ const DocumentsApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdRefusalPost(id, body, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdRefusalPost(id, body, options);
-                return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
-                    const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
-                    return axios.request(axiosRequestArgs);
-                };
+        apiDocumentsIdRefusalPost: function (id, body, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                var localVarAxiosArgs;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdRefusalPost(id, body, options)];
+                        case 1:
+                            localVarAxiosArgs = _a.sent();
+                            return [2 /*return*/, function (axios, basePath) {
+                                    if (axios === void 0) { axios = axios_1.default; }
+                                    if (basePath === void 0) { basePath = base_1.BASE_PATH; }
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    return axios.request(axiosRequestArgs);
+                                }];
+                    }
+                });
             });
         },
         /**
@@ -1231,17 +1777,26 @@ const DocumentsApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdSignaturesDetailsGet(id, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdSignaturesDetailsGet(id, options);
-                return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
-                    const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
-                    return axios.request(axiosRequestArgs);
-                };
+        apiDocumentsIdSignaturesDetailsGet: function (id, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                var localVarAxiosArgs;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdSignaturesDetailsGet(id, options)];
+                        case 1:
+                            localVarAxiosArgs = _a.sent();
+                            return [2 /*return*/, function (axios, basePath) {
+                                    if (axios === void 0) { axios = axios_1.default; }
+                                    if (basePath === void 0) { basePath = base_1.BASE_PATH; }
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    return axios.request(axiosRequestArgs);
+                                }];
+                    }
+                });
             });
         },
         /**
-         * The URL does not require authentication and will be available for 1 hour.  <br /><ul><li><b>Original</b>: the original file provided when the document was created.</li><li><b>OriginalWithMarks</b>: the original file with all marks added (for example when an user approves the document and includes its signature image).</li><li><b>PrinterFriendlyVersion</b>: if the original document is PDF, the version with marks and a appended signature manifest, otherwise a PDF file with the signature manifest.</li><li><b>Signatures</b>: if the original document is PDF, the signed PDF file, otherwise the .p7s file.</li></ul>
+         * The URL does not require authentication and will be available for 1 hour.    <ul><li><b>Original</b>: the original file provided when the document was created.</li><li><b>OriginalWithMarks</b>: the original file with all marks added (for example when an user approves the document and includes its signature image).</li><li><b>PrinterFriendlyVersion</b>: if the original document is PDF, the version with marks and a appended signature manifest, otherwise a PDF file with the signature manifest.</li><li><b>Signatures</b>: if the original document is PDF, the signed PDF file, otherwise the .p7s file.</li></ul>
          * @summary Generates a URL (ticket) to download a specific version type of the document.
          * @param {string} id Document id
          * @param {DocumentTicketType} [type] The version type to download
@@ -1249,30 +1804,48 @@ const DocumentsApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdTicketGet(id, type, preview, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdTicketGet(id, type, preview, options);
-                return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
-                    const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
-                    return axios.request(axiosRequestArgs);
-                };
+        apiDocumentsIdTicketGet: function (id, type, preview, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                var localVarAxiosArgs;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdTicketGet(id, type, preview, options)];
+                        case 1:
+                            localVarAxiosArgs = _a.sent();
+                            return [2 /*return*/, function (axios, basePath) {
+                                    if (axios === void 0) { axios = axios_1.default; }
+                                    if (basePath === void 0) { basePath = base_1.BASE_PATH; }
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    return axios.request(axiosRequestArgs);
+                                }];
+                    }
+                });
             });
         },
         /**
-         * The flow of the document will be restarted. <br /><br />  If the document was created as an envelope, please use the <a href=\"#operations-Documents-post_api_documents__id__envelope_versions\">Add Envelope Version API</a>
+         * The flow of the document will be restarted.       If the document was created as an envelope, please use the <a href=\"#operations-Documents-post_api_documents__id__envelope_versions\">Add Envelope Version API</a>
          * @summary Adds a new version for the document.
          * @param {string} id
          * @param {DocumentsDocumentAddVersionRequest} [body]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdVersionsPost(id, body, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdVersionsPost(id, body, options);
-                return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
-                    const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
-                    return axios.request(axiosRequestArgs);
-                };
+        apiDocumentsIdVersionsPost: function (id, body, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                var localVarAxiosArgs;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsIdVersionsPost(id, body, options)];
+                        case 1:
+                            localVarAxiosArgs = _a.sent();
+                            return [2 /*return*/, function (axios, basePath) {
+                                    if (axios === void 0) { axios = axios_1.default; }
+                                    if (basePath === void 0) { basePath = base_1.BASE_PATH; }
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    return axios.request(axiosRequestArgs);
+                                }];
+                    }
+                });
             });
         },
         /**
@@ -1282,29 +1855,47 @@ const DocumentsApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsKeysKeySignaturesGet(key, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsKeysKeySignaturesGet(key, options);
-                return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
-                    const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
-                    return axios.request(axiosRequestArgs);
-                };
+        apiDocumentsKeysKeySignaturesGet: function (key, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                var localVarAxiosArgs;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsKeysKeySignaturesGet(key, options)];
+                        case 1:
+                            localVarAxiosArgs = _a.sent();
+                            return [2 /*return*/, function (axios, basePath) {
+                                    if (axios === void 0) { axios = axios_1.default; }
+                                    if (basePath === void 0) { basePath = base_1.BASE_PATH; }
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    return axios.request(axiosRequestArgs);
+                                }];
+                    }
+                });
             });
         },
         /**
-         * Before calling this API you need to upload the file(s) using the <a href=\"#operations-Upload-post_api_uploads\">Upload API</a> or the <a href=\"#operations-Upload-post_api_uploads_bytes\">Upload Bytes API</a>. <br /><br />  When creating a big batch of documents, it is recommended to send multiple requests instead of one big request. For instance, if you want to create 100 documents,   send 10 requests of 10 documents. In this case it is recommended to use the disablePendingActionNotifications option and, when all requests are finished, use the   <a href=\"#operations-Notifications-post_api_users_notify_pending\">users/notify-pending API</a> to notify participants.<br /><br />  Returns a list of ids of each document created.
+         * Before calling this API you need to upload the file(s) using the <a href=\"#operations-Upload-post_api_uploads\">Upload API</a> or the <a href=\"#operations-Upload-post_api_uploads_bytes\">Upload Bytes API</a>.       When creating a big batch of documents, it is recommended to send multiple requests instead of one big request. For instance, if you want to create 100 documents,   send 10 requests of 10 documents. In this case it is recommended to use the disablePendingActionNotifications option and, when all requests are finished, use the   <a href=\"#operations-Notifications-post_api_users_notify_pending\">users/notify-pending API</a> to notify participants.      Returns a list of ids of each document created.
          * @summary Creates one or multiple documents.
          * @param {DocumentsCreateDocumentRequest} [body]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsPost(body, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsPost(body, options);
-                return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
-                    const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
-                    return axios.request(axiosRequestArgs);
-                };
+        apiDocumentsPost: function (body, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                var localVarAxiosArgs;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsPost(body, options)];
+                        case 1:
+                            localVarAxiosArgs = _a.sent();
+                            return [2 /*return*/, function (axios, basePath) {
+                                    if (axios === void 0) { axios = axios_1.default; }
+                                    if (basePath === void 0) { basePath = base_1.BASE_PATH; }
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    return axios.request(axiosRequestArgs);
+                                }];
+                    }
+                });
             });
         },
         /**
@@ -1314,13 +1905,22 @@ const DocumentsApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsValidateSignaturesPost(body, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsValidateSignaturesPost(body, options);
-                return (axios = axios_1.default, basePath = base_1.BASE_PATH) => {
-                    const axiosRequestArgs = Object.assign(Object.assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
-                    return axios.request(axiosRequestArgs);
-                };
+        apiDocumentsValidateSignaturesPost: function (body, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                var localVarAxiosArgs;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, (0, exports.DocumentsApiAxiosParamCreator)(configuration).apiDocumentsValidateSignaturesPost(body, options)];
+                        case 1:
+                            localVarAxiosArgs = _a.sent();
+                            return [2 /*return*/, function (axios, basePath) {
+                                    if (axios === void 0) { axios = axios_1.default; }
+                                    if (basePath === void 0) { basePath = base_1.BASE_PATH; }
+                                    var axiosRequestArgs = __assign(__assign({}, localVarAxiosArgs.options), { url: basePath + localVarAxiosArgs.url });
+                                    return axios.request(axiosRequestArgs);
+                                }];
+                    }
+                });
             });
         },
     };
@@ -1330,7 +1930,7 @@ exports.DocumentsApiFp = DocumentsApiFp;
  * DocumentsApi - factory interface
  * @export
  */
-const DocumentsApiFactory = function (configuration, basePath, axios) {
+var DocumentsApiFactory = function (configuration, basePath, axios) {
     return {
         /**
          *
@@ -1339,9 +1939,11 @@ const DocumentsApiFactory = function (configuration, basePath, axios) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsBatchFolderPost(body, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                return (0, exports.DocumentsApiFp)(configuration).apiDocumentsBatchFolderPost(body, options).then((request) => request(axios, basePath));
+        apiDocumentsBatchFolderPost: function (body, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    return [2 /*return*/, (0, exports.DocumentsApiFp)(configuration).apiDocumentsBatchFolderPost(body, options).then(function (request) { return request(axios, basePath); })];
+                });
             });
         },
         /**
@@ -1357,7 +1959,8 @@ const DocumentsApiFactory = function (configuration, basePath, axios) {
          * @param {DocumentQueryTypes} [queryType]
          * @param {string} [participantQ] Query to filter by participant
          * @param {ParticipantQueryTypes} [participantQueryType]
-         * @param {string} [tags] Label/value pairs are separated by \&quot;|\&quot; (optional) and Tags separated by \&quot;,\&quot;. Only the first 10 pairs will be considered.&lt;br /&gt;To search by tag value only, do not use the \&quot;|\&quot;.
+         * @param {string} [tags] Label/value pairs are separated by \&quot;|\&quot; (optional) and Tags separated by \&quot;,\&quot;. Only the first 10 pairs will be considered.  To search by tag value only, do not use the \&quot;|\&quot;.
+         * @param {boolean} [isDeleted] Returns deleted documents that had the specified document status when deleted.
          * @param {string} [Q] Query to filter items.
          * @param {number} [limit] Number of items to return.
          * @param {number} [offset] The offset of the searched page (starting with 0).
@@ -1365,22 +1968,26 @@ const DocumentsApiFactory = function (configuration, basePath, axios) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsGet(isConcluded, status, folderId, folderType, documentType, filterByDocumentType, filterByPendingSignature, queryType, participantQ, participantQueryType, tags, Q, limit, offset, order, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                return (0, exports.DocumentsApiFp)(configuration).apiDocumentsGet(isConcluded, status, folderId, folderType, documentType, filterByDocumentType, filterByPendingSignature, queryType, participantQ, participantQueryType, tags, Q, limit, offset, order, options).then((request) => request(axios, basePath));
+        apiDocumentsGet: function (isConcluded, status, folderId, folderType, documentType, filterByDocumentType, filterByPendingSignature, queryType, participantQ, participantQueryType, tags, isDeleted, Q, limit, offset, order, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    return [2 /*return*/, (0, exports.DocumentsApiFp)(configuration).apiDocumentsGet(isConcluded, status, folderId, folderType, documentType, filterByDocumentType, filterByPendingSignature, queryType, participantQ, participantQueryType, tags, isDeleted, Q, limit, offset, order, options).then(function (request) { return request(axios, basePath); })];
+                });
             });
         },
         /**
-         * This API will return an URL that allows an user to sign or approve the document without having to wait to receive an email notification.<br /><br />  If the document has multiple pending actions, this API will return the URL of the first pending action for the matched user.<br /><br />  After the action has been completed, you may call this API again to retrieve the URL for the next action (if any).<br /><br />  Please note that using the URL returned will be recorded in the evidences of the action as an Application Authentication.<br />
+         * This API will return an URL that allows an user to sign or approve the document without having to wait to receive an email notification.      If the document has multiple pending actions, this API will return the URL of the first pending action for the matched user.      After the action has been completed, you may call this API again to retrieve the URL for the next action (if any).      Please note that using the URL returned will be recorded in the evidences of the action as an Application Authentication.
          * @summary Retrieves an URL to redirect the user to the first pending action of the document.
          * @param {string} id Document Id
          * @param {DocumentsActionUrlRequest} [body]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdActionUrlPost(id, body, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                return (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdActionUrlPost(id, body, options).then((request) => request(axios, basePath));
+        apiDocumentsIdActionUrlPost: function (id, body, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    return [2 /*return*/, (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdActionUrlPost(id, body, options).then(function (request) { return request(axios, basePath); })];
+                });
             });
         },
         /**
@@ -1391,9 +1998,11 @@ const DocumentsApiFactory = function (configuration, basePath, axios) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdCancellationPost(id, body, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                return (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdCancellationPost(id, body, options).then((request) => request(axios, basePath));
+        apiDocumentsIdCancellationPost: function (id, body, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    return [2 /*return*/, (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdCancellationPost(id, body, options).then(function (request) { return request(axios, basePath); })];
+                });
             });
         },
         /**
@@ -1404,9 +2013,11 @@ const DocumentsApiFactory = function (configuration, basePath, axios) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdContentB64Get(id, type, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                return (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdContentB64Get(id, type, options).then((request) => request(axios, basePath));
+        apiDocumentsIdContentB64Get: function (id, type, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    return [2 /*return*/, (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdContentB64Get(id, type, options).then(function (request) { return request(axios, basePath); })];
+                });
             });
         },
         /**
@@ -1417,9 +2028,11 @@ const DocumentsApiFactory = function (configuration, basePath, axios) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdContentGet(id, type, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                return (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdContentGet(id, type, options).then((request) => request(axios, basePath));
+        apiDocumentsIdContentGet: function (id, type, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    return [2 /*return*/, (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdContentGet(id, type, options).then(function (request) { return request(axios, basePath); })];
+                });
             });
         },
         /**
@@ -1429,9 +2042,11 @@ const DocumentsApiFactory = function (configuration, basePath, axios) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdDelete(id, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                return (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdDelete(id, options).then((request) => request(axios, basePath));
+        apiDocumentsIdDelete: function (id, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    return [2 /*return*/, (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdDelete(id, options).then(function (request) { return request(axios, basePath); })];
+                });
             });
         },
         /**
@@ -1442,9 +2057,11 @@ const DocumentsApiFactory = function (configuration, basePath, axios) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdEnvelopeVersionsPost(id, body, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                return (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdEnvelopeVersionsPost(id, body, options).then((request) => request(axios, basePath));
+        apiDocumentsIdEnvelopeVersionsPost: function (id, body, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    return [2 /*return*/, (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdEnvelopeVersionsPost(id, body, options).then(function (request) { return request(axios, basePath); })];
+                });
             });
         },
         /**
@@ -1455,9 +2072,11 @@ const DocumentsApiFactory = function (configuration, basePath, axios) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdFlowPost(id, body, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                return (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdFlowPost(id, body, options).then((request) => request(axios, basePath));
+        apiDocumentsIdFlowPost: function (id, body, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    return [2 /*return*/, (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdFlowPost(id, body, options).then(function (request) { return request(axios, basePath); })];
+                });
             });
         },
         /**
@@ -1468,9 +2087,11 @@ const DocumentsApiFactory = function (configuration, basePath, axios) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdFolderPost(id, body, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                return (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdFolderPost(id, body, options).then((request) => request(axios, basePath));
+        apiDocumentsIdFolderPost: function (id, body, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    return [2 /*return*/, (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdFolderPost(id, body, options).then(function (request) { return request(axios, basePath); })];
+                });
             });
         },
         /**
@@ -1480,9 +2101,11 @@ const DocumentsApiFactory = function (configuration, basePath, axios) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdGet(id, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                return (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdGet(id, options).then((request) => request(axios, basePath));
+        apiDocumentsIdGet: function (id, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    return [2 /*return*/, (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdGet(id, options).then(function (request) { return request(axios, basePath); })];
+                });
             });
         },
         /**
@@ -1493,9 +2116,11 @@ const DocumentsApiFactory = function (configuration, basePath, axios) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdNotifiedEmailsPut(id, body, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                return (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdNotifiedEmailsPut(id, body, options).then((request) => request(axios, basePath));
+        apiDocumentsIdNotifiedEmailsPut: function (id, body, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    return [2 /*return*/, (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdNotifiedEmailsPut(id, body, options).then(function (request) { return request(axios, basePath); })];
+                });
             });
         },
         /**
@@ -1506,9 +2131,11 @@ const DocumentsApiFactory = function (configuration, basePath, axios) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdRefusalPost(id, body, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                return (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdRefusalPost(id, body, options).then((request) => request(axios, basePath));
+        apiDocumentsIdRefusalPost: function (id, body, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    return [2 /*return*/, (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdRefusalPost(id, body, options).then(function (request) { return request(axios, basePath); })];
+                });
             });
         },
         /**
@@ -1518,13 +2145,15 @@ const DocumentsApiFactory = function (configuration, basePath, axios) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdSignaturesDetailsGet(id, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                return (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdSignaturesDetailsGet(id, options).then((request) => request(axios, basePath));
+        apiDocumentsIdSignaturesDetailsGet: function (id, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    return [2 /*return*/, (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdSignaturesDetailsGet(id, options).then(function (request) { return request(axios, basePath); })];
+                });
             });
         },
         /**
-         * The URL does not require authentication and will be available for 1 hour.  <br /><ul><li><b>Original</b>: the original file provided when the document was created.</li><li><b>OriginalWithMarks</b>: the original file with all marks added (for example when an user approves the document and includes its signature image).</li><li><b>PrinterFriendlyVersion</b>: if the original document is PDF, the version with marks and a appended signature manifest, otherwise a PDF file with the signature manifest.</li><li><b>Signatures</b>: if the original document is PDF, the signed PDF file, otherwise the .p7s file.</li></ul>
+         * The URL does not require authentication and will be available for 1 hour.    <ul><li><b>Original</b>: the original file provided when the document was created.</li><li><b>OriginalWithMarks</b>: the original file with all marks added (for example when an user approves the document and includes its signature image).</li><li><b>PrinterFriendlyVersion</b>: if the original document is PDF, the version with marks and a appended signature manifest, otherwise a PDF file with the signature manifest.</li><li><b>Signatures</b>: if the original document is PDF, the signed PDF file, otherwise the .p7s file.</li></ul>
          * @summary Generates a URL (ticket) to download a specific version type of the document.
          * @param {string} id Document id
          * @param {DocumentTicketType} [type] The version type to download
@@ -1532,22 +2161,26 @@ const DocumentsApiFactory = function (configuration, basePath, axios) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdTicketGet(id, type, preview, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                return (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdTicketGet(id, type, preview, options).then((request) => request(axios, basePath));
+        apiDocumentsIdTicketGet: function (id, type, preview, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    return [2 /*return*/, (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdTicketGet(id, type, preview, options).then(function (request) { return request(axios, basePath); })];
+                });
             });
         },
         /**
-         * The flow of the document will be restarted. <br /><br />  If the document was created as an envelope, please use the <a href=\"#operations-Documents-post_api_documents__id__envelope_versions\">Add Envelope Version API</a>
+         * The flow of the document will be restarted.       If the document was created as an envelope, please use the <a href=\"#operations-Documents-post_api_documents__id__envelope_versions\">Add Envelope Version API</a>
          * @summary Adds a new version for the document.
          * @param {string} id
          * @param {DocumentsDocumentAddVersionRequest} [body]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsIdVersionsPost(id, body, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                return (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdVersionsPost(id, body, options).then((request) => request(axios, basePath));
+        apiDocumentsIdVersionsPost: function (id, body, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    return [2 /*return*/, (0, exports.DocumentsApiFp)(configuration).apiDocumentsIdVersionsPost(id, body, options).then(function (request) { return request(axios, basePath); })];
+                });
             });
         },
         /**
@@ -1557,21 +2190,25 @@ const DocumentsApiFactory = function (configuration, basePath, axios) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsKeysKeySignaturesGet(key, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                return (0, exports.DocumentsApiFp)(configuration).apiDocumentsKeysKeySignaturesGet(key, options).then((request) => request(axios, basePath));
+        apiDocumentsKeysKeySignaturesGet: function (key, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    return [2 /*return*/, (0, exports.DocumentsApiFp)(configuration).apiDocumentsKeysKeySignaturesGet(key, options).then(function (request) { return request(axios, basePath); })];
+                });
             });
         },
         /**
-         * Before calling this API you need to upload the file(s) using the <a href=\"#operations-Upload-post_api_uploads\">Upload API</a> or the <a href=\"#operations-Upload-post_api_uploads_bytes\">Upload Bytes API</a>. <br /><br />  When creating a big batch of documents, it is recommended to send multiple requests instead of one big request. For instance, if you want to create 100 documents,   send 10 requests of 10 documents. In this case it is recommended to use the disablePendingActionNotifications option and, when all requests are finished, use the   <a href=\"#operations-Notifications-post_api_users_notify_pending\">users/notify-pending API</a> to notify participants.<br /><br />  Returns a list of ids of each document created.
+         * Before calling this API you need to upload the file(s) using the <a href=\"#operations-Upload-post_api_uploads\">Upload API</a> or the <a href=\"#operations-Upload-post_api_uploads_bytes\">Upload Bytes API</a>.       When creating a big batch of documents, it is recommended to send multiple requests instead of one big request. For instance, if you want to create 100 documents,   send 10 requests of 10 documents. In this case it is recommended to use the disablePendingActionNotifications option and, when all requests are finished, use the   <a href=\"#operations-Notifications-post_api_users_notify_pending\">users/notify-pending API</a> to notify participants.      Returns a list of ids of each document created.
          * @summary Creates one or multiple documents.
          * @param {DocumentsCreateDocumentRequest} [body]
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsPost(body, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                return (0, exports.DocumentsApiFp)(configuration).apiDocumentsPost(body, options).then((request) => request(axios, basePath));
+        apiDocumentsPost: function (body, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    return [2 /*return*/, (0, exports.DocumentsApiFp)(configuration).apiDocumentsPost(body, options).then(function (request) { return request(axios, basePath); })];
+                });
             });
         },
         /**
@@ -1581,9 +2218,11 @@ const DocumentsApiFactory = function (configuration, basePath, axios) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsValidateSignaturesPost(body, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                return (0, exports.DocumentsApiFp)(configuration).apiDocumentsValidateSignaturesPost(body, options).then((request) => request(axios, basePath));
+        apiDocumentsValidateSignaturesPost: function (body, options) {
+            return __awaiter(this, void 0, void 0, function () {
+                return __generator(this, function (_a) {
+                    return [2 /*return*/, (0, exports.DocumentsApiFp)(configuration).apiDocumentsValidateSignaturesPost(body, options).then(function (request) { return request(axios, basePath); })];
+                });
             });
         },
     };
@@ -1595,7 +2234,11 @@ exports.DocumentsApiFactory = DocumentsApiFactory;
  * @class DocumentsApi
  * @extends {BaseAPI}
  */
-class DocumentsApi extends base_1.BaseAPI {
+var DocumentsApi = /** @class */ (function (_super) {
+    __extends(DocumentsApi, _super);
+    function DocumentsApi() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
     /**
      *
      * @summary Moves a batch of documents to a folder.
@@ -1604,11 +2247,14 @@ class DocumentsApi extends base_1.BaseAPI {
      * @throws {RequiredError}
      * @memberof DocumentsApi
      */
-    apiDocumentsBatchFolderPost(body, options) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsBatchFolderPost(body, options).then((request) => request(this.axios, this.basePath));
+    DocumentsApi.prototype.apiDocumentsBatchFolderPost = function (body, options) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsBatchFolderPost(body, options).then(function (request) { return request(_this.axios, _this.basePath); })];
+            });
         });
-    }
+    };
     /**
      * You may filter the documents by folder and document type.
      * @summary Retrieves the documents of the organization paginating the response.
@@ -1622,7 +2268,8 @@ class DocumentsApi extends base_1.BaseAPI {
      * @param {DocumentQueryTypes} [queryType]
      * @param {string} [participantQ] Query to filter by participant
      * @param {ParticipantQueryTypes} [participantQueryType]
-     * @param {string} [tags] Label/value pairs are separated by \&quot;|\&quot; (optional) and Tags separated by \&quot;,\&quot;. Only the first 10 pairs will be considered.&lt;br /&gt;To search by tag value only, do not use the \&quot;|\&quot;.
+     * @param {string} [tags] Label/value pairs are separated by \&quot;|\&quot; (optional) and Tags separated by \&quot;,\&quot;. Only the first 10 pairs will be considered.  To search by tag value only, do not use the \&quot;|\&quot;.
+     * @param {boolean} [isDeleted] Returns deleted documents that had the specified document status when deleted.
      * @param {string} [Q] Query to filter items.
      * @param {number} [limit] Number of items to return.
      * @param {number} [offset] The offset of the searched page (starting with 0).
@@ -1631,13 +2278,16 @@ class DocumentsApi extends base_1.BaseAPI {
      * @throws {RequiredError}
      * @memberof DocumentsApi
      */
-    apiDocumentsGet(isConcluded, status, folderId, folderType, documentType, filterByDocumentType, filterByPendingSignature, queryType, participantQ, participantQueryType, tags, Q, limit, offset, order, options) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsGet(isConcluded, status, folderId, folderType, documentType, filterByDocumentType, filterByPendingSignature, queryType, participantQ, participantQueryType, tags, Q, limit, offset, order, options).then((request) => request(this.axios, this.basePath));
+    DocumentsApi.prototype.apiDocumentsGet = function (isConcluded, status, folderId, folderType, documentType, filterByDocumentType, filterByPendingSignature, queryType, participantQ, participantQueryType, tags, isDeleted, Q, limit, offset, order, options) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsGet(isConcluded, status, folderId, folderType, documentType, filterByDocumentType, filterByPendingSignature, queryType, participantQ, participantQueryType, tags, isDeleted, Q, limit, offset, order, options).then(function (request) { return request(_this.axios, _this.basePath); })];
+            });
         });
-    }
+    };
     /**
-     * This API will return an URL that allows an user to sign or approve the document without having to wait to receive an email notification.<br /><br />  If the document has multiple pending actions, this API will return the URL of the first pending action for the matched user.<br /><br />  After the action has been completed, you may call this API again to retrieve the URL for the next action (if any).<br /><br />  Please note that using the URL returned will be recorded in the evidences of the action as an Application Authentication.<br />
+     * This API will return an URL that allows an user to sign or approve the document without having to wait to receive an email notification.      If the document has multiple pending actions, this API will return the URL of the first pending action for the matched user.      After the action has been completed, you may call this API again to retrieve the URL for the next action (if any).      Please note that using the URL returned will be recorded in the evidences of the action as an Application Authentication.
      * @summary Retrieves an URL to redirect the user to the first pending action of the document.
      * @param {string} id Document Id
      * @param {DocumentsActionUrlRequest} [body]
@@ -1645,11 +2295,14 @@ class DocumentsApi extends base_1.BaseAPI {
      * @throws {RequiredError}
      * @memberof DocumentsApi
      */
-    apiDocumentsIdActionUrlPost(id, body, options) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdActionUrlPost(id, body, options).then((request) => request(this.axios, this.basePath));
+    DocumentsApi.prototype.apiDocumentsIdActionUrlPost = function (id, body, options) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdActionUrlPost(id, body, options).then(function (request) { return request(_this.axios, _this.basePath); })];
+            });
         });
-    }
+    };
     /**
      * <b>CAUTION: This action cannot be reverted.</b>
      * @summary Cancels the document by providing a reason for the cancellation.
@@ -1659,11 +2312,14 @@ class DocumentsApi extends base_1.BaseAPI {
      * @throws {RequiredError}
      * @memberof DocumentsApi
      */
-    apiDocumentsIdCancellationPost(id, body, options) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdCancellationPost(id, body, options).then((request) => request(this.axios, this.basePath));
+    DocumentsApi.prototype.apiDocumentsIdCancellationPost = function (id, body, options) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdCancellationPost(id, body, options).then(function (request) { return request(_this.axios, _this.basePath); })];
+            });
         });
-    }
+    };
     /**
      *
      * @summary Downloads a specific version type of the document encoding the bytes in Base 64 format.
@@ -1673,11 +2329,14 @@ class DocumentsApi extends base_1.BaseAPI {
      * @throws {RequiredError}
      * @memberof DocumentsApi
      */
-    apiDocumentsIdContentB64Get(id, type, options) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdContentB64Get(id, type, options).then((request) => request(this.axios, this.basePath));
+    DocumentsApi.prototype.apiDocumentsIdContentB64Get = function (id, type, options) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdContentB64Get(id, type, options).then(function (request) { return request(_this.axios, _this.basePath); })];
+            });
         });
-    }
+    };
     /**
      *
      * @summary Downloads a specific version type of the document.
@@ -1687,11 +2346,14 @@ class DocumentsApi extends base_1.BaseAPI {
      * @throws {RequiredError}
      * @memberof DocumentsApi
      */
-    apiDocumentsIdContentGet(id, type, options) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdContentGet(id, type, options).then((request) => request(this.axios, this.basePath));
+    DocumentsApi.prototype.apiDocumentsIdContentGet = function (id, type, options) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdContentGet(id, type, options).then(function (request) { return request(_this.axios, _this.basePath); })];
+            });
         });
-    }
+    };
     /**
      *
      * @summary Deletes a specific document using it's id.
@@ -1700,11 +2362,14 @@ class DocumentsApi extends base_1.BaseAPI {
      * @throws {RequiredError}
      * @memberof DocumentsApi
      */
-    apiDocumentsIdDelete(id, options) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdDelete(id, options).then((request) => request(this.axios, this.basePath));
+    DocumentsApi.prototype.apiDocumentsIdDelete = function (id, options) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdDelete(id, options).then(function (request) { return request(_this.axios, _this.basePath); })];
+            });
         });
-    }
+    };
     /**
      * The flow of the document will be restarted.
      * @summary Adds a new version for an envelope.
@@ -1714,11 +2379,14 @@ class DocumentsApi extends base_1.BaseAPI {
      * @throws {RequiredError}
      * @memberof DocumentsApi
      */
-    apiDocumentsIdEnvelopeVersionsPost(id, body, options) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdEnvelopeVersionsPost(id, body, options).then((request) => request(this.axios, this.basePath));
+    DocumentsApi.prototype.apiDocumentsIdEnvelopeVersionsPost = function (id, body, options) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdEnvelopeVersionsPost(id, body, options).then(function (request) { return request(_this.axios, _this.basePath); })];
+            });
         });
-    }
+    };
     /**
      *
      * @summary Updates the document's flow.
@@ -1728,11 +2396,14 @@ class DocumentsApi extends base_1.BaseAPI {
      * @throws {RequiredError}
      * @memberof DocumentsApi
      */
-    apiDocumentsIdFlowPost(id, body, options) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdFlowPost(id, body, options).then((request) => request(this.axios, this.basePath));
+    DocumentsApi.prototype.apiDocumentsIdFlowPost = function (id, body, options) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdFlowPost(id, body, options).then(function (request) { return request(_this.axios, _this.basePath); })];
+            });
         });
-    }
+    };
     /**
      *
      * @summary Moves a document to a folder.
@@ -1742,11 +2413,14 @@ class DocumentsApi extends base_1.BaseAPI {
      * @throws {RequiredError}
      * @memberof DocumentsApi
      */
-    apiDocumentsIdFolderPost(id, body, options) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdFolderPost(id, body, options).then((request) => request(this.axios, this.basePath));
+    DocumentsApi.prototype.apiDocumentsIdFolderPost = function (id, body, options) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdFolderPost(id, body, options).then(function (request) { return request(_this.axios, _this.basePath); })];
+            });
         });
-    }
+    };
     /**
      *
      * @summary Retrieves the document's details.
@@ -1755,11 +2429,14 @@ class DocumentsApi extends base_1.BaseAPI {
      * @throws {RequiredError}
      * @memberof DocumentsApi
      */
-    apiDocumentsIdGet(id, options) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdGet(id, options).then((request) => request(this.axios, this.basePath));
+    DocumentsApi.prototype.apiDocumentsIdGet = function (id, options) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdGet(id, options).then(function (request) { return request(_this.axios, _this.basePath); })];
+            });
         });
-    }
+    };
     /**
      * The notified emails are the ones that will be notified after the document is concluded.
      * @summary Updates the document's notified emails
@@ -1769,11 +2446,14 @@ class DocumentsApi extends base_1.BaseAPI {
      * @throws {RequiredError}
      * @memberof DocumentsApi
      */
-    apiDocumentsIdNotifiedEmailsPut(id, body, options) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdNotifiedEmailsPut(id, body, options).then((request) => request(this.axios, this.basePath));
+    DocumentsApi.prototype.apiDocumentsIdNotifiedEmailsPut = function (id, body, options) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdNotifiedEmailsPut(id, body, options).then(function (request) { return request(_this.axios, _this.basePath); })];
+            });
         });
-    }
+    };
     /**
      * The document's flow will pause and can only be resumed by adding a new version of the document (see <a href=\"#operations-Documents-post_api_documents__id__versions\">Add Version API</a>).
      * @summary Refuses a document by providing a reason for the refusal.
@@ -1783,11 +2463,14 @@ class DocumentsApi extends base_1.BaseAPI {
      * @throws {RequiredError}
      * @memberof DocumentsApi
      */
-    apiDocumentsIdRefusalPost(id, body, options) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdRefusalPost(id, body, options).then((request) => request(this.axios, this.basePath));
+    DocumentsApi.prototype.apiDocumentsIdRefusalPost = function (id, body, options) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdRefusalPost(id, body, options).then(function (request) { return request(_this.axios, _this.basePath); })];
+            });
         });
-    }
+    };
     /**
      * This will perform the same validations as verifying the document signatures using the verification code.
      * @summary Retrieves the details of the document's signatures.
@@ -1796,13 +2479,16 @@ class DocumentsApi extends base_1.BaseAPI {
      * @throws {RequiredError}
      * @memberof DocumentsApi
      */
-    apiDocumentsIdSignaturesDetailsGet(id, options) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdSignaturesDetailsGet(id, options).then((request) => request(this.axios, this.basePath));
+    DocumentsApi.prototype.apiDocumentsIdSignaturesDetailsGet = function (id, options) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdSignaturesDetailsGet(id, options).then(function (request) { return request(_this.axios, _this.basePath); })];
+            });
         });
-    }
+    };
     /**
-     * The URL does not require authentication and will be available for 1 hour.  <br /><ul><li><b>Original</b>: the original file provided when the document was created.</li><li><b>OriginalWithMarks</b>: the original file with all marks added (for example when an user approves the document and includes its signature image).</li><li><b>PrinterFriendlyVersion</b>: if the original document is PDF, the version with marks and a appended signature manifest, otherwise a PDF file with the signature manifest.</li><li><b>Signatures</b>: if the original document is PDF, the signed PDF file, otherwise the .p7s file.</li></ul>
+     * The URL does not require authentication and will be available for 1 hour.    <ul><li><b>Original</b>: the original file provided when the document was created.</li><li><b>OriginalWithMarks</b>: the original file with all marks added (for example when an user approves the document and includes its signature image).</li><li><b>PrinterFriendlyVersion</b>: if the original document is PDF, the version with marks and a appended signature manifest, otherwise a PDF file with the signature manifest.</li><li><b>Signatures</b>: if the original document is PDF, the signed PDF file, otherwise the .p7s file.</li></ul>
      * @summary Generates a URL (ticket) to download a specific version type of the document.
      * @param {string} id Document id
      * @param {DocumentTicketType} [type] The version type to download
@@ -1811,13 +2497,16 @@ class DocumentsApi extends base_1.BaseAPI {
      * @throws {RequiredError}
      * @memberof DocumentsApi
      */
-    apiDocumentsIdTicketGet(id, type, preview, options) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdTicketGet(id, type, preview, options).then((request) => request(this.axios, this.basePath));
+    DocumentsApi.prototype.apiDocumentsIdTicketGet = function (id, type, preview, options) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdTicketGet(id, type, preview, options).then(function (request) { return request(_this.axios, _this.basePath); })];
+            });
         });
-    }
+    };
     /**
-     * The flow of the document will be restarted. <br /><br />  If the document was created as an envelope, please use the <a href=\"#operations-Documents-post_api_documents__id__envelope_versions\">Add Envelope Version API</a>
+     * The flow of the document will be restarted.       If the document was created as an envelope, please use the <a href=\"#operations-Documents-post_api_documents__id__envelope_versions\">Add Envelope Version API</a>
      * @summary Adds a new version for the document.
      * @param {string} id
      * @param {DocumentsDocumentAddVersionRequest} [body]
@@ -1825,11 +2514,14 @@ class DocumentsApi extends base_1.BaseAPI {
      * @throws {RequiredError}
      * @memberof DocumentsApi
      */
-    apiDocumentsIdVersionsPost(id, body, options) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdVersionsPost(id, body, options).then((request) => request(this.axios, this.basePath));
+    DocumentsApi.prototype.apiDocumentsIdVersionsPost = function (id, body, options) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsIdVersionsPost(id, body, options).then(function (request) { return request(_this.axios, _this.basePath); })];
+            });
         });
-    }
+    };
     /**
      *
      * @summary Validates each signature in a document using the verification code
@@ -1838,24 +2530,30 @@ class DocumentsApi extends base_1.BaseAPI {
      * @throws {RequiredError}
      * @memberof DocumentsApi
      */
-    apiDocumentsKeysKeySignaturesGet(key, options) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsKeysKeySignaturesGet(key, options).then((request) => request(this.axios, this.basePath));
+    DocumentsApi.prototype.apiDocumentsKeysKeySignaturesGet = function (key, options) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsKeysKeySignaturesGet(key, options).then(function (request) { return request(_this.axios, _this.basePath); })];
+            });
         });
-    }
+    };
     /**
-     * Before calling this API you need to upload the file(s) using the <a href=\"#operations-Upload-post_api_uploads\">Upload API</a> or the <a href=\"#operations-Upload-post_api_uploads_bytes\">Upload Bytes API</a>. <br /><br />  When creating a big batch of documents, it is recommended to send multiple requests instead of one big request. For instance, if you want to create 100 documents,   send 10 requests of 10 documents. In this case it is recommended to use the disablePendingActionNotifications option and, when all requests are finished, use the   <a href=\"#operations-Notifications-post_api_users_notify_pending\">users/notify-pending API</a> to notify participants.<br /><br />  Returns a list of ids of each document created.
+     * Before calling this API you need to upload the file(s) using the <a href=\"#operations-Upload-post_api_uploads\">Upload API</a> or the <a href=\"#operations-Upload-post_api_uploads_bytes\">Upload Bytes API</a>.       When creating a big batch of documents, it is recommended to send multiple requests instead of one big request. For instance, if you want to create 100 documents,   send 10 requests of 10 documents. In this case it is recommended to use the disablePendingActionNotifications option and, when all requests are finished, use the   <a href=\"#operations-Notifications-post_api_users_notify_pending\">users/notify-pending API</a> to notify participants.      Returns a list of ids of each document created.
      * @summary Creates one or multiple documents.
      * @param {DocumentsCreateDocumentRequest} [body]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof DocumentsApi
      */
-    apiDocumentsPost(body, options) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsPost(body, options).then((request) => request(this.axios, this.basePath));
+    DocumentsApi.prototype.apiDocumentsPost = function (body, options) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsPost(body, options).then(function (request) { return request(_this.axios, _this.basePath); })];
+            });
         });
-    }
+    };
     /**
      * Before calling this API you need to upload the file using the <a href=\"#operations-Upload-post_api_uploads\">Upload API</a> or the <a href=\"#operations-Upload-post_api_uploads_bytes\">Upload Bytes API</a>.
      * @summary Validates each signature in the uploaded document
@@ -1864,10 +2562,14 @@ class DocumentsApi extends base_1.BaseAPI {
      * @throws {RequiredError}
      * @memberof DocumentsApi
      */
-    apiDocumentsValidateSignaturesPost(body, options) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsValidateSignaturesPost(body, options).then((request) => request(this.axios, this.basePath));
+    DocumentsApi.prototype.apiDocumentsValidateSignaturesPost = function (body, options) {
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            return __generator(this, function (_a) {
+                return [2 /*return*/, (0, exports.DocumentsApiFp)(this.configuration).apiDocumentsValidateSignaturesPost(body, options).then(function (request) { return request(_this.axios, _this.basePath); })];
+            });
         });
-    }
-}
+    };
+    return DocumentsApi;
+}(base_1.BaseAPI));
 exports.DocumentsApi = DocumentsApi;
