@@ -1,11 +1,45 @@
-# signerNodeClient
-This repository stores the client library in Node.js for the [Lacuna Signer API](https://signer-lac.azurewebsites.net/swagger/index.html) and was made using the [swagger codegen library](https://swagger.io/tools/swagger-codegen/) along with other minor manual changes. This library was made using Node v.19.0.0.
+## signer-node-client@1.1.0
 
-## Building
-In order to publish this library, you must first run `npm install` and `npm run build`, which will install dependencies and trigger the internal build.
-## Publishing
-After building, you may proceed running the following command:
+This generator creates TypeScript/JavaScript client that utilizes [axios](https://github.com/axios/axios). The generated Node module can be used in the following environments:
+
+Environment
+* Node.js
+* Webpack
+* Browserify
+
+Language level
+* ES5 - you must have a Promises/A+ library installed
+* ES6
+
+Module system
+* CommonJS
+* ES6 module system
+
+It can be used in both TypeScript and JavaScript. In TypeScript, the definition should be automatically resolved via `package.json`. ([Reference](http://www.typescriptlang.org/docs/handbook/typings-for-npm-packages.html))
+
+### Building
+
+To build and compile the typescript sources to javascript use:
 ```
-npm publish
+npm install
+npm run build
 ```
-Make sure you have the correct credentials to publish this library. You might also fork this repository if you want to publish another version with modifications of this library.
+
+### Publishing
+
+First build the package then run ```npm publish```
+
+### Consuming
+
+navigate to the folder of your consuming project and run one of the following commands.
+
+_published:_
+
+```
+npm install signer-node-client@1.1.0 --save
+```
+
+_unPublished (not recommended):_
+
+```
+npm install PATH_TO_GENERATED_PACKAGE --save

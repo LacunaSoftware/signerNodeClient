@@ -2,9 +2,9 @@
 /* eslint-disable */
 /**
  * Dropsigner
- * <!--------------------------------------------------------------------------------------------------------------------->    <h2>Authentication</h2>    <p>   In order to call this APIs, you will need an <strong>API key</strong>. Set the API key in the header <span class=\"code\">X-Api-Key</span>:  </p>    <pre>X-Api-Key: your-app|xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</pre>    <!--------------------------------------------------------------------------------------------------------------------->  <br />    <h2>HTTP Codes</h2>    <p>   The APIs will return the following HTTP codes:  </p>    <table>   <thead>    <tr>     <th>Code</th>     <th>Description</th>    </tr>   </thead>   <tbody>    <tr>     <td><strong class=\"model-title\">200 (OK)</strong></td>     <td>Request processed successfully. The response is different for each API, please refer to the operation's documentation</td>    </tr>    <tr>     <td><strong class=\"model-title\">400 (Bad Request)</strong></td>     <td>Syntax error. For instance, when a required field was not provided</td>    </tr>    <tr>     <td><strong class=\"model-title\">401 (Unauthorized)</strong></td>     <td>API key not provided or invalid</td>    </tr>    <tr>     <td><strong class=\"model-title\">403 (Forbidden)</strong></td>     <td>API key is valid, but the application has insufficient permissions to complete the requested operation</td>    </tr>    <tr>     <td><strong class=\"model-title\">422 (Unprocessable Entity)</strong></td>     <td>API error. The response is as defined in <a href=\"#model-ErrorModel\">ErrorModel</a></td>    </tr>   </tbody>  </table>    <br />    <h3>Error Codes</h3>    <p>Some of the error codes returned in a 422 response are provided bellow*:</p>    <ul>   <li>CertificateNotFound</li>   <li>DocumentNotFound</li>   <li>FolderNotFound</li>   <li>CpfMismatch</li>   <li>CpfNotExpected</li>   <li>InvalidFlowAction</li>   <li>DocumentInvalidKey</li>  </ul>    <p style=\"font-size: 0.9em\">   *The codes shown above are the main error codes. Nonetheless, this list is not comprehensive. New codes may be added anytime without previous warning.  </p>    <!--------------------------------------------------------------------------------------------------------------------->    <br />    <h2>Webhooks</h2>    <p>   It is recomended to subscribe to Webhook events <strong>instead</strong> of polling APIs. To do so, enable webhooks and register an URL that will receive a POST request   whenever one of the events bellow occur.  </p>  <p>   All requests have the format described in <a href=\"#model-Webhooks.WebhookModel\">Webhooks.WebhookModel</a>.   The data field varies according to the webhook event type:  </p>      <table>   <thead>    <tr>     <th>Event type</th>     <th>Description</th>     <th>Payload</th>    </tr>   </thead>   <tbody>    <tr>     <td><strong class=\"model-title\">DocumentSigned</strong></td>     <td>Triggered when a document is signed.</td>     <td><a href=\"#model-Webhooks.DocumentSignedModel\">Webhooks.DocumentSignedModel</a></td>    </tr>    <tr>     <td><strong class=\"model-title\">DocumentApproved</strong></td>     <td>Triggered when a document is approved.</td>     <td><a href=\"#model-Webhooks.DocumentApprovedModel\">Webhooks.DocumentApprovedModel</a></td>    </tr>    <tr>     <td><strong class=\"model-title\">DocumentRefused</strong></td>     <td>Triggered when a document is refused.</td>     <td><a href=\"#model-Webhooks.DocumentRefusedModel\">Webhooks.DocumentRefusedModel</a></td>    </tr>    <tr>     <td><strong class=\"model-title\">DocumentConcluded</strong></td>     <td>Triggered when the flow of a document is concluded.</td>     <td><a href=\"#model-Webhooks.DocumentConcludedModel\">Webhooks.DocumentConcludedModel</a></td>    </tr>    <tr>     <td><strong class=\"model-title\">DocumentCanceled</strong></td>     <td>Triggered when the document is canceled.</td>     <td><a href=\"#model-Webhooks.DocumentCanceledModel\">Webhooks.DocumentCanceledModel</a></td>    </tr>    <tr>     <td><strong class=\"model-title\">DocumentsCreated (v1.50.0)</strong></td>     <td>Triggered when one or more documents are created.</td>     <td><a href=\"#model-Webhooks.DocumentsCreatedModel\">Webhooks.DocumentsCreatedModel</a></td>    </tr>   </tbody>  </table>    <p>   To register your application URL and enable Webhooks, access the integrations section in your <a href=\"/private/organizations\" target=\"_blank\">organization's details page</a>.  </p>  
+ * <!--------------------------------------------------------------------------------------------------------------------->  <h2>Authentication</h2>  <p>  In order to call this APIs, you will need an <strong>API key</strong>. Set the API key in the header <span class=\"code\">X-Api-Key</span>: </p>  <pre>X-Api-Key: your-app|xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</pre>  <!---------------------------------------------------------------------------------------------------------------------> <br />  <h2>HTTP Codes</h2>  <p>  The APIs will return the following HTTP codes: </p>  <table>  <thead>   <tr>    <th>Code</th>    <th>Description</th>   </tr>  </thead>  <tbody>   <tr>    <td><strong class=\"model-title\">200 (OK)</strong></td>    <td>Request processed successfully. The response is different for each API, please refer to the operation's documentation</td>   </tr>   <tr>    <td><strong class=\"model-title\">400 (Bad Request)</strong></td>    <td>Syntax error. For instance, when a required field was not provided</td>   </tr>   <tr>    <td><strong class=\"model-title\">401 (Unauthorized)</strong></td>    <td>API key not provided or invalid</td>   </tr>   <tr>    <td><strong class=\"model-title\">403 (Forbidden)</strong></td>    <td>API key is valid, but the application has insufficient permissions to complete the requested operation</td>   </tr>   <tr>    <td><strong class=\"model-title\">422 (Unprocessable Entity)</strong></td>    <td>API error. The response is as defined in <a href=\"#model-ErrorModel\">ErrorModel</a></td>   </tr>  </tbody> </table>  <br />  <h3>Error Codes</h3>  <p>Some of the error codes returned in a 422 response are provided bellow*:</p>  <ul>  <li>CertificateNotFound</li>  <li>DocumentNotFound</li>  <li>FolderNotFound</li>  <li>CpfMismatch</li>  <li>CpfNotExpected</li>  <li>InvalidFlowAction</li>  <li>DocumentInvalidKey</li> </ul>  <p style=\"font-size: 0.9em\">  *The codes shown above are the main error codes. Nonetheless, this list is not comprehensive. New codes may be added anytime without previous warning. </p>  <!--------------------------------------------------------------------------------------------------------------------->  <br />  <h2>Webhooks</h2>  <p>  It is recomended to subscribe to Webhook events <strong>instead</strong> of polling APIs. To do so, enable webhooks and register an URL that will receive a POST request  whenever one of the events bellow occur. </p> <p>  All requests have the format described in <a href=\"#model-Webhooks.WebhookModel\">Webhooks.WebhookModel</a>.  The data field varies according to the webhook event type: </p>   <table>  <thead>   <tr>    <th>Event type</th>    <th>Description</th>    <th>Payload</th>   </tr>  </thead>  <tbody>   <tr>    <td><strong class=\"model-title\">DocumentSigned</strong></td>    <td>Triggered when a document is signed.</td>    <td><a href=\"#model-Webhooks.DocumentSignedModel\">Webhooks.DocumentSignedModel</a></td>   </tr>   <tr>    <td><strong class=\"model-title\">DocumentApproved</strong></td>    <td>Triggered when a document is approved.</td>    <td><a href=\"#model-Webhooks.DocumentApprovedModel\">Webhooks.DocumentApprovedModel</a></td>   </tr>   <tr>    <td><strong class=\"model-title\">DocumentRefused</strong></td>    <td>Triggered when a document is refused.</td>    <td><a href=\"#model-Webhooks.DocumentRefusedModel\">Webhooks.DocumentRefusedModel</a></td>   </tr>   <tr>    <td><strong class=\"model-title\">DocumentConcluded</strong></td>    <td>Triggered when the flow of a document is concluded.</td>    <td><a href=\"#model-Webhooks.DocumentConcludedModel\">Webhooks.DocumentConcludedModel</a></td>   </tr>   <tr>    <td><strong class=\"model-title\">DocumentCanceled</strong></td>    <td>Triggered when the document is canceled.</td>    <td><a href=\"#model-Webhooks.DocumentCanceledModel\">Webhooks.DocumentCanceledModel</a></td>   </tr>   <tr>    <td><strong class=\"model-title\">DocumentExpired (v1.33.0)</strong></td>    <td>Triggered when the document is expired.</td>    <td><a href=\"#model-Webhooks.DocumentExpiredModel\">Webhooks.DocumentExpiredModel</a></td>   </tr>   <tr>    <td><strong class=\"model-title\">DocumentsCreated (v1.50.0)</strong></td>    <td>Triggered when one or more documents are created.</td>    <td><a href=\"#model-Webhooks.DocumentsCreatedModel\">Webhooks.DocumentsCreatedModel</a></td>   </tr>   <tr>    <td><strong class=\"model-title\">DocumentsDeleted (v1.78.0)</strong></td>    <td>Triggered when one or more documents are deleted.</td>    <td><a href=\"#model-Webhooks.DocumentsDeletedModel\">Webhooks.DocumentsDeletedModel</a></td>   </tr>  </tbody> </table>  <p>  To register your application URL and enable Webhooks, access the integrations section in your <a href=\"/private/organizations\" target=\"_blank\">organization's details page</a>. </p> 
  *
- * OpenAPI spec version: 1.55.1
+ * OpenAPI spec version: 2.6.0
  * 
  *
  * NOTE: This class is auto generated by the swagger code generator program.
@@ -112,7 +112,8 @@ export const DocumentsApiAxiosParamCreator = function (configuration?: Configura
          * @param {DocumentQueryTypes} [queryType] 
          * @param {string} [participantQ] Query to filter by participant
          * @param {ParticipantQueryTypes} [participantQueryType] 
-         * @param {string} [tags] Label/value pairs are separated by \&quot;|\&quot; (optional) and Tags separated by \&quot;,\&quot;. Only the first 10 pairs will be considered.&lt;br /&gt;To search by tag value only, do not use the \&quot;|\&quot;.
+         * @param {string} [tags] Label/value pairs are separated by \&quot;|\&quot; (optional) and Tags separated by \&quot;,\&quot;. Only the first 10 pairs will be considered.  To search by tag value only, do not use the \&quot;|\&quot;.
+         * @param {boolean} [isDeleted] Returns deleted documents that had the specified document status when deleted.
          * @param {string} [Q] Query to filter items.
          * @param {number} [limit] Number of items to return.
          * @param {number} [offset] The offset of the searched page (starting with 0).
@@ -120,7 +121,7 @@ export const DocumentsApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiDocumentsGet: async (isConcluded?: boolean, status?: DocumentFilterStatus, folderId?: string, folderType?: FolderType, documentType?: DocumentTypes, filterByDocumentType?: boolean, filterByPendingSignature?: boolean, queryType?: DocumentQueryTypes, participantQ?: string, participantQueryType?: ParticipantQueryTypes, tags?: string, Q?: string, limit?: number, offset?: number, order?: PaginationOrders, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiDocumentsGet: async (isConcluded?: boolean, status?: DocumentFilterStatus, folderId?: string, folderType?: FolderType, documentType?: DocumentTypes, filterByDocumentType?: boolean, filterByPendingSignature?: boolean, queryType?: DocumentQueryTypes, participantQ?: string, participantQueryType?: ParticipantQueryTypes, tags?: string, isDeleted?: boolean, Q?: string, limit?: number, offset?: number, order?: PaginationOrders, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/documents`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, 'https://example.com');
@@ -184,6 +185,10 @@ export const DocumentsApiAxiosParamCreator = function (configuration?: Configura
                 localVarQueryParameter['Tags'] = tags;
             }
 
+            if (isDeleted !== undefined) {
+                localVarQueryParameter['IsDeleted'] = isDeleted;
+            }
+
             if (Q !== undefined) {
                 localVarQueryParameter['Q'] = Q;
             }
@@ -217,7 +222,7 @@ export const DocumentsApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * This API will return an URL that allows an user to sign or approve the document without having to wait to receive an email notification.<br /><br />  If the document has multiple pending actions, this API will return the URL of the first pending action for the matched user.<br /><br />  After the action has been completed, you may call this API again to retrieve the URL for the next action (if any).<br /><br />  Please note that using the URL returned will be recorded in the evidences of the action as an Application Authentication.<br />
+         * This API will return an URL that allows an user to sign or approve the document without having to wait to receive an email notification.      If the document has multiple pending actions, this API will return the URL of the first pending action for the matched user.      After the action has been completed, you may call this API again to retrieve the URL for the next action (if any).      Please note that using the URL returned will be recorded in the evidences of the action as an Application Authentication.  
          * @summary Retrieves an URL to redirect the user to the first pending action of the document.
          * @param {string} id Document Id
          * @param {DocumentsActionUrlRequest} [body] 
@@ -838,7 +843,7 @@ export const DocumentsApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * The URL does not require authentication and will be available for 1 hour.  <br /><ul><li><b>Original</b>: the original file provided when the document was created.</li><li><b>OriginalWithMarks</b>: the original file with all marks added (for example when an user approves the document and includes its signature image).</li><li><b>PrinterFriendlyVersion</b>: if the original document is PDF, the version with marks and a appended signature manifest, otherwise a PDF file with the signature manifest.</li><li><b>Signatures</b>: if the original document is PDF, the signed PDF file, otherwise the .p7s file.</li></ul>
+         * The URL does not require authentication and will be available for 1 hour.    <ul><li><b>Original</b>: the original file provided when the document was created.</li><li><b>OriginalWithMarks</b>: the original file with all marks added (for example when an user approves the document and includes its signature image).</li><li><b>PrinterFriendlyVersion</b>: if the original document is PDF, the version with marks and a appended signature manifest, otherwise a PDF file with the signature manifest.</li><li><b>Signatures</b>: if the original document is PDF, the signed PDF file, otherwise the .p7s file.</li></ul>
          * @summary Generates a URL (ticket) to download a specific version type of the document.
          * @param {string} id Document id
          * @param {DocumentTicketType} [type] The version type to download
@@ -896,7 +901,7 @@ export const DocumentsApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * The flow of the document will be restarted. <br /><br />  If the document was created as an envelope, please use the <a href=\"#operations-Documents-post_api_documents__id__envelope_versions\">Add Envelope Version API</a>
+         * The flow of the document will be restarted.       If the document was created as an envelope, please use the <a href=\"#operations-Documents-post_api_documents__id__envelope_versions\">Add Envelope Version API</a>
          * @summary Adds a new version for the document.
          * @param {string} id 
          * @param {DocumentsDocumentAddVersionRequest} [body] 
@@ -997,7 +1002,7 @@ export const DocumentsApiAxiosParamCreator = function (configuration?: Configura
             };
         },
         /**
-         * Before calling this API you need to upload the file(s) using the <a href=\"#operations-Upload-post_api_uploads\">Upload API</a> or the <a href=\"#operations-Upload-post_api_uploads_bytes\">Upload Bytes API</a>. <br /><br />  When creating a big batch of documents, it is recommended to send multiple requests instead of one big request. For instance, if you want to create 100 documents,   send 10 requests of 10 documents. In this case it is recommended to use the disablePendingActionNotifications option and, when all requests are finished, use the   <a href=\"#operations-Notifications-post_api_users_notify_pending\">users/notify-pending API</a> to notify participants.<br /><br />  Returns a list of ids of each document created.
+         * Before calling this API you need to upload the file(s) using the <a href=\"#operations-Upload-post_api_uploads\">Upload API</a> or the <a href=\"#operations-Upload-post_api_uploads_bytes\">Upload Bytes API</a>.       When creating a big batch of documents, it is recommended to send multiple requests instead of one big request. For instance, if you want to create 100 documents,   send 10 requests of 10 documents. In this case it is recommended to use the disablePendingActionNotifications option and, when all requests are finished, use the   <a href=\"#operations-Notifications-post_api_users_notify_pending\">users/notify-pending API</a> to notify participants.      Returns a list of ids of each document created.
          * @summary Creates one or multiple documents.
          * @param {DocumentsCreateDocumentRequest} [body] 
          * @param {*} [options] Override http request option.
@@ -1126,7 +1131,8 @@ export const DocumentsApiFp = function(configuration?: Configuration) {
          * @param {DocumentQueryTypes} [queryType] 
          * @param {string} [participantQ] Query to filter by participant
          * @param {ParticipantQueryTypes} [participantQueryType] 
-         * @param {string} [tags] Label/value pairs are separated by \&quot;|\&quot; (optional) and Tags separated by \&quot;,\&quot;. Only the first 10 pairs will be considered.&lt;br /&gt;To search by tag value only, do not use the \&quot;|\&quot;.
+         * @param {string} [tags] Label/value pairs are separated by \&quot;|\&quot; (optional) and Tags separated by \&quot;,\&quot;. Only the first 10 pairs will be considered.  To search by tag value only, do not use the \&quot;|\&quot;.
+         * @param {boolean} [isDeleted] Returns deleted documents that had the specified document status when deleted.
          * @param {string} [Q] Query to filter items.
          * @param {number} [limit] Number of items to return.
          * @param {number} [offset] The offset of the searched page (starting with 0).
@@ -1134,15 +1140,15 @@ export const DocumentsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiDocumentsGet(isConcluded?: boolean, status?: DocumentFilterStatus, folderId?: string, folderType?: FolderType, documentType?: DocumentTypes, filterByDocumentType?: boolean, filterByPendingSignature?: boolean, queryType?: DocumentQueryTypes, participantQ?: string, participantQueryType?: ParticipantQueryTypes, tags?: string, Q?: string, limit?: number, offset?: number, order?: PaginationOrders, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<PaginatedSearchResponseDocumentsDocumentListModel>>> {
-            const localVarAxiosArgs = await DocumentsApiAxiosParamCreator(configuration).apiDocumentsGet(isConcluded, status, folderId, folderType, documentType, filterByDocumentType, filterByPendingSignature, queryType, participantQ, participantQueryType, tags, Q, limit, offset, order, options);
+        async apiDocumentsGet(isConcluded?: boolean, status?: DocumentFilterStatus, folderId?: string, folderType?: FolderType, documentType?: DocumentTypes, filterByDocumentType?: boolean, filterByPendingSignature?: boolean, queryType?: DocumentQueryTypes, participantQ?: string, participantQueryType?: ParticipantQueryTypes, tags?: string, isDeleted?: boolean, Q?: string, limit?: number, offset?: number, order?: PaginationOrders, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<PaginatedSearchResponseDocumentsDocumentListModel>>> {
+            const localVarAxiosArgs = await DocumentsApiAxiosParamCreator(configuration).apiDocumentsGet(isConcluded, status, folderId, folderType, documentType, filterByDocumentType, filterByPendingSignature, queryType, participantQ, participantQueryType, tags, isDeleted, Q, limit, offset, order, options);
             return (axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
                 const axiosRequestArgs :AxiosRequestConfig = {...localVarAxiosArgs.options, url: basePath + localVarAxiosArgs.url};
                 return axios.request(axiosRequestArgs);
             };
         },
         /**
-         * This API will return an URL that allows an user to sign or approve the document without having to wait to receive an email notification.<br /><br />  If the document has multiple pending actions, this API will return the URL of the first pending action for the matched user.<br /><br />  After the action has been completed, you may call this API again to retrieve the URL for the next action (if any).<br /><br />  Please note that using the URL returned will be recorded in the evidences of the action as an Application Authentication.<br />
+         * This API will return an URL that allows an user to sign or approve the document without having to wait to receive an email notification.      If the document has multiple pending actions, this API will return the URL of the first pending action for the matched user.      After the action has been completed, you may call this API again to retrieve the URL for the next action (if any).      Please note that using the URL returned will be recorded in the evidences of the action as an Application Authentication.  
          * @summary Retrieves an URL to redirect the user to the first pending action of the document.
          * @param {string} id Document Id
          * @param {DocumentsActionUrlRequest} [body] 
@@ -1319,7 +1325,7 @@ export const DocumentsApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * The URL does not require authentication and will be available for 1 hour.  <br /><ul><li><b>Original</b>: the original file provided when the document was created.</li><li><b>OriginalWithMarks</b>: the original file with all marks added (for example when an user approves the document and includes its signature image).</li><li><b>PrinterFriendlyVersion</b>: if the original document is PDF, the version with marks and a appended signature manifest, otherwise a PDF file with the signature manifest.</li><li><b>Signatures</b>: if the original document is PDF, the signed PDF file, otherwise the .p7s file.</li></ul>
+         * The URL does not require authentication and will be available for 1 hour.    <ul><li><b>Original</b>: the original file provided when the document was created.</li><li><b>OriginalWithMarks</b>: the original file with all marks added (for example when an user approves the document and includes its signature image).</li><li><b>PrinterFriendlyVersion</b>: if the original document is PDF, the version with marks and a appended signature manifest, otherwise a PDF file with the signature manifest.</li><li><b>Signatures</b>: if the original document is PDF, the signed PDF file, otherwise the .p7s file.</li></ul>
          * @summary Generates a URL (ticket) to download a specific version type of the document.
          * @param {string} id Document id
          * @param {DocumentTicketType} [type] The version type to download
@@ -1335,7 +1341,7 @@ export const DocumentsApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * The flow of the document will be restarted. <br /><br />  If the document was created as an envelope, please use the <a href=\"#operations-Documents-post_api_documents__id__envelope_versions\">Add Envelope Version API</a>
+         * The flow of the document will be restarted.       If the document was created as an envelope, please use the <a href=\"#operations-Documents-post_api_documents__id__envelope_versions\">Add Envelope Version API</a>
          * @summary Adds a new version for the document.
          * @param {string} id 
          * @param {DocumentsDocumentAddVersionRequest} [body] 
@@ -1364,7 +1370,7 @@ export const DocumentsApiFp = function(configuration?: Configuration) {
             };
         },
         /**
-         * Before calling this API you need to upload the file(s) using the <a href=\"#operations-Upload-post_api_uploads\">Upload API</a> or the <a href=\"#operations-Upload-post_api_uploads_bytes\">Upload Bytes API</a>. <br /><br />  When creating a big batch of documents, it is recommended to send multiple requests instead of one big request. For instance, if you want to create 100 documents,   send 10 requests of 10 documents. In this case it is recommended to use the disablePendingActionNotifications option and, when all requests are finished, use the   <a href=\"#operations-Notifications-post_api_users_notify_pending\">users/notify-pending API</a> to notify participants.<br /><br />  Returns a list of ids of each document created.
+         * Before calling this API you need to upload the file(s) using the <a href=\"#operations-Upload-post_api_uploads\">Upload API</a> or the <a href=\"#operations-Upload-post_api_uploads_bytes\">Upload Bytes API</a>.       When creating a big batch of documents, it is recommended to send multiple requests instead of one big request. For instance, if you want to create 100 documents,   send 10 requests of 10 documents. In this case it is recommended to use the disablePendingActionNotifications option and, when all requests are finished, use the   <a href=\"#operations-Notifications-post_api_users_notify_pending\">users/notify-pending API</a> to notify participants.      Returns a list of ids of each document created.
          * @summary Creates one or multiple documents.
          * @param {DocumentsCreateDocumentRequest} [body] 
          * @param {*} [options] Override http request option.
@@ -1423,7 +1429,8 @@ export const DocumentsApiFactory = function (configuration?: Configuration, base
          * @param {DocumentQueryTypes} [queryType] 
          * @param {string} [participantQ] Query to filter by participant
          * @param {ParticipantQueryTypes} [participantQueryType] 
-         * @param {string} [tags] Label/value pairs are separated by \&quot;|\&quot; (optional) and Tags separated by \&quot;,\&quot;. Only the first 10 pairs will be considered.&lt;br /&gt;To search by tag value only, do not use the \&quot;|\&quot;.
+         * @param {string} [tags] Label/value pairs are separated by \&quot;|\&quot; (optional) and Tags separated by \&quot;,\&quot;. Only the first 10 pairs will be considered.  To search by tag value only, do not use the \&quot;|\&quot;.
+         * @param {boolean} [isDeleted] Returns deleted documents that had the specified document status when deleted.
          * @param {string} [Q] Query to filter items.
          * @param {number} [limit] Number of items to return.
          * @param {number} [offset] The offset of the searched page (starting with 0).
@@ -1431,11 +1438,11 @@ export const DocumentsApiFactory = function (configuration?: Configuration, base
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiDocumentsGet(isConcluded?: boolean, status?: DocumentFilterStatus, folderId?: string, folderType?: FolderType, documentType?: DocumentTypes, filterByDocumentType?: boolean, filterByPendingSignature?: boolean, queryType?: DocumentQueryTypes, participantQ?: string, participantQueryType?: ParticipantQueryTypes, tags?: string, Q?: string, limit?: number, offset?: number, order?: PaginationOrders, options?: AxiosRequestConfig): Promise<AxiosResponse<PaginatedSearchResponseDocumentsDocumentListModel>> {
-            return DocumentsApiFp(configuration).apiDocumentsGet(isConcluded, status, folderId, folderType, documentType, filterByDocumentType, filterByPendingSignature, queryType, participantQ, participantQueryType, tags, Q, limit, offset, order, options).then((request) => request(axios, basePath));
+        async apiDocumentsGet(isConcluded?: boolean, status?: DocumentFilterStatus, folderId?: string, folderType?: FolderType, documentType?: DocumentTypes, filterByDocumentType?: boolean, filterByPendingSignature?: boolean, queryType?: DocumentQueryTypes, participantQ?: string, participantQueryType?: ParticipantQueryTypes, tags?: string, isDeleted?: boolean, Q?: string, limit?: number, offset?: number, order?: PaginationOrders, options?: AxiosRequestConfig): Promise<AxiosResponse<PaginatedSearchResponseDocumentsDocumentListModel>> {
+            return DocumentsApiFp(configuration).apiDocumentsGet(isConcluded, status, folderId, folderType, documentType, filterByDocumentType, filterByPendingSignature, queryType, participantQ, participantQueryType, tags, isDeleted, Q, limit, offset, order, options).then((request) => request(axios, basePath));
         },
         /**
-         * This API will return an URL that allows an user to sign or approve the document without having to wait to receive an email notification.<br /><br />  If the document has multiple pending actions, this API will return the URL of the first pending action for the matched user.<br /><br />  After the action has been completed, you may call this API again to retrieve the URL for the next action (if any).<br /><br />  Please note that using the URL returned will be recorded in the evidences of the action as an Application Authentication.<br />
+         * This API will return an URL that allows an user to sign or approve the document without having to wait to receive an email notification.      If the document has multiple pending actions, this API will return the URL of the first pending action for the matched user.      After the action has been completed, you may call this API again to retrieve the URL for the next action (if any).      Please note that using the URL returned will be recorded in the evidences of the action as an Application Authentication.  
          * @summary Retrieves an URL to redirect the user to the first pending action of the document.
          * @param {string} id Document Id
          * @param {DocumentsActionUrlRequest} [body] 
@@ -1564,7 +1571,7 @@ export const DocumentsApiFactory = function (configuration?: Configuration, base
             return DocumentsApiFp(configuration).apiDocumentsIdSignaturesDetailsGet(id, options).then((request) => request(axios, basePath));
         },
         /**
-         * The URL does not require authentication and will be available for 1 hour.  <br /><ul><li><b>Original</b>: the original file provided when the document was created.</li><li><b>OriginalWithMarks</b>: the original file with all marks added (for example when an user approves the document and includes its signature image).</li><li><b>PrinterFriendlyVersion</b>: if the original document is PDF, the version with marks and a appended signature manifest, otherwise a PDF file with the signature manifest.</li><li><b>Signatures</b>: if the original document is PDF, the signed PDF file, otherwise the .p7s file.</li></ul>
+         * The URL does not require authentication and will be available for 1 hour.    <ul><li><b>Original</b>: the original file provided when the document was created.</li><li><b>OriginalWithMarks</b>: the original file with all marks added (for example when an user approves the document and includes its signature image).</li><li><b>PrinterFriendlyVersion</b>: if the original document is PDF, the version with marks and a appended signature manifest, otherwise a PDF file with the signature manifest.</li><li><b>Signatures</b>: if the original document is PDF, the signed PDF file, otherwise the .p7s file.</li></ul>
          * @summary Generates a URL (ticket) to download a specific version type of the document.
          * @param {string} id Document id
          * @param {DocumentTicketType} [type] The version type to download
@@ -1576,7 +1583,7 @@ export const DocumentsApiFactory = function (configuration?: Configuration, base
             return DocumentsApiFp(configuration).apiDocumentsIdTicketGet(id, type, preview, options).then((request) => request(axios, basePath));
         },
         /**
-         * The flow of the document will be restarted. <br /><br />  If the document was created as an envelope, please use the <a href=\"#operations-Documents-post_api_documents__id__envelope_versions\">Add Envelope Version API</a>
+         * The flow of the document will be restarted.       If the document was created as an envelope, please use the <a href=\"#operations-Documents-post_api_documents__id__envelope_versions\">Add Envelope Version API</a>
          * @summary Adds a new version for the document.
          * @param {string} id 
          * @param {DocumentsDocumentAddVersionRequest} [body] 
@@ -1597,7 +1604,7 @@ export const DocumentsApiFactory = function (configuration?: Configuration, base
             return DocumentsApiFp(configuration).apiDocumentsKeysKeySignaturesGet(key, options).then((request) => request(axios, basePath));
         },
         /**
-         * Before calling this API you need to upload the file(s) using the <a href=\"#operations-Upload-post_api_uploads\">Upload API</a> or the <a href=\"#operations-Upload-post_api_uploads_bytes\">Upload Bytes API</a>. <br /><br />  When creating a big batch of documents, it is recommended to send multiple requests instead of one big request. For instance, if you want to create 100 documents,   send 10 requests of 10 documents. In this case it is recommended to use the disablePendingActionNotifications option and, when all requests are finished, use the   <a href=\"#operations-Notifications-post_api_users_notify_pending\">users/notify-pending API</a> to notify participants.<br /><br />  Returns a list of ids of each document created.
+         * Before calling this API you need to upload the file(s) using the <a href=\"#operations-Upload-post_api_uploads\">Upload API</a> or the <a href=\"#operations-Upload-post_api_uploads_bytes\">Upload Bytes API</a>.       When creating a big batch of documents, it is recommended to send multiple requests instead of one big request. For instance, if you want to create 100 documents,   send 10 requests of 10 documents. In this case it is recommended to use the disablePendingActionNotifications option and, when all requests are finished, use the   <a href=\"#operations-Notifications-post_api_users_notify_pending\">users/notify-pending API</a> to notify participants.      Returns a list of ids of each document created.
          * @summary Creates one or multiple documents.
          * @param {DocumentsCreateDocumentRequest} [body] 
          * @param {*} [options] Override http request option.
@@ -1650,7 +1657,8 @@ export class DocumentsApi extends BaseAPI {
      * @param {DocumentQueryTypes} [queryType] 
      * @param {string} [participantQ] Query to filter by participant
      * @param {ParticipantQueryTypes} [participantQueryType] 
-     * @param {string} [tags] Label/value pairs are separated by \&quot;|\&quot; (optional) and Tags separated by \&quot;,\&quot;. Only the first 10 pairs will be considered.&lt;br /&gt;To search by tag value only, do not use the \&quot;|\&quot;.
+     * @param {string} [tags] Label/value pairs are separated by \&quot;|\&quot; (optional) and Tags separated by \&quot;,\&quot;. Only the first 10 pairs will be considered.  To search by tag value only, do not use the \&quot;|\&quot;.
+     * @param {boolean} [isDeleted] Returns deleted documents that had the specified document status when deleted.
      * @param {string} [Q] Query to filter items.
      * @param {number} [limit] Number of items to return.
      * @param {number} [offset] The offset of the searched page (starting with 0).
@@ -1659,11 +1667,11 @@ export class DocumentsApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DocumentsApi
      */
-    public async apiDocumentsGet(isConcluded?: boolean, status?: DocumentFilterStatus, folderId?: string, folderType?: FolderType, documentType?: DocumentTypes, filterByDocumentType?: boolean, filterByPendingSignature?: boolean, queryType?: DocumentQueryTypes, participantQ?: string, participantQueryType?: ParticipantQueryTypes, tags?: string, Q?: string, limit?: number, offset?: number, order?: PaginationOrders, options?: AxiosRequestConfig) : Promise<AxiosResponse<PaginatedSearchResponseDocumentsDocumentListModel>> {
-        return DocumentsApiFp(this.configuration).apiDocumentsGet(isConcluded, status, folderId, folderType, documentType, filterByDocumentType, filterByPendingSignature, queryType, participantQ, participantQueryType, tags, Q, limit, offset, order, options).then((request) => request(this.axios, this.basePath));
+    public async apiDocumentsGet(isConcluded?: boolean, status?: DocumentFilterStatus, folderId?: string, folderType?: FolderType, documentType?: DocumentTypes, filterByDocumentType?: boolean, filterByPendingSignature?: boolean, queryType?: DocumentQueryTypes, participantQ?: string, participantQueryType?: ParticipantQueryTypes, tags?: string, isDeleted?: boolean, Q?: string, limit?: number, offset?: number, order?: PaginationOrders, options?: AxiosRequestConfig) : Promise<AxiosResponse<PaginatedSearchResponseDocumentsDocumentListModel>> {
+        return DocumentsApiFp(this.configuration).apiDocumentsGet(isConcluded, status, folderId, folderType, documentType, filterByDocumentType, filterByPendingSignature, queryType, participantQ, participantQueryType, tags, isDeleted, Q, limit, offset, order, options).then((request) => request(this.axios, this.basePath));
     }
     /**
-     * This API will return an URL that allows an user to sign or approve the document without having to wait to receive an email notification.<br /><br />  If the document has multiple pending actions, this API will return the URL of the first pending action for the matched user.<br /><br />  After the action has been completed, you may call this API again to retrieve the URL for the next action (if any).<br /><br />  Please note that using the URL returned will be recorded in the evidences of the action as an Application Authentication.<br />
+     * This API will return an URL that allows an user to sign or approve the document without having to wait to receive an email notification.      If the document has multiple pending actions, this API will return the URL of the first pending action for the matched user.      After the action has been completed, you may call this API again to retrieve the URL for the next action (if any).      Please note that using the URL returned will be recorded in the evidences of the action as an Application Authentication.  
      * @summary Retrieves an URL to redirect the user to the first pending action of the document.
      * @param {string} id Document Id
      * @param {DocumentsActionUrlRequest} [body] 
@@ -1804,7 +1812,7 @@ export class DocumentsApi extends BaseAPI {
         return DocumentsApiFp(this.configuration).apiDocumentsIdSignaturesDetailsGet(id, options).then((request) => request(this.axios, this.basePath));
     }
     /**
-     * The URL does not require authentication and will be available for 1 hour.  <br /><ul><li><b>Original</b>: the original file provided when the document was created.</li><li><b>OriginalWithMarks</b>: the original file with all marks added (for example when an user approves the document and includes its signature image).</li><li><b>PrinterFriendlyVersion</b>: if the original document is PDF, the version with marks and a appended signature manifest, otherwise a PDF file with the signature manifest.</li><li><b>Signatures</b>: if the original document is PDF, the signed PDF file, otherwise the .p7s file.</li></ul>
+     * The URL does not require authentication and will be available for 1 hour.    <ul><li><b>Original</b>: the original file provided when the document was created.</li><li><b>OriginalWithMarks</b>: the original file with all marks added (for example when an user approves the document and includes its signature image).</li><li><b>PrinterFriendlyVersion</b>: if the original document is PDF, the version with marks and a appended signature manifest, otherwise a PDF file with the signature manifest.</li><li><b>Signatures</b>: if the original document is PDF, the signed PDF file, otherwise the .p7s file.</li></ul>
      * @summary Generates a URL (ticket) to download a specific version type of the document.
      * @param {string} id Document id
      * @param {DocumentTicketType} [type] The version type to download
@@ -1817,7 +1825,7 @@ export class DocumentsApi extends BaseAPI {
         return DocumentsApiFp(this.configuration).apiDocumentsIdTicketGet(id, type, preview, options).then((request) => request(this.axios, this.basePath));
     }
     /**
-     * The flow of the document will be restarted. <br /><br />  If the document was created as an envelope, please use the <a href=\"#operations-Documents-post_api_documents__id__envelope_versions\">Add Envelope Version API</a>
+     * The flow of the document will be restarted.       If the document was created as an envelope, please use the <a href=\"#operations-Documents-post_api_documents__id__envelope_versions\">Add Envelope Version API</a>
      * @summary Adds a new version for the document.
      * @param {string} id 
      * @param {DocumentsDocumentAddVersionRequest} [body] 
@@ -1840,7 +1848,7 @@ export class DocumentsApi extends BaseAPI {
         return DocumentsApiFp(this.configuration).apiDocumentsKeysKeySignaturesGet(key, options).then((request) => request(this.axios, this.basePath));
     }
     /**
-     * Before calling this API you need to upload the file(s) using the <a href=\"#operations-Upload-post_api_uploads\">Upload API</a> or the <a href=\"#operations-Upload-post_api_uploads_bytes\">Upload Bytes API</a>. <br /><br />  When creating a big batch of documents, it is recommended to send multiple requests instead of one big request. For instance, if you want to create 100 documents,   send 10 requests of 10 documents. In this case it is recommended to use the disablePendingActionNotifications option and, when all requests are finished, use the   <a href=\"#operations-Notifications-post_api_users_notify_pending\">users/notify-pending API</a> to notify participants.<br /><br />  Returns a list of ids of each document created.
+     * Before calling this API you need to upload the file(s) using the <a href=\"#operations-Upload-post_api_uploads\">Upload API</a> or the <a href=\"#operations-Upload-post_api_uploads_bytes\">Upload Bytes API</a>.       When creating a big batch of documents, it is recommended to send multiple requests instead of one big request. For instance, if you want to create 100 documents,   send 10 requests of 10 documents. In this case it is recommended to use the disablePendingActionNotifications option and, when all requests are finished, use the   <a href=\"#operations-Notifications-post_api_users_notify_pending\">users/notify-pending API</a> to notify participants.      Returns a list of ids of each document created.
      * @summary Creates one or multiple documents.
      * @param {DocumentsCreateDocumentRequest} [body] 
      * @param {*} [options] Override http request option.
