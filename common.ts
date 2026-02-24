@@ -13,89 +13,136 @@
  */
 
 
-export interface ConfigurationParameters {
-    apiKey?: string | Promise<string> | ((name: string) => string) | ((name: string) => Promise<string>);
-    username?: string;
-    password?: string;
-    accessToken?: string | Promise<string> | ((name?: string, scopes?: string[]) => string) | ((name?: string, scopes?: string[]) => Promise<string>);
-    basePath?: string;
-    baseOptions?: any;
-    formDataCtor?: new () => any;
+import { Configuration } from "./configuration";
+import { RequiredError, RequestArgs } from "./base";
+import { AxiosInstance, AxiosResponse } from 'axios';
+
+/**
+ *
+ * @export
+ */
+export const DUMMY_BASE_URL = 'https://example.com'
+
+/**
+ *
+ * @throws {RequiredError}
+ * @export
+ */
+export const assertParamExists = function (functionName: string, paramName: string, paramValue: unknown) {
+    if (paramValue === null || paramValue === undefined) {
+        throw new RequiredError(paramName, `Required parameter ${paramName} was null or undefined when calling ${functionName}.`);
+    }
 }
 
-export class Configuration {
-    /**
-     * parameter for apiKey security
-     * @param name security name
-     * @memberof Configuration
-     */
-    apiKey?: string | Promise<string> | ((name: string) => string) | ((name: string) => Promise<string>);
-    /**
-     * parameter for basic security
-     *
-     * @type {string}
-     * @memberof Configuration
-     */
-    username?: string;
-    /**
-     * parameter for basic security
-     *
-     * @type {string}
-     * @memberof Configuration
-     */
-    password?: string;
-    /**
-     * parameter for oauth2 security
-     * @param name security name
-     * @param scopes oauth2 scope
-     * @memberof Configuration
-     */
-    accessToken?: string | Promise<string> | ((name?: string, scopes?: string[]) => string) | ((name?: string, scopes?: string[]) => Promise<string>);
-    /**
-     * override base path
-     *
-     * @type {string}
-     * @memberof Configuration
-     */
-    basePath?: string;
-    /**
-     * base options for axios calls
-     *
-     * @type {any}
-     * @memberof Configuration
-     */
-    baseOptions?: any;
-    /**
-     * The FormData constructor that will be used to create multipart form data
-     * requests. You can inject this here so that execution environments that
-     * do not support the FormData class can still run the generated client.
-     *
-     * @type {new () => FormData}
-     */
-    formDataCtor?: new () => any;
-
-    constructor(param: ConfigurationParameters = {}) {
-        this.apiKey = param.apiKey;
-        this.username = param.username;
-        this.password = param.password;
-        this.accessToken = param.accessToken;
-        this.basePath = param.basePath;
-        this.baseOptions = param.baseOptions;
-        this.formDataCtor = param.formDataCtor;
+/**
+ *
+ * @export
+ */
+export const setApiKeyToObject = async function (object: any, keyParamName: string, configuration?: Configuration) {
+    if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue = typeof configuration.apiKey === 'function'
+            ? await configuration.apiKey(keyParamName)
+            : await configuration.apiKey;
+        object[keyParamName] = localVarApiKeyValue;
     }
+}
 
-    /**
-     * Check if the given MIME is a JSON MIME.
-     * JSON MIME examples:
-     *   application/json
-     *   application/json; charset=UTF8
-     *   APPLICATION/JSON
-     *   application/vnd.company+json
-     * @param mime - MIME (Multipurpose Internet Mail Extensions)
-     * @return True if the given MIME is JSON, false otherwise.
-     */
-    public isJsonMime(mime: string): boolean {
-        const jsonMime: RegExp = new RegExp('^(application\/json|[^;/ \t]+\/[^;/ \t]+[+]json)[ \t]*(;.*)?$', 'i');
-        return mime !== null && (jsonMime.test(mime) || mime.toLowerCase() === 'application/json-patch+json');
+/**
+ *
+ * @export
+ */
+export const setBasicAuthToObject = function (object: any, configuration?: Configuration) {
+    if (configuration && (configuration.username || configuration.password)) {
+        object["auth"] = { username: configuration.username, password: configuration.password };
     }
+}
+
+/**
+ *
+ * @export
+ */
+export const setBearerAuthToObject = async function (object: any, configuration?: Configuration) {
+    if (configuration && configuration.accessToken) {
+        const accessToken = typeof configuration.accessToken === 'function'
+            ? await configuration.accessToken()
+            : await configuration.accessToken;
+        object["Authorization"] = "Bearer " + accessToken;
+    }
+}
+
+/**
+ *
+ * @export
+ */
+export const setOAuthToObject = async function (object: any, name: string, scopes: string[], configuration?: Configuration) {
+    if (configuration && configuration.accessToken) {
+        const localVarAccessTokenValue = typeof configuration.accessToken === 'function'
+            ? await configuration.accessToken(name, scopes)
+            : await configuration.accessToken;
+        object["Authorization"] = "Bearer " + localVarAccessTokenValue;
+    }
+}
+
+function setFlattenedQueryParams(urlSearchParams: URLSearchParams, parameter: any, key: string = ""): void {
+    if (typeof parameter === "object") {
+        if (Array.isArray(parameter)) {
+            (parameter as any[]).forEach(item => setFlattenedQueryParams(urlSearchParams, item, key));
+        } 
+        else {
+            Object.keys(parameter).forEach(currentKey => 
+                setFlattenedQueryParams(urlSearchParams, parameter[currentKey], `${key}${key !== '' ? '.' : ''}${currentKey}`)
+            );
+        }
+    } 
+    else {
+        if (urlSearchParams.has(key)) {
+            urlSearchParams.append(key, parameter);
+        } 
+        else {
+            urlSearchParams.set(key, parameter);
+        }
+    }
+}
+
+/**
+ *
+ * @export
+ */
+export const setSearchParams = function (url: URL, ...objects: any[]) {
+    const searchParams = new URLSearchParams(url.search);
+    setFlattenedQueryParams(searchParams, objects);
+    url.search = searchParams.toString();
+}
+
+/**
+ *
+ * @export
+ */
+export const serializeDataIfNeeded = function (value: any, requestOptions: any, configuration?: Configuration) {
+    const nonString = typeof value !== 'string';
+    const needsSerialization = nonString && configuration && configuration.isJsonMime
+        ? configuration.isJsonMime(requestOptions.headers['Content-Type'])
+        : nonString;
+    return needsSerialization
+        ? JSON.stringify(value !== undefined ? value : {})
+        : (value || "");
+}
+
+/**
+ *
+ * @export
+ */
+export const toPathString = function (url: URL) {
+    return url.pathname + url.search + url.hash
+}
+
+/**
+ *
+ * @export
+ */
+export const createRequestFunction = function (axiosArgs: RequestArgs, globalAxios: AxiosInstance, BASE_PATH: string, configuration?: Configuration) {
+    return <T = unknown, R = AxiosResponse<T>>(axios: AxiosInstance = globalAxios, basePath: string = BASE_PATH) => {
+        const axiosRequestArgs = {...axiosArgs.options, url: (configuration?.basePath || basePath) + axiosArgs.url};
+        return axios.request<T, R>(axiosRequestArgs);
+    };
 }

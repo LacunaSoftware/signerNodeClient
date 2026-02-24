@@ -2,10 +2,10 @@
  * Signature API - Public signature endpoints (StartPublicSignature, CompletePublicSignature).
  * Not from Swagger spec - added manually to match C# client behavior.
  */
-import { AxiosResponse, AxiosInstance, AxiosRequestConfig } from 'axios';
+import { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Configuration } from '../configuration';
-import { RequestArgs, BaseAPI } from '../base';
-import { SignaturePublicStartSignatureRequest, SignaturePublicStartSignatureResponse, SignatureCompleteSignatureRequest, SignatureCompleteSignatureResponse } from '../models';
+import { BaseAPI, RequestArgs } from '../base';
+import { SignaturePublicCompleteSignatureRequest, SignaturePublicCompleteSignatureResponse, SignaturePublicStartSignatureRequest, SignaturePublicStartSignatureResponse } from '../models';
 /**
  * SignatureApi - axios parameter creator
  * @export
@@ -24,11 +24,11 @@ export declare const SignatureApiAxiosParamCreator: (configuration?: Configurati
      * Completes the public signature by submitting the signature bytes for the hash returned by StartPublicSignature.
      * @summary Complete public signature
      * @param {string} documentKey Document key (from the document action URL path)
-     * @param {SignatureCompleteSignatureRequest} [body]
+     * @param {SignaturePublicCompleteSignatureRequest} [body]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    apiDocumentKeyDocumentKeyCompletePublicSignaturePost: (documentKey: string, body?: SignatureCompleteSignatureRequest, options?: AxiosRequestConfig) => Promise<RequestArgs>;
+    apiDocumentKeyDocumentKeyCompletePublicSignaturePost: (documentKey: string, body?: SignaturePublicCompleteSignatureRequest, options?: AxiosRequestConfig) => Promise<RequestArgs>;
 };
 /**
  * SignatureApi - functional programming interface
@@ -46,11 +46,11 @@ export declare const SignatureApiFp: (configuration?: Configuration) => {
     /**
      * @summary Complete public signature
      * @param {string} documentKey Document key
-     * @param {SignatureCompleteSignatureRequest} [body]
+     * @param {SignaturePublicCompleteSignatureRequest} [body]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    completePublicSignature(documentKey: string, body?: SignatureCompleteSignatureRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<SignatureCompleteSignatureResponse>>>;
+    completePublicSignature(documentKey: string, body?: SignaturePublicCompleteSignatureRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => Promise<AxiosResponse<SignaturePublicCompleteSignatureResponse>>>;
 };
 /**
  * SignatureApi - object-oriented interface
@@ -73,10 +73,10 @@ export declare class SignatureApi extends BaseAPI {
      * Completes the public signature by submitting the signature bytes.
      * @summary Complete public signature
      * @param {string} documentKey Document key (from the document action URL path)
-     * @param {SignatureCompleteSignatureRequest} [body]
+     * @param {SignaturePublicCompleteSignatureRequest} [body]
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SignatureApi
      */
-    completePublicSignatureAsync(documentKey: string, body?: SignatureCompleteSignatureRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<SignatureCompleteSignatureResponse>>;
+    completePublicSignatureAsync(documentKey: string, body?: SignaturePublicCompleteSignatureRequest, options?: AxiosRequestConfig): Promise<AxiosResponse<SignaturePublicCompleteSignatureResponse>>;
 }

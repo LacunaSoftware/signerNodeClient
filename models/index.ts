@@ -108,16 +108,12 @@ export * from './refusal-refusal-model';
 export * from './refusal-refusal-request';
 export * from './security-contexts-authentication-types-model';
 export * from './security-contexts-security-context-simple-model';
-export * from './signature-complete-signature-request';
-export * from './signature-complete-signature-response';
 export * from './signature-datavalid-selfie-validation-response';
 export * from './signature-evidences-model';
 export * from './signature-geolocation-model';
 export * from './signature-initials-modes';
 export * from './signature-liveness3d-authentication-model';
 export * from './signature-pix-authentication-model';
-export * from './signature-public-start-signature-request';
-export * from './signature-public-start-signature-response';
 export * from './signature-selfie-model';
 export * from './signature-signatures-info-request';
 export * from './signature-types';
@@ -152,3 +148,170 @@ export * from './xades-insertion-options';
 export * from './xades-signature-types';
 export * from './xml-namespace-model';
 
+export * from './signature-evidences-from-client-model';
+
+export * from './signature-public-start-signature-request';
+
+export * from './signature-public-start-signature-response';
+
+export * from './signature-public-complete-signature-request';
+
+export * from './signature-public-complete-signature-response';
+
+export * from './prescription-signer-type';
+
+export * from './signature-evidences-from-client-model';
+
+export * from './signature-public-start-signature-request';
+
+export * from './signature-public-start-signature-response';
+
+export * from './signature-public-complete-signature-request';
+
+export * from './signature-public-complete-signature-response';
+
+export * from './prescription-signer-type';
+
+export * from './signature-evidences-from-client-model';
+
+export * from './signature-public-start-signature-request';
+
+export * from './signature-public-start-signature-response';
+
+export * from './signature-public-complete-signature-request';
+
+export * from './signature-public-complete-signature-response';
+
+export * from './prescription-signer-type';
+
+export * from './signature-evidences-from-client-model';
+
+export * from './signature-public-start-signature-request';
+
+export * from './signature-public-start-signature-response';
+
+export * from './signature-public-complete-signature-request';
+
+export * from './signature-public-complete-signature-response';
+
+export * from './prescription-signer-type';
+
+export * from './signature-evidences-from-client-model';
+
+export * from './signature-public-start-signature-request';
+
+export * from './signature-public-start-signature-response';
+
+export * from './signature-public-complete-signature-request';
+
+export * from './signature-public-complete-signature-response';
+
+export * from './prescription-signer-type';
+
+export * from './signature-evidences-from-client-model';
+
+export * from './signature-public-start-signature-request';
+
+export * from './signature-public-start-signature-response';
+
+export * from './signature-public-complete-signature-request';
+
+export * from './signature-public-complete-signature-response';
+
+export * from './prescription-signer-type';
+
+export * from './signature-evidences-from-client-model';
+
+export * from './signature-public-start-signature-request';
+
+export * from './signature-public-start-signature-response';
+
+export * from './signature-public-complete-signature-request';
+
+export * from './signature-public-complete-signature-response';
+
+export * from './prescription-signer-type';
+
+export * from './signature-evidences-from-client-model';
+
+export * from './signature-public-start-signature-request';
+
+export * from './signature-public-start-signature-response';
+
+export * from './signature-public-complete-signature-request';
+
+export * from './signature-public-complete-signature-response';
+
+export * from './prescription-signer-type';
+
+export * from './signature-evidences-from-client-model';
+
+export * from './signature-public-start-signature-request';
+
+export * from './signature-public-start-signature-response';
+
+export * from './signature-public-complete-signature-request';
+
+export * from './signature-public-complete-signature-response';
+
+export * from './prescription-signer-type';
+
+export * from './signature-evidences-from-client-model';
+
+export * from './signature-public-start-signature-request';
+
+export * from './signature-public-start-signature-response';
+
+export * from './signature-public-complete-signature-request';
+
+export * from './signature-public-complete-signature-response';
+
+export * from './prescription-signer-type';
+
+export * from './signature-evidences-from-client-model';
+
+export * from './signature-public-start-signature-request';
+
+export * from './signature-public-start-signature-response';
+
+export * from './signature-public-complete-signature-request';
+
+export * from './signature-public-complete-signature-response';
+
+export * from './prescription-signer-type';
+
+export * from './signature-evidences-from-client-model';
+
+export * from './signature-public-start-signature-request';
+
+export * from './signature-public-start-signature-response';
+
+export * from './signature-public-complete-signature-request';
+
+export * from './signature-public-complete-signature-response';
+
+export * from './prescription-signer-type';
+
+export * from './signature-evidences-from-client-model';
+
+export * from './signature-public-start-signature-request';
+
+export * from './signature-public-start-signature-response';
+
+export * from './signature-public-complete-signature-request';
+
+export * from './signature-public-complete-signature-response';
+
+export * from './prescription-signer-type';
+
+export * from './signature-evidences-from-client-model';
+
+export * from './signature-public-start-signature-request';
+
+export * from './signature-public-start-signature-response';
+
+export * from './signature-public-complete-signature-request';
+
+export * from './signature-public-complete-signature-response';
+
+export * from './prescription-signer-type';
